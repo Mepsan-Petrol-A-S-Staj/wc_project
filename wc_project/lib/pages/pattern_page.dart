@@ -77,6 +77,7 @@ class _PatternPageState extends State<PatternPage> {
       DeviceSavePage(height: widget.height, width: widget.width),
     ];
     return Scaffold(
+      // resizeToAvoidBottomInset: true,
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(
@@ -145,7 +146,10 @@ class _PatternPageState extends State<PatternPage> {
                 child: Consumer<PageIndexProvider>(
                   builder: (context, notifier, _) {
                     // pages[index] içeriği, SomeNotifier'ın değişikliklerine göre otomatik olarak güncellenir
-                    return pages[index];
+                    return SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: pages[index],
+                    );
                   },
                 ),
               ),

@@ -119,7 +119,9 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             child: Padding(
-              padding: const EdgeInsets.all(20),
+              padding: EdgeInsets.all(
+                widget.height * SharedConstants.generalPadding,
+              ),
               child: RatingStars(
                 value: value,
                 onValueChanged: (v) {
@@ -154,11 +156,9 @@ class _HomePageState extends State<HomePage> {
           // Answer Textfield Area
           Padding(
             padding: EdgeInsets.symmetric(
-              vertical: widget.height * SharedConstants.generalPadding,
+              vertical: widget.width * SharedConstants.generalPadding,
             ),
             child: Container(
-              width: widget.width * 0.6,
-              height: widget.height * 0.25,
               decoration: BoxDecoration(
                 border: Border.all(
                   color: Colors.black,
@@ -172,7 +172,8 @@ class _HomePageState extends State<HomePage> {
                   widget.height * SharedConstants.generalPadding,
                 ),
                 child: TextField(
-                  maxLines: 10,
+                  style: Theme.of(context).textTheme.displayMedium,
+                  maxLines: 2,
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     hintText: SharedConstants.answerHintText,
