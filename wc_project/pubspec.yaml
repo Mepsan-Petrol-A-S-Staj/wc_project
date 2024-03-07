@@ -15,6 +15,7 @@ dependencies:
   flutter_rating_stars: ^1.0.3+4
   flutter_svg: ^2.0.10+1
   icons_plus: ^5.0.0
+  circular_countdown_timer: ^0.2.3
 
   # Service
   provider: ^6.1.2

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:icons_plus/icons_plus.dart';
@@ -21,6 +22,7 @@ class _HomePageState extends State<HomePage> {
   late double value;
   late OverlayEntry? _overlayEntry;
   late Timer _timer;
+  CountDownController _controller = CountDownController();
 
   @override
   void initState() {
@@ -32,18 +34,23 @@ class _HomePageState extends State<HomePage> {
     OverlayState? overlayState = Overlay.of(context);
     _overlayEntry = OverlayEntry(
       builder: (context) => Positioned(
-        top: MediaQuery.of(context).size.height * 0.4,
-        left: MediaQuery.of(context).size.width * 0.25,
+        top: MediaQuery.of(context).size.height * 0.35,
+        left: MediaQuery.of(context).size.width * 0.3,
         child: Material(
           color: Colors.transparent,
-          child: Container(
-            width: MediaQuery.of(context).size.width * 0.5,
-            height: MediaQuery.of(context).size.height * 0.2,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(8),
+          child: Card(
+            elevation: 2,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(
+                widget.height * SharedConstants.generalPadding,
+              ),
             ),
-            child: Center(
+            color: Colors.amber,
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: widget.width * SharedConstants.bigPadding * 1.5,
+                vertical: widget.height * SharedConstants.bigPadding,
+              ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -51,11 +58,32 @@ class _HomePageState extends State<HomePage> {
                     "Cevabınız Gönderildi!",
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 8),
-                  Text(
-                    "5 saniye içinde kapanacak.",
-                    style: TextStyle(fontSize: 14),
-                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      top: widget.height * SharedConstants.bigPadding,
+                    ),
+                    child: CircularCountDownTimer(
+                      controller: _controller,
+                      duration: 5,
+                      width: MediaQuery.of(context).size.width * 0.2,
+                      height: MediaQuery.of(context).size.height * 0.1,
+                      ringColor: Colors.blue,
+                      fillColor: Colors.white,
+                      strokeWidth: 5.0,
+                      textStyle: TextStyle(
+                        fontSize: 16.0,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      isReverse: true,
+                      isReverseAnimation: true,
+                      isTimerTextShown: true,
+                      onComplete: () {
+                        _overlayEntry?.remove();
+                        _overlayEntry = null;
+                      },
+                    ),
+                  )
                 ],
               ),
             ),
@@ -64,8 +92,9 @@ class _HomePageState extends State<HomePage> {
       ),
     );
     overlayState?.insert(_overlayEntry!);
-
+    _controller.start();
     _timer = Timer(Duration(seconds: 5), () {
+      _controller.pause();
       _overlayEntry?.remove();
       _overlayEntry = null;
     });
@@ -157,7 +186,6 @@ class _HomePageState extends State<HomePage> {
             width: double.infinity,
             child: ElevatedButton(
               onPressed: () {
-                print("Gönderildi");
                 _showPopup(context);
               },
               child: Padding(
