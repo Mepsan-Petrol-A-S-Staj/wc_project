@@ -32,7 +32,7 @@ class _PatternPageState extends State<PatternPage> {
 
   @override
   void initState() {
-    // _startTimer();
+    _startTimer();
     _loadSavedDevice();
     super.initState();
   }
@@ -53,7 +53,6 @@ class _PatternPageState extends State<PatternPage> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       savedDevice = prefs.getBool('savedDevice') ?? false;
-      print("savedDevice durumu: $savedDevice");
       if (savedDevice) {
         index = 0;
       } else {

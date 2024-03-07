@@ -72,9 +72,9 @@ class _DeviceSavePageState extends State<DeviceSavePage> {
                   await _prefs.setString('devicenum', deviceNumber);
                   await _prefs.setBool('savedDevice', true);
                   print('Cihaz $deviceNumber ile Kaydedildi');
-                  // int index = 0;
-                  // Provider.of<PageIndexProvider>(context, listen: false)
-                  //     .setIndex(index);
+                  int index = 0;
+                  Provider.of<PageIndexProvider>(context, listen: false)
+                      .setIndex(index);
                 },
                 child: Text('Cihaz Kaydet'),
               ),
