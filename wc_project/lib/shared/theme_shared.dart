@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:wc_project/shared/constants_shared.dart';
 
 class SharedTheme {
   static double screenWidth = 0.0, screenHeight = 0.0;
-  static ThemeData lightTheme = ThemeData(
+/*   static ThemeData lightTheme = ThemeData(
     primarySwatch: Colors.blue,
     primaryColor: Colors.white,
     brightness: Brightness.light,
@@ -28,6 +27,11 @@ class SharedTheme {
       color: Colors.black,
       size: screenHeight * SharedConstants.generalPadding * 2,
     ),
-  );
-  static ThemeData get themeGet => lightTheme;
+  ); */
+  static ThemeData darkTheme = ThemeData(
+      colorSchemeSeed: const Color.fromARGB(255, 61, 219, 153),
+      brightness: Brightness.dark);
+  static ThemeData lightTheme = ThemeData(
+      colorSchemeSeed: const Color.fromARGB(255, 61, 219, 153),
+      brightness: Brightness.dark);
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:wc_project/pages/devicesave_page.dart';
 import 'package:wc_project/pages/home_page.dart';
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
     final MediaQueryData mediaQuery = MediaQuery.of(context);
     final double height = mediaQuery.size.height, width = mediaQuery.size.width;
     SharedTheme.screenHeight = height;
@@ -34,7 +36,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: SharedConstants.appName,
       debugShowCheckedModeBanner: false,
-      theme: SharedTheme.themeGet,
+      themeMode: ThemeMode.system,
+      theme: ThemeData(
+          colorSchemeSeed: const Color.fromARGB(255, 61, 219, 153),
+          brightness: Brightness.light),
+      darkTheme: ThemeData(
+          colorSchemeSeed: const Color.fromARGB(255, 61, 219, 153),
+          brightness: Brightness.dark),
       routes: {
         '/': (context) => PatternPage(
               height: height,

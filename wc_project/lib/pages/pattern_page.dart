@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:slide_digital_clock/slide_digital_clock.dart';
 import 'package:wc_project/pages/devicesave_page.dart';
 import 'package:wc_project/pages/task_page.dart';
 import 'package:wc_project/shared/constants_shared.dart';
@@ -106,7 +107,14 @@ class PatternPageState extends State<PatternPage> {
                     Row(
                       children: [
                         IconButton(
-                          icon: const Icon(Icons.person),
+                          icon: Icon(
+                            Icons.person_outline,
+                            size: Theme.of(context)
+                                    .textTheme
+                                    .headlineMedium!
+                                    .fontSize! *
+                                1.4,
+                          ),
                           onPressed: () {
                             index = 1;
                             Provider.of<PageIndexProvider>(context,
@@ -115,7 +123,18 @@ class PatternPageState extends State<PatternPage> {
                           },
                         ),
                         // Date and Time
-                        Padding(
+                        DigitalClock(
+                          hourMinuteDigitTextStyle:
+                              Theme.of(context).textTheme.headlineMedium,
+                          secondDigitTextStyle:
+                              Theme.of(context).textTheme.bodyMedium,
+                          colon: Text(
+                            ":",
+                            style: Theme.of(context).textTheme.headlineMedium,
+                          ),
+                        )
+
+                        /* Padding(
                           padding: EdgeInsets.only(
                             left: widget.width * SharedConstants.generalPadding,
                           ),
@@ -131,12 +150,10 @@ class PatternPageState extends State<PatternPage> {
                                           .format(DateTime.now())
                                       : DateFormat('HH:mm:ss')
                                           .format(DateTime.now()),
-                                  style:
-                                      Theme.of(context).textTheme.displaySmall,
                                 ),
                             ],
                           ),
-                        ),
+                        ), */
                       ],
                     ),
                   ],

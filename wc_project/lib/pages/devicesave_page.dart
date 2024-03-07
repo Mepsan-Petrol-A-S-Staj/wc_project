@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -19,11 +20,13 @@ class DeviceSavePage extends StatefulWidget {
 class DeviceSavePageState extends State<DeviceSavePage> {
   late TextEditingController _controller;
   late SharedPreferences _prefs;
+  String? selectedValue;
 
   @override
   void initState() {
     super.initState();
     _controller = TextEditingController();
+
     _loadPreferences();
   }
 
@@ -51,26 +54,125 @@ class DeviceSavePageState extends State<DeviceSavePage> {
       ),
       child: Column(
         children: [
-          Text(
+          const Text(
             'Cihaz Kaydet',
-            style: Theme.of(context).textTheme.displayLarge,
           ),
           const SizedBox(height: 20),
-          TextField(
-            controller: _controller,
-            decoration: const InputDecoration(
-              labelText: 'Cihaz Numarası',
-              border: OutlineInputBorder(),
+          Container(
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.primaryContainer,
+              borderRadius: BorderRadius.circular(15),
+              /* border:
+                    Border.all(color: Theme.of(context).colorScheme.primary) */
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: DropdownButton(
+                dropdownColor: Theme.of(context).colorScheme.tertiaryContainer,
+                itemHeight: 100,
+                // isExpanded: true,
+                //dropdownColor: Colors.amber,
+                isDense: true,
+                hint: selectedValue == null
+                    ? const Text('Kat Seçin')
+                    : Text('Kat: $selectedValue'),
+
+                icon: selectedValue == null
+                    ? SvgPicture.asset(
+                        "assets/icons/emptyfloor.svg",
+                        height: 80,
+                      )
+                    : SvgPicture.asset(
+                        "assets/icons/${selectedValue}floor.svg",
+                        height: 80,
+                      ),
+                iconSize: 80,
+
+                borderRadius: BorderRadius.circular(15),
+                underline: const Text(''),
+                //value: selectedValue,
+                items: [
+                  DropdownMenuItem(
+                    value: "Teras",
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          const Text('Teras'),
+                          SvgPicture.asset(
+                            "assets/icons/Terasfloor.svg",
+                            height: 80,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  DropdownMenuItem(
+                    value: "3",
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          const Text('3. Kat'),
+                          SvgPicture.asset(
+                            "assets/icons/3floor.svg",
+                            height: 80,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  DropdownMenuItem(
+                    value: "2",
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          const Text('2. Kat'),
+                          SvgPicture.asset(
+                            "assets/icons/2floor.svg",
+                            height: 80,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  DropdownMenuItem(
+                    value: "1",
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          const Text('1. Kat'),
+                          SvgPicture.asset(
+                            "assets/icons/1floor.svg",
+                            height: 80,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+                onChanged: (value) {
+                  setState(() {
+                    selectedValue = value;
+                  });
+                },
+              ),
             ),
           ),
           const SizedBox(height: 20),
           ElevatedButton(
             onPressed: () async {
-              String deviceNumber = _controller.text;
-              await _prefs.setString('devicenum', deviceNumber);
+              await _prefs.setString('devicenum', selectedValue!);
               await _prefs.setBool('savedDevice', true);
 
               int index = 0;
+              // ignore: use_build_context_synchronously
               Provider.of<PageIndexProvider>(context, listen: false)
                   .setIndex(index);
             },
