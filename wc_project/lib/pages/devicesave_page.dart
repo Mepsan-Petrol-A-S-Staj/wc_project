@@ -55,7 +55,7 @@ class _DeviceSavePageState extends State<DeviceSavePage> {
             children: [
               Text(
                 'Cihaz Kaydet',
-                style: Theme.of(context).textTheme.headline4,
+                style: Theme.of(context).textTheme.displayLarge,
               ),
               SizedBox(height: 20),
               TextField(
@@ -72,9 +72,9 @@ class _DeviceSavePageState extends State<DeviceSavePage> {
                   await _prefs.setString('devicenum', deviceNumber);
                   await _prefs.setBool('savedDevice', true);
                   print('Cihaz $deviceNumber ile Kaydedildi');
-                  int index = 0;
-                  Provider.of<PageIndexProvider>(context, listen: false)
-                      .setIndex(index);
+                  // int index = 0;
+                  // Provider.of<PageIndexProvider>(context, listen: false)
+                  //     .setIndex(index);
                 },
                 child: Text('Cihaz Kaydet'),
               ),

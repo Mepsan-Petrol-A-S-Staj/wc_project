@@ -32,9 +32,9 @@ class _PatternPageState extends State<PatternPage> {
 
   @override
   void initState() {
-    super.initState();
-    _startTimer();
+    // _startTimer();
     _loadSavedDevice();
+    super.initState();
   }
 
   @override
@@ -53,7 +53,7 @@ class _PatternPageState extends State<PatternPage> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       savedDevice = prefs.getBool('savedDevice') ?? false;
-      print(savedDevice);
+      print("savedDevice durumu: $savedDevice");
       if (savedDevice) {
         index = 0;
       } else {
@@ -146,11 +146,6 @@ class _PatternPageState extends State<PatternPage> {
                 child: Consumer<PageIndexProvider>(
                   builder: (context, notifier, _) {
                     // pages[index] içeriği, SomeNotifier'ın değişikliklerine göre otomatik olarak güncellenir
-                    if (savedDevice) {
-                      index = 3;
-                      Provider.of<PageIndexProvider>(context, listen: false)
-                          .setIndex(index);
-                    }
                     return pages[index];
                   },
                 ),

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:icons_plus/icons_plus.dart';
@@ -9,8 +10,8 @@ class HomePage extends StatefulWidget {
   const HomePage({
     required this.height,
     required this.width,
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -18,10 +19,56 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late double value;
+  late OverlayEntry? _overlayEntry;
+  late Timer _timer;
+
   @override
   void initState() {
     super.initState();
     value = 2.5;
+  }
+
+  void _showPopup(BuildContext context) {
+    OverlayState? overlayState = Overlay.of(context);
+    _overlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        top: MediaQuery.of(context).size.height * 0.4,
+        left: MediaQuery.of(context).size.width * 0.25,
+        child: Material(
+          color: Colors.transparent,
+          child: Container(
+            width: MediaQuery.of(context).size.width * 0.5,
+            height: MediaQuery.of(context).size.height * 0.2,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Cevabınız Gönderildi!",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    "5 saniye içinde kapanacak.",
+                    style: TextStyle(fontSize: 14),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+    overlayState?.insert(_overlayEntry!);
+
+    _timer = Timer(Duration(seconds: 5), () {
+      _overlayEntry?.remove();
+      _overlayEntry = null;
+    });
   }
 
   @override
@@ -111,6 +158,7 @@ class _HomePageState extends State<HomePage> {
             child: ElevatedButton(
               onPressed: () {
                 print("Gönderildi");
+                _showPopup(context);
               },
               child: Padding(
                 padding: EdgeInsets.symmetric(
@@ -126,5 +174,11 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
   }
 }
