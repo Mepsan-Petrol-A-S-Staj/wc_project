@@ -22,7 +22,7 @@ class _HomePageState extends State<HomePage> {
   late double value;
   late OverlayEntry? _overlayEntry;
   late Timer _timer;
-  CountDownController _controller = CountDownController();
+  final CountDownController _controller = CountDownController();
 
   @override
   void initState() {
@@ -54,7 +54,7 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
+                  const Text(
                     "Cevabınız Gönderildi!",
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
@@ -70,7 +70,7 @@ class _HomePageState extends State<HomePage> {
                       ringColor: Colors.blue,
                       fillColor: Colors.white,
                       strokeWidth: 5.0,
-                      textStyle: TextStyle(
+                      textStyle: const TextStyle(
                         fontSize: 16.0,
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
@@ -91,9 +91,9 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
-    overlayState?.insert(_overlayEntry!);
+    overlayState.insert(_overlayEntry!);
     _controller.start();
-    _timer = Timer(Duration(seconds: 5), () {
+    _timer = Timer(const Duration(seconds: 5), () {
       _controller.pause();
       _overlayEntry?.remove();
       _overlayEntry = null;

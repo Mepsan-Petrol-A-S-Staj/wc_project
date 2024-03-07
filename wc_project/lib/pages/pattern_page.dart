@@ -22,10 +22,10 @@ class PatternPage extends StatefulWidget {
   });
 
   @override
-  _PatternPageState createState() => _PatternPageState();
+  PatternPageState createState() => PatternPageState();
 }
 
-class _PatternPageState extends State<PatternPage> {
+class PatternPageState extends State<PatternPage> {
   late int index;
   late Timer _timer;
   late bool savedDevice;

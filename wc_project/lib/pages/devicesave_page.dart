@@ -13,10 +13,10 @@ class DeviceSavePage extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _DeviceSavePageState createState() => _DeviceSavePageState();
+  DeviceSavePageState createState() => DeviceSavePageState();
 }
 
-class _DeviceSavePageState extends State<DeviceSavePage> {
+class DeviceSavePageState extends State<DeviceSavePage> {
   late TextEditingController _controller;
   late SharedPreferences _prefs;
 
@@ -44,43 +44,39 @@ class _DeviceSavePageState extends State<DeviceSavePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: 20,
-            vertical: 20,
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 20,
+        vertical: 20,
+      ),
+      child: Column(
+        children: [
+          Text(
+            'Cihaz Kaydet',
+            style: Theme.of(context).textTheme.displayLarge,
           ),
-          child: Column(
-            children: [
-              Text(
-                'Cihaz Kaydet',
-                style: Theme.of(context).textTheme.displayLarge,
-              ),
-              SizedBox(height: 20),
-              TextField(
-                controller: _controller,
-                decoration: InputDecoration(
-                  labelText: 'Cihaz Numarası',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () async {
-                  String deviceNumber = _controller.text;
-                  await _prefs.setString('devicenum', deviceNumber);
-                  await _prefs.setBool('savedDevice', true);
-                  print('Cihaz $deviceNumber ile Kaydedildi');
-                  int index = 0;
-                  Provider.of<PageIndexProvider>(context, listen: false)
-                      .setIndex(index);
-                },
-                child: Text('Cihaz Kaydet'),
-              ),
-            ],
+          const SizedBox(height: 20),
+          TextField(
+            controller: _controller,
+            decoration: const InputDecoration(
+              labelText: 'Cihaz Numarası',
+              border: OutlineInputBorder(),
+            ),
           ),
-        ),
+          const SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: () async {
+              String deviceNumber = _controller.text;
+              await _prefs.setString('devicenum', deviceNumber);
+              await _prefs.setBool('savedDevice', true);
+
+              int index = 0;
+              Provider.of<PageIndexProvider>(context, listen: false)
+                  .setIndex(index);
+            },
+            child: const Text('Cihaz Kaydet'),
+          ),
+        ],
       ),
     );
   }
