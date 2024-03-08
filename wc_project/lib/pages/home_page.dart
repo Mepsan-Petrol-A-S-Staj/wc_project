@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:wc_project/shared/constants_shared.dart';
@@ -85,59 +87,74 @@ class _HomePageState extends State<HomePage> {
           ),
 
           // Answer Textfield Area
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(
-                widget.height * SharedConstants.generalPadding,
-              ),
-            ),
-            child: TextField(
-              maxLines: 2,
-              decoration: InputDecoration(
-                border:
-                    OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
-                hintText: SharedConstants.answerHintText,
-              ),
-            ),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              showDialog(
-                barrierDismissible: false,
-                context: context,
-                builder: (context) {
-                  // Dialog oluşturulduğunda bir Future dön
-                  return AlertDialog(
-                    backgroundColor:
-                        Theme.of(context).colorScheme.tertiaryContainer,
-                    title: Column(
-                      children: [
-                        Icon(
-                          Icons.task_alt_outlined,
-                          size: 40,
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          'Cevap Gönderildi',
-                          style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary),
-                        ),
-                      ],
+          Padding(
+            padding: const EdgeInsets.only(top: 40.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
+                  flex: 5,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                    child: TextField(
+                      maxLines: 2,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15)),
+                          // hintText: SharedConstants.answerHintText,
+                          labelText: 'Lütfen yorumunuzu buraya yazınız.'),
                     ),
-                  );
-                },
-              );
-              // showDialog fonksiyonu bir Future döndürdüğü için
-              // .then metoduyla kapanma süresini kontrol edebiliriz
-              Future.delayed(const Duration(seconds: 3), () {
-                Navigator.of(context).pop(); // Dialog'u kapat
-              });
-            },
-            child: const Text(
-              SharedConstants.submitText,
+                  ),
+                ),
+                SizedBox(
+                  width: 200,
+                ),
+                Expanded(
+                  flex: 4,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      showDialog(
+                        barrierDismissible: false,
+                        context: context,
+                        builder: (context) {
+                          // Dialog oluşturulduğunda bir Future dön
+                          return AlertDialog(
+                            backgroundColor:
+                                Theme.of(context).colorScheme.tertiaryContainer,
+                            title: Column(
+                              children: [
+                                Icon(
+                                  Icons.task_alt_outlined,
+                                  size: 40,
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  'Cevap Gönderildi',
+                                  style: TextStyle(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primary),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                      // showDialog fonksiyonu bir Future döndürdüğü için
+                      // .then metoduyla kapanma süresini kontrol edebiliriz
+                      Future.delayed(const Duration(seconds: 3), () {
+                        Navigator.of(context).pop(); // Dialog'u kapat
+                      });
+                    },
+                    child: const Text(
+                      SharedConstants.submitText,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ],
