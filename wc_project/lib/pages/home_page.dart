@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:wc_project/shared/constants_shared.dart';
-import '../services/providers/rate_provider.dart';
+
+import '../services/all_provider.dart';
 
 class HomePage extends StatelessWidget {
   final double height;
@@ -17,9 +18,9 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<RateProvider>(
-      builder: (context, rateProvider, _) {
-        double value = rateProvider.getIndex.toDouble();
+    return Consumer(
+      builder: (context, ref, child) {
+        int value = ref.watch(rateProvider);
         return Padding(
           padding: EdgeInsets.symmetric(horizontal: width * 0.1),
           child: Column(
@@ -48,9 +49,11 @@ class HomePage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(200),
                 ),
                 child: RatingStars(
-                  value: value,
+                  value: value.toDouble(),
                   onValueChanged: (v) {
-                    rateProvider.setIndex(v.round());
+                    ref
+                        .read(rateProvider.notifier)
+                        .update((state) => v.toInt());
                   },
                   starBuilder: (index, color) => Icon(
                     AntDesign.star_fill,

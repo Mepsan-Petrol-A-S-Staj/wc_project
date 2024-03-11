@@ -3,33 +3,22 @@ import 'package:wc_project/shared/constants_shared.dart';
 
 import '../shared/list_shared.dart';
 
-class TaskPage extends StatefulWidget {
+class TaskPage extends StatelessWidget {
   final double height, width;
   const TaskPage({
     required this.height,
     required this.width,
-    super.key,
-  });
-
-  @override
-  State<TaskPage> createState() => _TaskPageState();
-}
-
-class _TaskPageState extends State<TaskPage> {
-  late bool value;
-
-  @override
-  void initState() {
-    super.initState();
-    value = false;
-  }
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    bool value = false;
+
     return Padding(
       padding: EdgeInsets.symmetric(
-        horizontal: widget.width * SharedConstants.generalPadding,
-        vertical: widget.height * SharedConstants.generalPadding,
+        horizontal: width * SharedConstants.generalPadding,
+        vertical: height * SharedConstants.generalPadding,
       ),
       child: Column(
         children: [
@@ -40,15 +29,13 @@ class _TaskPageState extends State<TaskPage> {
                   child: Card(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(
-                        widget.height * SharedConstants.generalPadding,
+                        height * SharedConstants.generalPadding,
                       ),
                     ),
                     child: Padding(
                       padding: EdgeInsets.symmetric(
-                        horizontal:
-                            widget.width * SharedConstants.generalPadding,
-                        vertical:
-                            widget.height * SharedConstants.generalPadding,
+                        horizontal: width * SharedConstants.generalPadding,
+                        vertical: height * SharedConstants.generalPadding,
                       ),
                       child: Column(
                         children: [
@@ -70,10 +57,11 @@ class _TaskPageState extends State<TaskPage> {
                               style: Theme.of(context).textTheme.displaySmall,
                             ),
                             trailing: Checkbox(
-                                value: value,
-                                onChanged: (value) {
-                                  value = !value!;
-                                }),
+                              value: value,
+                              onChanged: (newValue) {
+                                value = newValue ?? false;
+                              },
+                            ),
                           ),
                         ],
                       ),
@@ -84,7 +72,7 @@ class _TaskPageState extends State<TaskPage> {
           ),
           Padding(
             padding: EdgeInsets.only(
-              top: widget.height * SharedConstants.generalPadding,
+              top: height * SharedConstants.generalPadding,
             ),
             child: ElevatedButton(
               onPressed: () {

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../services/providers/pageindex_provider.dart';
+import '../services/all_provider.dart';
 
-class DeviceSavePage extends StatefulWidget {
+class DeviceSavePage extends ConsumerWidget {
   final double height, width;
+
   const DeviceSavePage({
     required this.height,
     required this.width,
@@ -14,41 +15,23 @@ class DeviceSavePage extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  DeviceSavePageState createState() => DeviceSavePageState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    late TextEditingController _controller;
+    late SharedPreferences _prefs;
+    String? selectedValue = '';
 
-class DeviceSavePageState extends State<DeviceSavePage> {
-  late TextEditingController _controller;
-  late SharedPreferences _prefs;
-  String? selectedValue;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = TextEditingController();
-
-    _loadPreferences();
-  }
-
-  Future<void> _loadPreferences() async {
-    _prefs = await SharedPreferences.getInstance();
-    // SharedPreference'dan devicenum değerini al ve eğer varsa TextField'a set et
-    String? deviceNum = _prefs.getString('devicenum');
-    if (deviceNum != null) {
-      _controller.text = deviceNum;
+    void _loadPreferences() async {
+      _prefs = await SharedPreferences.getInstance();
+      // SharedPreference'dan devicenum değerini al ve eğer varsa TextField'a set et
+      String? deviceNum = _prefs.getString('devicenum');
+      if (deviceNum != null) {
+        _controller.text = deviceNum;
+      }
     }
-  }
 
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
+    _controller = TextEditingController();
+    _loadPreferences();
 
-  // 1024x600px 7 inch
-
-  @override
-  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 20,
@@ -80,13 +63,12 @@ class DeviceSavePageState extends State<DeviceSavePage> {
                       Theme.of(context).colorScheme.tertiaryContainer,
                   itemHeight: 100,
                   // isExpanded: true,
-                  //dropdownColor: Colors.amber,
                   isDense: true,
                   hint: selectedValue == null
                       ? const Text('Kat Seçin')
                       : Text('Kat: $selectedValue'),
 
-                  icon: selectedValue == null
+                  icon: selectedValue == ''
                       ? SvgPicture.asset(
                           "assets/icons/emptyfloor.svg",
                           height: 80,
@@ -167,9 +149,7 @@ class DeviceSavePageState extends State<DeviceSavePage> {
                     ),
                   ],
                   onChanged: (value) {
-                    setState(() {
-                      selectedValue = value;
-                    });
+                    selectedValue = value as String?;
                   },
                 ),
               ),
@@ -181,9 +161,7 @@ class DeviceSavePageState extends State<DeviceSavePage> {
                 await _prefs.setBool('isDeviceSaved', true);
 
                 int index = 0;
-                // ignore: use_build_context_synchronously
-                Provider.of<PageIndexProvider>(context, listen: false)
-                    .setIndex(index);
+                ref.read(pageIndexProvider.notifier).update((state) => index);
               },
               child: const Text('Cihaz Kaydet'),
             ),

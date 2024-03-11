@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:slide_digital_clock/slide_digital_clock.dart';
 import 'package:wc_project/pages/devicesave_page.dart';
 import 'package:wc_project/pages/task_page.dart';
 import 'package:wc_project/shared/constants_shared.dart';
 
-import '../services/providers/pageindex_provider.dart';
+import '../services/all_provider.dart';
 import 'home_page.dart';
 import 'login_page.dart';
 
-class PatternPage extends StatelessWidget {
+class PatternPage extends ConsumerWidget {
   final double height, width;
 
   const PatternPage({
@@ -20,10 +20,10 @@ class PatternPage extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Consumer<PageIndexProvider>(
-      builder: (context, pageIndexProvider, _) {
-        int index = pageIndexProvider.getIndex;
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Consumer(
+      builder: (context, ref, child) {
+        int index = ref.watch(pageIndexProvider);
         return PopScope(
           canPop: false,
           onPopInvoked: (didPop) async {
@@ -70,7 +70,11 @@ class PatternPage extends StatelessWidget {
                               height: height * 0.05,
                             ),
                             onTap: () {
-                              index == 3 ? null : pageIndexProvider.setIndex(0);
+                              index == 3
+                                  ? null
+                                  : ref
+                                      .read(pageIndexProvider.notifier)
+                                      .update((state) => 0);
                             },
                           ),
                           Row(
@@ -87,7 +91,9 @@ class PatternPage extends StatelessWidget {
                                 onPressed: () {
                                   index == 3
                                       ? null
-                                      : pageIndexProvider.setIndex(1);
+                                      : ref
+                                          .read(pageIndexProvider.notifier)
+                                          .update((state) => 1);
                                 },
                               ),
                               DigitalClock(

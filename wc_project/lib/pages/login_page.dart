@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:wc_project/shared/constants_shared.dart';
 import 'package:wc_project/shared/list_shared.dart';
 
-import '../services/providers/pageindex_provider.dart';
+import '../services/all_provider.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends ConsumerWidget {
   final double height, width;
   const LoginPage({
     required this.height,
@@ -14,7 +14,7 @@ class LoginPage extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Column(
       // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -65,8 +65,9 @@ class LoginPage extends StatelessWidget {
                     child: ElevatedButton(
                       onPressed: () {
                         int index = 2;
-                        Provider.of<PageIndexProvider>(context, listen: false)
-                            .setIndex(index);
+                        ref
+                            .read(pageIndexProvider.notifier)
+                            .update((state) => index);
                       },
                       child: Text(
                         SharedConstants.loginText,
