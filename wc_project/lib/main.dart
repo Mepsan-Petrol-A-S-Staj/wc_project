@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_rating_stars/flutter_rating_stars.dart';
+// import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wc_project/pages/devicesave_page.dart';
