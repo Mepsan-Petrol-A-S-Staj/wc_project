@@ -178,7 +178,7 @@ class DeviceSavePageState extends State<DeviceSavePage> {
             ElevatedButton(
               onPressed: () async {
                 await _prefs.setString('devicenum', selectedValue!);
-                await _prefs.setBool('savedDevice', true);
+                await _prefs.setBool('isDeviceSaved', true);
 
                 int index = 0;
                 // ignore: use_build_context_synchronously

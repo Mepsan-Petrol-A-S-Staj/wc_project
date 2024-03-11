@@ -16,7 +16,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Text(
           SharedConstants.loginText,
@@ -79,9 +79,6 @@ class LoginPage extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(
-          height: height * 0.2,
-        )
       ],
     );
   }

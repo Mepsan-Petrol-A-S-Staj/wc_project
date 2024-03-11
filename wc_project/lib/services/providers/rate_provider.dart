@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class PageIndexProvider with ChangeNotifier {
-  int _index = 0;
+class RateProvider with ChangeNotifier {
+  int _index = 1;
   int get getIndex => _index;
 
   void setIndex(int setIndex) {
