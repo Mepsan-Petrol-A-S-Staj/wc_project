@@ -82,7 +82,7 @@ class _HomePageState extends State<HomePage> {
               maxValueVisibility: true,
               valueLabelVisibility: false,
               animationDuration: const Duration(milliseconds: 800),
-              starColor: Colors.blue,
+              starColor: Color(0xff3da2db),
             ),
           ),
 
@@ -102,12 +102,10 @@ class _HomePageState extends State<HomePage> {
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15)),
                           // hintText: SharedConstants.answerHintText,
+                          labelStyle: Theme.of(context).textTheme.bodySmall,
                           labelText: 'Lütfen yorumunuzu buraya yazınız.'),
                     ),
                   ),
-                ),
-                SizedBox(
-                  width: 200,
                 ),
                 Expanded(
                   flex: 4,

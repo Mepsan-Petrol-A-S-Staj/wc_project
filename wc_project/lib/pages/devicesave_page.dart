@@ -45,7 +45,7 @@ class DeviceSavePageState extends State<DeviceSavePage> {
     super.dispose();
   }
 
-  // 1024x600 px 7 inch
+  // 1024x600px 7 inch
 
   @override
   Widget build(BuildContext context) {
