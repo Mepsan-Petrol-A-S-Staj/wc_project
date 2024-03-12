@@ -3,6 +3,7 @@ import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:wc_project/shared/constants_shared.dart';
+import 'package:wc_project/shared/list_shared.dart';
 
 import '../services/all_provider.dart';
 
@@ -25,24 +26,19 @@ class HomePage extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: width * 0.1),
           child: Column(
             children: [
-              const Text(
-                'LAVABOLARIN GENEL TEMİZLİĞİNİ',
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.w300,
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.only(bottom: 30.0),
-                child: Text(
-                  'DEĞERLENDİRİN',
-                  style: TextStyle(
-                    color: Color(0xff3DA2DB),
-                    fontSize: 30,
-                    fontWeight: FontWeight.w300,
+              for (int i = 0; i < SharedList.welcomeTextList.length; i++)
+                Padding(
+                  padding: EdgeInsets.only(top: i == 0 ? 0 : 30.0),
+                  child: Text(
+                    SharedList.welcomeTextList[i],
+                    style: const TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.w300,
+                    ).copyWith(
+                      color: i == 0 ? null : SharedConstants.secondaryTextColor,
+                    ),
                   ),
                 ),
-              ),
               Container(
                 decoration: BoxDecoration(
                   color: Colors.black12,
@@ -74,7 +70,7 @@ class HomePage extends StatelessWidget {
                   maxValueVisibility: true,
                   valueLabelVisibility: false,
                   animationDuration: const Duration(milliseconds: 800),
-                  starColor: Color(0xff3da2db),
+                  starColor: SharedConstants.secondaryColor,
                 ),
               ),
               // Answer Textfield Area
@@ -92,7 +88,7 @@ class HomePage extends StatelessWidget {
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(15)),
-                            labelText: 'Lütfen yorumunuzu buraya yazınız.',
+                            labelText: SharedConstants.answerHintText,
                           ),
                         ),
                       ),
@@ -105,9 +101,8 @@ class HomePage extends StatelessWidget {
                             barrierDismissible: false,
                             context: context,
                             builder: (context) {
-                              return WillPopScope(
-                                onWillPop: () async =>
-                                    false, // Geri butona basıldığında hiçbir şey yapma
+                              return PopScope(
+                                canPop: false,
                                 child: AlertDialog(
                                   backgroundColor: Theme.of(context)
                                       .colorScheme
@@ -125,11 +120,12 @@ class HomePage extends StatelessWidget {
                                         height: 10,
                                       ),
                                       Text(
-                                        'Cevap Gönderildi',
+                                        SharedConstants.surveySendedPopText,
                                         style: TextStyle(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .primary),
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -137,9 +133,14 @@ class HomePage extends StatelessWidget {
                               );
                             },
                           );
-                          Future.delayed(const Duration(seconds: 3), () {
-                            Navigator.of(context).pop();
-                          });
+                          Future.delayed(
+                            const Duration(
+                              seconds: SharedConstants.timerPopup,
+                            ),
+                            () {
+                              Navigator.of(context).pop();
+                            },
+                          );
                         },
                         child: const Text(
                           SharedConstants.submitText,

@@ -1,45 +1,120 @@
-class SharedConstants {
-  // App Definetions
-  static const String appName = 'WC Project'; // Project Name
-  static const String appVersion = '1.0.0'; // Project Version
-  static const String companyName = 'Mepsan Petrol Cihazları A.Ş.';
-  static const int starCount = 5; // Star Count
+import 'package:flutter/material.dart';
 
-  // Text Definetions
-  static const String welcomeText = 'Lütfen Değerlendir!'; // Welcome Text
+class SharedConstants {
+  //!----------------------------------------------------------------------------------------
+  //! App Definetions
+  //!----------------------------------------------------------------------------------------
+  static const String appName = 'MLB Clean'; // Project Name
+  static const String appVersion = '1.0.0'; // Project Version
+  static const String companyName =
+      'Mepsan Petrol Cihazları A.Ş.'; // Company Name
+  static const int starCount = 5; // Star Count
+  static const int timerPopup = 3; // Timer Popup (Seconds)
+  //----------------------------------------------------------------------------------------
+
+  //!----------------------------------------------------------------------------------------
+  //! Path and Routes (String Definetions)
+  //!----------------------------------------------------------------------------------------
+  //? Image Route
+  //----------------------------------------------------------------------------------------
+  static const String logoImageRoute = 'assets/images/logo.svg'; // Logo
+  //----------------------------------------------------------------------------------------
+  //? Api Routes
+  //----------------------------------------------------------------------------------------
+  static const String apiBaseUrl =
+      'http://192.168.137.101:8085/api'; // Base Url
+  //----------------------------------------------------------------------------------------
+  //* -> User
+  //----------------------------------------------------------------------------------------
+  static const String userSave = '/user/save'; // Users Save
+  static const String userGetwithId = '/user/'; // Get user with Id
+  static const String userEmployee = '/user/employee'; //? Users Employee
+  static const String userDeletewithId = '/user/delete'; // Users Delete with Id
+  static const String userGetAll = '/user/all'; // Users Get All
+  //----------------------------------------------------------------------------------------
+  //* -> Task
+  //----------------------------------------------------------------------------------------
+  static const String taskSave = '/task/save'; // Tasks Save
+  static const String taskGetwithId = '/task/'; // Get Task with Id
+  static const String taskDeletewithId = '/task/delete'; // Tasks Delete with Id
+  static const String taskGetAll = '/task/all'; // Tasks Get All
+  static const String taskGetAllRE = '/task/allRE'; //? Tasks Get AllRE
+  //----------------------------------------------------------------------------------------
+  //* -> Survey
+  //----------------------------------------------------------------------------------------
+  static const String surveySave = '/survey/save'; // Surveys Save
+  static const String surveyMontly = '/survey/montly'; //? Surveys Save
+  static const String surveyGetwithId = '/survey/'; // Get Survey with Id
+  static const String surveyDeletewithDeviceId =
+      '/survey/device/'; // Surveys Delete with Id
+  static const String surveyDeletewithId =
+      '/survey/delete'; // Surveys Delete with Id
+  static const String surveyGetAll = '/survey/all'; // Surveys Get All
+  //----------------------------------------------------------------------------------------
+  //* -> Device
+  //----------------------------------------------------------------------------------------
+  static const String deviceSave = '/device/save'; // Devices Save
+  static const String deviceGetwithId = '/device/'; // Get Device with Id
+  static const String deviceDeletewithId =
+      '/device/delete'; // Devices Delete with Id
+  static const String deviceGetAll = '/device/all'; // Devices Get All
+  //----------------------------------------------------------------------------------------
+  //* -> Task Device Connection
+  //----------------------------------------------------------------------------------------
+  static const String taskGetInfowithDeviceId =
+      '/taskinfo/device/'; // Task Device Connection Save
+  static const String taskGetInfoAll =
+      '/taskinfo/all'; // Get Task Device Connection with Id
+
+  //----------------------------------------------------------------------------------------
+  //? Text Definetions
+  //----------------------------------------------------------------------------------------
+  //* -> Home Page
+  //----------------------------------------------------------------------------------------
   static const String answerHintText = 'Lütfen yorumunuzu buraya yazınız.';
   static const String submitText = 'Gönder'; // Submit Text
+  static const String surveySendedPopText = 'Cevap Gönderildi';
+  //----------------------------------------------------------------------------------------
+  //* -> Login Page
+  //----------------------------------------------------------------------------------------
   static const String loginText = 'Giriş Yap'; // Login Text
   static const String registerText = 'Kayıt Ol'; // Register Text
   static const String forgotPasswordText =
       'Şifremi Unuttum'; // Forgot Password Text
+  //----------------------------------------------------------------------------------------
 
-  // Api Definetions
-  static const String baseUrl =
-      'https://jsonplaceholder.typicode.com'; // Base Url
-  // static const String users = '/users'; // Users
-
-  // Paddings
+  //!----------------------------------------------------------------------------------------
+  //! Paddings
+  //!----------------------------------------------------------------------------------------
   static const double generalPadding = 0.02; // Padding
   static const double mediumPadding = 0.04;
   static const double largePadding = 0.06;
   static const double bigPadding = 0.06;
+  //----------------------------------------------------------------------------------------
 
-  // Colors
-  static const int primaryColor = 0xFF0A0A0A; // Primary Color
-  static const int secondaryColor = 0xFF0A0A0A; // Secondary Color
-  static const int tertiaryColor = 0xFF0A0A0A; // Tertiary Color
-  static const int quaternaryColor = 0xFF0A0A0A; // Quaternary Color
-  // Text Colors
-  static const int primaryTextColor = 0xFF0A0A0A; // Primary Text Color
-  static const int secondaryTextColor = 0xFF0A0A0A; // Secondary Text Color
-  static const int tertiaryTextColor = 0xFF0A0A0A; // Tertiary Text Color
-
-  // Icon Colors
-  static const int primaryIconColor = 0xFF0A0A0A; // Primary Icon Color
-  static const int secondaryIconColor = 0xFF0A0A0A; // Secondary Icon Color
-  static const int tertiaryIconColor = 0xFF0A0A0A; // Tertiary Icon Color
-
-  // Image Route
-  static const String logoImageRoute = 'assets/images/logo.svg'; // Logo
+  //!----------------------------------------------------------------------------------------
+  //! Colors
+  //!----------------------------------------------------------------------------------------
+  //? General Colors
+  //----------------------------------------------------------------------------------------
+  static const Color primaryColor = Color(0xFF0A0A0A); // Primary Color
+  static const Color secondaryColor = Color(0xFF3DA2DB); // Secondary Color
+  static const Color tertiaryColor = Color(0xFF0A0A0A); // Tertiary Color
+  static const Color quaternaryColor = Color(0xFF0A0A0A); // Quaternary Color
+  //----------------------------------------------------------------------------------------
+  //? Text Colors
+  //----------------------------------------------------------------------------------------
+  static const Color primaryTextColor = Color(0xFF0A0A0A); // Primary Text Color
+  static const Color secondaryTextColor =
+      Color(0xFF3DA2DB); // Secondary Text Color
+  static const Color tertiaryTextColor =
+      Color(0xFF0A0A0A); // Tertiary Text Color
+  //---------------------------------------------------------------------------------------
+  //? Icon Colors
+  static const Color primaryIconColor = Color(0xFF0A0A0A); // Primary Icon Color
+  static const Color secondaryIconColor =
+      Color(0xFF0A0A0A); // Secondary Icon Color
+  static const Color tertiaryIconColor =
+      Color(0xFF0A0A0A); // Tertiary Icon Color
+  //----------------------------------------------------------------------------------------
 }
