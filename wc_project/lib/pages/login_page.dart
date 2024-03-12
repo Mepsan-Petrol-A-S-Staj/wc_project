@@ -38,8 +38,9 @@ class LoginPage extends ConsumerWidget {
               ),
               child: Column(
                 children: [
-                  for (int i = 0; i < 2; i++)
-                    // texfield outlineborder
+                  for (int i = 0;
+                      i < SharedList.loginPageTextfieldHintTextList.length;
+                      i++)
                     Padding(
                       padding: EdgeInsets.only(
                         top: height * SharedConstants.generalPadding,

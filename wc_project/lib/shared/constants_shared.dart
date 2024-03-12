@@ -84,12 +84,35 @@ class SharedConstants {
   //----------------------------------------------------------------------------------------
 
   //!----------------------------------------------------------------------------------------
-  //! Paddings
+  //! Size
   //!----------------------------------------------------------------------------------------
+  //? General Size
+  //----------------------------------------------------------------------------------------
+  static const double generalSize = 0.02; // Padding
+  static const double mediumSize = 0.04;
+  static const double largeSize = 0.06;
+  static const double bigSize = 0.08;
+  //----------------------------------------------------------------------------------------
+  //? Padding
+  //----------------------------------------------------------------------------------------
   static const double generalPadding = 0.02; // Padding
   static const double mediumPadding = 0.04;
   static const double largePadding = 0.06;
-  static const double bigPadding = 0.06;
+  static const double bigPadding = 0.08;
+  //----------------------------------------------------------------------------------------
+  //? Font Size
+  //----------------------------------------------------------------------------------------
+  static const double generalFontSize = 0.02; // Font Size
+  static const double mediumFontSize = 0.04;
+  static const double largeFontSize = 0.06;
+  static const double bigFontSize = 0.08;
+  //----------------------------------------------------------------------------------------
+  //? Icon Size
+  //----------------------------------------------------------------------------------------
+  static const double generalIconSize = 0.02; // Icon Size
+  static const double mediumIconSize = 0.04;
+  static const double largeIconSize = 0.06;
+  static const double bigIconSize = 0.08;
   //----------------------------------------------------------------------------------------
 
   //!----------------------------------------------------------------------------------------

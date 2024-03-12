@@ -28,7 +28,10 @@ class HomePage extends StatelessWidget {
             children: [
               for (int i = 0; i < SharedList.welcomeTextList.length; i++)
                 Padding(
-                  padding: EdgeInsets.only(top: i == 0 ? 0 : 30.0),
+                  padding: EdgeInsets.symmetric(
+                    vertical:
+                        i == 0 ? 0 : height * SharedConstants.mediumPadding,
+                  ),
                   child: Text(
                     SharedList.welcomeTextList[i],
                     style: const TextStyle(
@@ -42,7 +45,9 @@ class HomePage extends StatelessWidget {
               Container(
                 decoration: BoxDecoration(
                   color: Colors.black12,
-                  borderRadius: BorderRadius.circular(200),
+                  borderRadius: BorderRadius.circular(
+                    width * SharedConstants.mediumSize,
+                  ),
                 ),
                 child: RatingStars(
                   value: value.toDouble(),
@@ -54,10 +59,10 @@ class HomePage extends StatelessWidget {
                   starBuilder: (index, color) => Icon(
                     AntDesign.star_fill,
                     color: color,
-                    size: width * 0.1,
+                    size: width * SharedConstants.bigIconSize,
                   ),
                   starCount: SharedConstants.starCount,
-                  starSize: width * 0.12,
+                  starSize: width * SharedConstants.bigIconSize * 1.20,
                   valueLabelColor: const Color(0xff9b9b9b),
                   valueLabelTextStyle: const TextStyle(
                     color: Colors.white,
@@ -75,7 +80,9 @@ class HomePage extends StatelessWidget {
               ),
               // Answer Textfield Area
               Padding(
-                padding: const EdgeInsets.only(top: 40.0),
+                padding: EdgeInsets.only(
+                  top: height * SharedConstants.largePadding,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [

@@ -63,11 +63,12 @@ class PatternPage extends ConsumerWidget {
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           InkWell(
                             child: SvgPicture.asset(
                               SharedConstants.logoImageRoute,
-                              height: height * 0.05,
+                              height: height * SharedConstants.bigSize * 1.20,
                             ),
                             onTap: () {
                               index == 3
@@ -114,9 +115,15 @@ class PatternPage extends ConsumerWidget {
                       ),
                     ),
                     Expanded(
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.vertical,
-                        child: _buildPage(index),
+                      // flex: 4,
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                          top: height * SharedConstants.generalPadding,
+                        ),
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.vertical,
+                          child: _buildPage(index),
+                        ),
                       ),
                     ),
                   ],
