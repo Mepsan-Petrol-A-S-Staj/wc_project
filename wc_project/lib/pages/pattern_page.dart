@@ -29,7 +29,9 @@ class _PatternPageState extends ConsumerState<PatternPage> {
   late int pageIndex;
   void sharedPreferanceStart(WidgetRef ref) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    isDeviceSaved = prefs.getBool("isDeviceSaved") ?? false;
+    isDeviceSaved =
+        prefs.getBool(SharedConstants.preferanceDeviceSavedControllText) ??
+            false;
     debugPrint("isDeviceSaved durumu: $isDeviceSaved");
     isDeviceSaved == true
         ? null
@@ -41,6 +43,11 @@ class _PatternPageState extends ConsumerState<PatternPage> {
     isDeviceSaved = false;
     pageIndex = 0;
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override

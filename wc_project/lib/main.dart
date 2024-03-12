@@ -15,7 +15,12 @@ void main() {
   WidgetsFlutterBinding
       .ensureInitialized(); // Flutter uygulaması başlamadan önce Flutter motorunu başlatır
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
-
+  SystemChrome.setPreferredOrientations(
+    [
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ],
+  );
   runApp(
     const ProviderScope(
       child: MyApp(),
