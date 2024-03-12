@@ -1,11 +1,10 @@
 class User {
-  final String name;
-  final String surname;
-  final String username;
-  final String password;
+  final int userId;
+  final String name, surname, username, password;
   final bool isAdmin;
 
   User({
+    required this.userId,
     required this.name,
     required this.surname,
     required this.username,
@@ -15,6 +14,7 @@ class User {
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
+      userId: json['userId'],
       name: json['name'],
       surname: json['surname'],
       username: json['username'],
@@ -25,6 +25,7 @@ class User {
 
   Map<String, dynamic> toJson() {
     return {
+      'userId': userId,
       'name': name,
       'surname': surname,
       'username': username,
@@ -33,4 +34,3 @@ class User {
     };
   }
 }
-

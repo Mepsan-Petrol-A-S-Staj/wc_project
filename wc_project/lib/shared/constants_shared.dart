@@ -22,14 +22,18 @@ class SharedConstants {
   //? Api Routes
   //----------------------------------------------------------------------------------------
   static const String apiBaseUrl =
-      'http://192.168.137.101:8085/api'; // Base Url
+      'http://192.168.137.101:8090/api'; // Base Url
+  //----------------------------------------------------------------------------------------
+  //* -> Auth
+  //----------------------------------------------------------------------------------------
+  static const String authLogin = '/auth/login'; // Auth Login
   //----------------------------------------------------------------------------------------
   //* -> User
   //----------------------------------------------------------------------------------------
   static const String userSave = '/user/save'; // Users Save
   static const String userGetwithId = '/user/'; // Get user with Id
   static const String userEmployee = '/user/employee'; //? Users Employee
-  static const String userDeletewithId = '/user/delete'; // Users Delete with Id
+  static const String userDeletewithId = '/user/delete/'; // Users Delete with Id
   static const String userGetAll = '/user/all'; // Users Get All
   //----------------------------------------------------------------------------------------
   //* -> Task
@@ -48,7 +52,7 @@ class SharedConstants {
   static const String surveyDeletewithDeviceId =
       '/survey/device/'; // Surveys Delete with Id
   static const String surveyDeletewithId =
-      '/survey/delete'; // Surveys Delete with Id
+      '/survey/delete/'; // Surveys Delete with Id
   static const String surveyGetAll = '/survey/all'; // Surveys Get All
   //----------------------------------------------------------------------------------------
   //* -> Device
