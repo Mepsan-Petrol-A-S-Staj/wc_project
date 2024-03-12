@@ -16,21 +16,19 @@ class DeviceSavePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    late TextEditingController _controller;
-    late SharedPreferences _prefs;
+     TextEditingController controller=TextEditingController();
+    late SharedPreferences prefs;
     String? selectedValue = '';
 
-    void _loadPreferences() async {
-      _prefs = await SharedPreferences.getInstance();
+    void loadPreferences() async {
+      prefs = await SharedPreferences.getInstance();
       // SharedPreference'dan devicenum değerini al ve eğer varsa TextField'a set et
-      String? deviceNum = _prefs.getString('devicenum');
+      String? deviceNum = prefs.getString('devicenum');
       if (deviceNum != null) {
-        _controller.text = deviceNum;
+        controller.text = deviceNum;
       }
     }
-
-    _controller = TextEditingController();
-    _loadPreferences();
+    loadPreferences();
 
     return Padding(
       padding: const EdgeInsets.symmetric(
@@ -157,8 +155,8 @@ class DeviceSavePage extends ConsumerWidget {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
-                await _prefs.setString('devicenum', selectedValue!);
-                await _prefs.setBool('isDeviceSaved', true);
+                await prefs.setString('devicenum', selectedValue!);
+                await prefs.setBool('isDeviceSaved', true);
 
                 int index = 0;
                 ref.read(pageIndexProvider.notifier).update((state) => index);

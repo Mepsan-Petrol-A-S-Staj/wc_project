@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:slide_digital_clock/slide_digital_clock.dart';
 import 'package:wc_project/pages/devicesave_page.dart';
 import 'package:wc_project/pages/task_page.dart';
@@ -10,7 +11,7 @@ import '../services/all_provider.dart';
 import 'home_page.dart';
 import 'login_page.dart';
 
-class PatternPage extends ConsumerWidget {
+class PatternPage extends ConsumerStatefulWidget {
   final double height, width;
 
   const PatternPage({
@@ -20,14 +21,38 @@ class PatternPage extends ConsumerWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<PatternPage> createState() => _PatternPageState();
+}
+
+class _PatternPageState extends ConsumerState<PatternPage> {
+  late bool isDeviceSaved;
+  late int pageIndex;
+  void sharedPreferanceStart(WidgetRef ref) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    isDeviceSaved = prefs.getBool("isDeviceSaved") ?? false;
+    debugPrint("isDeviceSaved durumu: $isDeviceSaved");
+    isDeviceSaved == true
+        ? null
+        : ref.read(pageIndexProvider.notifier).state = 3;
+  }
+
+  @override
+  void initState() {
+    isDeviceSaved = false;
+    pageIndex = 0;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Consumer(
       builder: (context, ref, child) {
-        int index = ref.watch(pageIndexProvider);
+        sharedPreferanceStart(ref);
+        pageIndex = ref.watch(pageIndexProvider);
         return PopScope(
           canPop: false,
           onPopInvoked: (didPop) async {
-            if (index == 0) {
+            if (pageIndex == 0) {
               await showDialog(
                 context: context,
                 builder: (context) => AlertDialog(
@@ -53,13 +78,13 @@ class PatternPage extends ConsumerWidget {
             body: SafeArea(
               child: Padding(
                 padding: EdgeInsets.symmetric(
-                  horizontal: width * SharedConstants.generalPadding,
+                  horizontal: widget.width * SharedConstants.generalPadding,
                 ),
                 child: Column(
                   children: [
                     Padding(
                       padding: EdgeInsets.only(
-                        top: height * SharedConstants.generalPadding,
+                        top: widget.height * SharedConstants.generalPadding,
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -68,10 +93,12 @@ class PatternPage extends ConsumerWidget {
                           InkWell(
                             child: SvgPicture.asset(
                               SharedConstants.logoImageRoute,
-                              height: height * SharedConstants.bigSize * 1.20,
+                              height: widget.height *
+                                  SharedConstants.bigSize *
+                                  1.20,
                             ),
                             onTap: () {
-                              index == 3
+                              pageIndex == 3
                                   ? null
                                   : ref
                                       .read(pageIndexProvider.notifier)
@@ -90,7 +117,7 @@ class PatternPage extends ConsumerWidget {
                                       1.4,
                                 ),
                                 onPressed: () {
-                                  index == 3
+                                  pageIndex == 3
                                       ? null
                                       : ref
                                           .read(pageIndexProvider.notifier)
@@ -118,11 +145,11 @@ class PatternPage extends ConsumerWidget {
                       // flex: 4,
                       child: Padding(
                         padding: EdgeInsets.only(
-                          top: height * SharedConstants.generalPadding,
+                          top: widget.height * SharedConstants.generalPadding,
                         ),
                         child: SingleChildScrollView(
                           scrollDirection: Axis.vertical,
-                          child: _buildPage(index),
+                          child: _buildPage(pageIndex),
                         ),
                       ),
                     ),
@@ -139,14 +166,14 @@ class PatternPage extends ConsumerWidget {
   Widget _buildPage(int index) {
     switch (index) {
       case 0:
-        return HomePage(height: height, width: width);
+        return HomePage(height: widget.height, width: widget.width);
       // return LoginPage(height: height, width: width);
       case 1:
-        return LoginPage(height: height, width: width);
+        return LoginPage(height: widget.height, width: widget.width);
       case 2:
-        return TaskPage(height: height, width: width);
+        return TaskPage(height: widget.height, width: widget.width);
       case 3:
-        return DeviceSavePage(height: height, width: width);
+        return DeviceSavePage(height: widget.height, width: widget.width);
       default:
         return Container();
     }

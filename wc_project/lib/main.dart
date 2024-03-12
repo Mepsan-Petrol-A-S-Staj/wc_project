@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 // import 'package:flutter_rating_stars/flutter_rating_stars.dart';
-
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wc_project/pages/devicesave_page.dart';
 import 'package:wc_project/pages/home_page.dart';
 import 'package:wc_project/pages/login_page.dart';
@@ -13,35 +11,28 @@ import 'package:wc_project/pages/task_page.dart';
 import 'package:wc_project/shared/constants_shared.dart';
 import 'package:wc_project/shared/theme_shared.dart';
 
-import 'services/all_provider.dart';
-
-void main() async {
+void main() {
   WidgetsFlutterBinding
       .ensureInitialized(); // Flutter uygulaması başlamadan önce Flutter motorunu başlatır
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
 
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  bool isDeviceSaved = prefs.getBool("isDeviceSaved") ?? false;
-  // isDeviceSaved ? print("Cihaz kaydedilmiş") : print("Cihaz kaydedilmemiş");
   runApp(
-    ProviderScope(
-      child: MyApp(isDeviceSaved: isDeviceSaved),
+    const ProviderScope(
+      child: MyApp(),
     ),
   );
 }
 
-class MyApp extends ConsumerWidget {
-  final bool isDeviceSaved;
-
-  const MyApp({Key? key, required this.isDeviceSaved}) : super(key: key);
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final MediaQueryData mediaQuery = MediaQuery.of(context);
     final double height = mediaQuery.size.height, width = mediaQuery.size.width;
     SharedTheme.screenHeight = height;
     SharedTheme.screenWidth = width;
-    isDeviceSaved ? null : ref.read(pageIndexProvider.notifier).state = 3;
+
     return MaterialApp(
       title: SharedConstants.appName,
       debugShowCheckedModeBanner: false,
