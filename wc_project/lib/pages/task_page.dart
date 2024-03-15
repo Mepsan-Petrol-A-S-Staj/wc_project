@@ -76,7 +76,7 @@ class TaskPage extends StatelessWidget {
             ),
             child: ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/');
+                Navigator.pop(context);
               },
               child: Text(
                 'Anaekrana Dön!',

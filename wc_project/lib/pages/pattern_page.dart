@@ -1,13 +1,22 @@
+import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:network_info_plus/network_info_plus.dart';
 import 'package:slide_digital_clock/slide_digital_clock.dart';
+import 'package:wc_project/pages/admin_page.dart';
+import 'package:wc_project/shared/constants_shared.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
+
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wc_project/pages/devicesave_page.dart';
 import 'package:wc_project/pages/task_page.dart';
-import 'package:wc_project/shared/constants_shared.dart';
+import 'package:wc_project/shared/theme_shared.dart';
 
 import '../services/all_provider.dart';
+import '../services/controllers/patternpage_controller.dart';
 import 'home_page.dart';
 import 'login_page.dart';
 
@@ -25,59 +34,57 @@ class PatternPage extends ConsumerStatefulWidget {
 }
 
 class _PatternPageState extends ConsumerState<PatternPage> {
-  late bool isDeviceSaved;
+  // late StreamSubscription<bool> keyboardSubscription;
   late int pageIndex;
-  void sharedPreferanceStart(WidgetRef ref) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    isDeviceSaved =
-        prefs.getBool(SharedConstants.preferanceDeviceSavedControllText) ??
-            false;
-    debugPrint("isDeviceSaved durumu: $isDeviceSaved");
-    isDeviceSaved == true
-        ? null
-        : ref.read(pageIndexProvider.notifier).state = 3;
+  String ipAddress = "";
+
+  Future<void> updateIpAddress(WidgetRef ref) async {
+    const Duration updateInterval = Duration(minutes: 5);
+    while (true) {
+      await Future.delayed(updateInterval);
+      if (mounted) {
+        ipAddress = await PatternPageController().getIpAddress(ref);
+      }
+    }
   }
 
   @override
   void initState() {
-    isDeviceSaved = false;
     pageIndex = 0;
+    PatternPageController().sharedPreferanceStart(ref);
+    updateIpAddress(ref);
     super.initState();
   }
 
   @override
   void dispose() {
+    // keyboardSubscription.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    pageIndex = ref.watch(pageIndexProvider);
     return Consumer(
       builder: (context, ref, child) {
-        sharedPreferanceStart(ref);
-        pageIndex = ref.watch(pageIndexProvider);
         return PopScope(
           canPop: false,
           onPopInvoked: (didPop) async {
-            if (pageIndex == 0) {
+            if (pageIndex == 0 || pageIndex == 3) {
               await showDialog(
                 context: context,
                 builder: (context) => AlertDialog(
-                  title: Text('Uygulamadan çıkmak istiyor musunuz?'),
+                  title: Text('Uygulamadan çıkış yapamazsınız.'),
                   actions: [
                     TextButton(
-                      onPressed: () => Navigator.of(context).pop(false),
-                      child: Text('Hayır'),
-                    ),
-                    TextButton(
                       onPressed: () => Navigator.of(context).pop(true),
-                      child: Text('Evet'),
+                      child: Text('Kapat'),
                     ),
                   ],
                 ),
               );
             } else {
-              didPop ? null : null;
+              ref.read(pageIndexProvider.notifier).update((state) => 0);
             }
           },
           child: Scaffold(
@@ -85,13 +92,17 @@ class _PatternPageState extends ConsumerState<PatternPage> {
             body: SafeArea(
               child: Padding(
                 padding: EdgeInsets.symmetric(
-                  horizontal: widget.width * SharedConstants.generalPadding,
+                  horizontal: widget.height > widget.width
+                      ? widget.width * SharedConstants.generalPadding
+                      : widget.height * SharedConstants.generalPadding,
                 ),
                 child: Column(
                   children: [
                     Padding(
                       padding: EdgeInsets.only(
-                        top: widget.height * SharedConstants.generalPadding,
+                        top: widget.height > widget.width
+                            ? widget.width * SharedConstants.generalPadding
+                            : widget.height * SharedConstants.generalPadding,
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -100,9 +111,11 @@ class _PatternPageState extends ConsumerState<PatternPage> {
                           InkWell(
                             child: SvgPicture.asset(
                               SharedConstants.logoImageRoute,
-                              height: widget.height *
-                                  SharedConstants.bigSize *
-                                  1.20,
+                              height: widget.height > widget.width
+                                  ? widget.width * SharedConstants.bigSize * 1.1
+                                  : widget.height *
+                                      SharedConstants.bigSize *
+                                      1.1,
                             ),
                             onTap: () {
                               pageIndex == 3
@@ -133,14 +146,13 @@ class _PatternPageState extends ConsumerState<PatternPage> {
                               ),
                               DigitalClock(
                                 hourMinuteDigitTextStyle:
-                                    Theme.of(context).textTheme.headlineMedium,
+                                    Theme.of(context).textTheme.displayLarge,
                                 secondDigitTextStyle:
                                     Theme.of(context).textTheme.bodyMedium,
                                 colon: Text(
                                   ":",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headlineMedium,
+                                  style:
+                                      Theme.of(context).textTheme.displayLarge,
                                 ),
                               ),
                             ],
@@ -149,14 +161,19 @@ class _PatternPageState extends ConsumerState<PatternPage> {
                       ),
                     ),
                     Expanded(
-                      // flex: 4,
                       child: Padding(
                         padding: EdgeInsets.only(
                           top: widget.height * SharedConstants.generalPadding,
                         ),
                         child: SingleChildScrollView(
                           scrollDirection: Axis.vertical,
-                          child: _buildPage(pageIndex),
+                          // reverse: true,
+                          physics: const BouncingScrollPhysics(),
+                          child: PatternPageController().buildPage(
+                            pageIndex,
+                            widget.height,
+                            widget.width,
+                          ),
                         ),
                       ),
                     ),
@@ -168,21 +185,5 @@ class _PatternPageState extends ConsumerState<PatternPage> {
         );
       },
     );
-  }
-
-  Widget _buildPage(int index) {
-    switch (index) {
-      case 0:
-        return HomePage(height: widget.height, width: widget.width);
-      // return LoginPage(height: height, width: width);
-      case 1:
-        return LoginPage(height: widget.height, width: widget.width);
-      case 2:
-        return TaskPage(height: widget.height, width: widget.width);
-      case 3:
-        return DeviceSavePage(height: widget.height, width: widget.width);
-      default:
-        return Container();
-    }
   }
 }

@@ -15,8 +15,11 @@ class LoginPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    List<TextEditingController> controllers = [
+      TextEditingController(),
+      TextEditingController(),
+    ];
     return Column(
-      // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Text(
           SharedConstants.loginText,
@@ -24,7 +27,9 @@ class LoginPage extends ConsumerWidget {
         ),
         Padding(
           padding: EdgeInsets.symmetric(
-            horizontal: width * 0.25,
+            horizontal: height > width
+                ? width * SharedConstants.generalPadding
+                : height * SharedConstants.generalPadding,
           ),
           child: Card(
             shape: RoundedRectangleBorder(
@@ -46,6 +51,7 @@ class LoginPage extends ConsumerWidget {
                         top: height * SharedConstants.generalPadding,
                       ),
                       child: TextField(
+                        controller: controllers[i],
                         decoration: InputDecoration(
                           icon: SharedList.loginPageTextFieldIconList[i],
                           border: OutlineInputBorder(
@@ -65,7 +71,13 @@ class LoginPage extends ConsumerWidget {
                     ),
                     child: ElevatedButton(
                       onPressed: () {
-                        int index = 2;
+                        String userAdmin = controllers[0].text;
+                        int index = 0;
+                        if (userAdmin == "admin") {
+                          index = 4;
+                        } else {
+                          index = 2;
+                        }
                         ref
                             .read(pageIndexProvider.notifier)
                             .update((state) => index);

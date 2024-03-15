@@ -1,37 +1,86 @@
 import 'package:flutter/material.dart';
 
+import 'constants_shared.dart';
+
 class SharedTheme {
-  static double screenWidth = 0.0, screenHeight = 0.0;
-/*   static ThemeData lightTheme = ThemeData(
-    primarySwatch: Colors.blue,
-    primaryColor: Colors.white,
-    brightness: Brightness.light,
-    textTheme: TextTheme(
-      displaySmall: TextStyle(
-        fontSize: screenHeight * SharedConstants.generalPadding * 0.85,
-        fontWeight: FontWeight.w400,
-        color: Colors.black,
+  final bool isDarkModeTheme;
+  final double width, height;
+
+  SharedTheme({
+    required this.isDarkModeTheme,
+    required this.width,
+    required this.height,
+  });
+
+  static ThemeData getTextTheme(
+      bool isDarkModeTheme, double width, double height) {
+    return ThemeData(
+      textTheme: TextTheme(
+        displaySmall: TextStyle(
+          fontSize: height > width
+              ? height * SharedConstants.generalPadding * 1
+              : width * SharedConstants.generalPadding * 1,
+          fontWeight: FontWeight.w400,
+          color: isDarkModeTheme == true ? Colors.white : Colors.black,
+        ),
+        displayMedium: TextStyle(
+          fontSize: height > width
+              ? height * SharedConstants.generalPadding * 1.25
+              : width * SharedConstants.generalPadding * 1.25,
+          fontWeight: FontWeight.w400,
+          color: isDarkModeTheme == true ? Colors.white : Colors.black,
+        ),
+        displayLarge: TextStyle(
+          fontSize: height > width
+              ? height * SharedConstants.generalPadding * 1.5
+              : width * SharedConstants.generalPadding * 1.5,
+          fontWeight: FontWeight.w400,
+          color: isDarkModeTheme == true ? Colors.white : Colors.black,
+        ),
+        bodySmall: TextStyle(
+          fontSize: height > width
+              ? height * SharedConstants.generalPadding * 0.6
+              : width * SharedConstants.generalPadding * 0.6,
+          fontWeight: FontWeight.w400,
+          color: isDarkModeTheme == true ? Colors.white : Colors.black,
+        ),
+        bodyMedium: TextStyle(
+          fontSize: height > width
+              ? height * SharedConstants.generalPadding * 0.8
+              : width * SharedConstants.generalPadding * 0.8,
+          fontWeight: FontWeight.w400,
+          color: isDarkModeTheme == true ? Colors.white : Colors.black,
+        ),
+        bodyLarge: TextStyle(
+          fontSize: height > width
+              ? height * SharedConstants.generalPadding
+              : width * SharedConstants.generalPadding,
+          fontWeight: FontWeight.w400,
+          color: isDarkModeTheme == true ? Colors.white : Colors.black,
+        ),
       ),
-      displayMedium: TextStyle(
-        fontSize: screenHeight * SharedConstants.generalPadding,
-        fontWeight: FontWeight.w400,
-        color: Colors.black,
+      iconTheme: IconThemeData(
+        size: height * SharedConstants.generalPadding * 2,
+        color: isDarkModeTheme == true ? Colors.white : Colors.black,
       ),
-      displayLarge: TextStyle(
-        fontSize: screenHeight * SharedConstants.generalPadding * 1.15,
-        fontWeight: FontWeight.w400,
-        color: Colors.black,
-      ),
-    ),
-    iconTheme: IconThemeData(
-      color: Colors.black,
-      size: screenHeight * SharedConstants.generalPadding * 2,
-    ),
-  ); */
-  static ThemeData darkTheme = ThemeData(
+    );
+  }
+
+  static ThemeData darkTheme(
+      bool isDarkModeTheme, double width, double height) {
+    return ThemeData(
       colorSchemeSeed: const Color.fromARGB(255, 61, 219, 153),
-      brightness: Brightness.dark);
-  static ThemeData lightTheme = ThemeData(
+      brightness: Brightness.dark,
+      textTheme: getTextTheme(isDarkModeTheme, width, height).textTheme,
+    );
+  }
+
+  static ThemeData lightTheme(
+      bool isDarkModeTheme, double width, double height) {
+    return ThemeData(
       colorSchemeSeed: const Color.fromARGB(255, 61, 219, 153),
-      brightness: Brightness.dark);
+      brightness: Brightness.light,
+      textTheme: getTextTheme(isDarkModeTheme, width, height).textTheme,
+    );
+  }
 }
