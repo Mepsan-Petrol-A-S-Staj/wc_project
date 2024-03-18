@@ -86,6 +86,10 @@ class SharedConstants {
   static const String forgotPasswordText =
       'Şifremi Unuttum'; // Forgot Password Text
   //----------------------------------------------------------------------------------------
+  //* -> Task Page
+  //----------------------------------------------------------------------------------------
+  static const String taskPageTitle = 'Görevler'; // Task Page Title
+  //----------------------------------------------------------------------------------------
   //? Other
   //----------------------------------------------------------------------------------------
   static const preferanceDeviceSavedControllText = "isDeviceSaved";

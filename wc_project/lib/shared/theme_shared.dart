@@ -18,49 +18,49 @@ class SharedTheme {
       textTheme: TextTheme(
         displaySmall: TextStyle(
           fontSize: height > width
-              ? height * SharedConstants.generalPadding * 1
-              : width * SharedConstants.generalPadding * 1,
+              ? height * SharedConstants.generalSize * 1.15
+              : width * SharedConstants.generalSize * 1.15,
           fontWeight: FontWeight.w400,
           color: Colors.grey,
         ),
         displayMedium: TextStyle(
           fontSize: height > width
-              ? height * SharedConstants.generalPadding * 1.25
-              : width * SharedConstants.generalPadding * 1.25,
+              ? height * SharedConstants.generalSize * 1.4
+              : width * SharedConstants.generalSize * 1.4,
           fontWeight: FontWeight.w400,
           color: isDarkModeTheme == true ? Colors.white : Colors.black,
         ),
         displayLarge: TextStyle(
           fontSize: height > width
-              ? height * SharedConstants.generalPadding * 1.5
-              : width * SharedConstants.generalPadding * 1.5,
+              ? height * SharedConstants.generalSize * 1.65
+              : width * SharedConstants.generalSize * 1.65,
           fontWeight: FontWeight.w400,
           color: isDarkModeTheme == true ? Colors.white : Colors.black,
         ),
         bodySmall: TextStyle(
           fontSize: height > width
-              ? height * SharedConstants.generalPadding * 0.6
-              : width * SharedConstants.generalPadding * 0.6,
+              ? height * SharedConstants.generalSize * 0.85
+              : width * SharedConstants.generalSize * 0.85,
           fontWeight: FontWeight.w400,
           color: Colors.grey,
         ),
         bodyMedium: TextStyle(
           fontSize: height > width
-              ? height * SharedConstants.generalPadding * 0.8
-              : width * SharedConstants.generalPadding * 0.8,
+              ? height * SharedConstants.generalSize
+              : width * SharedConstants.generalSize,
           fontWeight: FontWeight.w400,
           color: isDarkModeTheme == true ? Colors.white : Colors.black,
         ),
         bodyLarge: TextStyle(
           fontSize: height > width
-              ? height * SharedConstants.generalPadding
-              : width * SharedConstants.generalPadding,
+              ? height * SharedConstants.generalSize * 1.15
+              : width * SharedConstants.generalSize * 1.15,
           fontWeight: FontWeight.w400,
           color: isDarkModeTheme == true ? Colors.white : Colors.black,
         ),
       ),
       iconTheme: IconThemeData(
-        size: height * SharedConstants.generalPadding * 2,
+        size: height * SharedConstants.generalSize * 2,
         color: isDarkModeTheme == true ? Colors.white : Colors.black,
       ),
     );

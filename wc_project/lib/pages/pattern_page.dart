@@ -129,7 +129,7 @@ class _PatternPageState extends ConsumerState<PatternPage> {
                             children: [
                               IconButton(
                                 icon: Icon(
-                                  Icons.person_outline,
+                                  Icons.logout_outlined,
                                   size: Theme.of(context)
                                           .textTheme
                                           .headlineMedium!

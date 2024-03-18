@@ -69,7 +69,8 @@ class AdminPage extends StatelessWidget {
                     i++)
                   Text(
                     SharedList.adminPageTabbarTextList[i],
-                    style: Theme.of(context).textTheme.displaySmall,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                    overflow: TextOverflow.ellipsis,
                   ),
               ],
               views: [

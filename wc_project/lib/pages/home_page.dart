@@ -79,7 +79,7 @@ class HomePage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Expanded(
-                    flex: 5,
+                    flex: 2,
                     child: TextField(
                       textAlign: TextAlign.start,
                       style: Theme.of(context).textTheme.displayMedium,
@@ -97,7 +97,7 @@ class HomePage extends StatelessWidget {
                   ),
                   SizedBox(width: width * SharedConstants.generalPadding),
                   Expanded(
-                    flex: 2,
+                    flex: 1,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor:
@@ -170,7 +170,14 @@ class HomePage extends StatelessWidget {
                         ),
                         child: Text(
                           SharedConstants.submitText,
-                          style: Theme.of(context).textTheme.displayMedium,
+                          style: Theme.of(context)
+                              .textTheme
+                              .displaySmall!
+                              .copyWith(
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .displayLarge!
+                                      .color),
                         ),
                       ),
                     ),
