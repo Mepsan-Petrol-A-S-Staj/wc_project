@@ -1,24 +1,12 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:network_info_plus/network_info_plus.dart';
 import 'package:slide_digital_clock/slide_digital_clock.dart';
-import 'package:wc_project/pages/admin_page.dart';
 import 'package:wc_project/shared/constant_shared.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
-
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:wc_project/pages/devicesave_page.dart';
-import 'package:wc_project/pages/task_page.dart';
-import 'package:wc_project/shared/theme_shared.dart';
 
 import '../services/provider/all_provider.dart';
 import '../services/controllers/patternpage_controller.dart';
-import 'home_page.dart';
-import 'login_page.dart';
 
 class PatternPage extends ConsumerStatefulWidget {
   final double height, width;

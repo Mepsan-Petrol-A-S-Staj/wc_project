@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+// import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:network_info_plus/network_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -58,17 +58,17 @@ class PatternPageController {
     return ipAddress;
   }
 
-  bool isKeyboardOpen() {
-    bool isKeyboardOpen = false;
-    var keyboardVisibilityController = KeyboardVisibilityController();
-    isKeyboardOpen = keyboardVisibilityController.isVisible;
-    keyboardVisibilityController.onChange.listen((bool visible) {
-      isKeyboardOpen = visible;
-    });
-    debugPrint('Klavye durumu: $isKeyboardOpen');
-    print('Klavye durumu: $isKeyboardOpen');
-    return isKeyboardOpen;
-  }
+  // bool isKeyboardOpen() {
+  //   bool isKeyboardOpen = false;
+  //   var keyboardVisibilityController = KeyboardVisibilityController();
+  //   isKeyboardOpen = keyboardVisibilityController.isVisible;
+  //   keyboardVisibilityController.onChange.listen((bool visible) {
+  //     isKeyboardOpen = visible;
+  //   });
+  //   debugPrint('Klavye durumu: $isKeyboardOpen');
+  //   print('Klavye durumu: $isKeyboardOpen');
+  //   return isKeyboardOpen;
+  // }
 
   Widget buildPage(int index, double height, double width) {
     // bool isKeyboardOpened = isKeyboardOpen();

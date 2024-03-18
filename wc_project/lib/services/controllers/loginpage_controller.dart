@@ -1,6 +1,4 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:wc_project/models/user_model.dart';
-import 'package:wc_project/services/apis/user_service.dart';
 
 import '../provider/all_provider.dart';
 

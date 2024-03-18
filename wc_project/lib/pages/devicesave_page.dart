@@ -63,7 +63,9 @@ class DeviceSavePage extends ConsumerWidget {
                 child: DropdownButton(
                   dropdownColor:
                       Theme.of(context).colorScheme.tertiaryContainer,
-                  itemHeight: height * SharedConstants.bigSize,
+                  itemHeight: width > height
+                      ? width * SharedConstants.bigSize
+                      : height * SharedConstants.bigSize,
                   isDense: true,
                   hint: selectedValue == 'emptyfloor'
                       ? const Text('Kat Seçin')
@@ -72,13 +74,13 @@ class DeviceSavePage extends ConsumerWidget {
                   icon: selectedValue == 'emptyfloor'
                       ? SvgPicture.asset(
                           "assets/icons/emptyfloor.svg",
-                          height: 80,
+                          height: height * SharedConstants.bigSize * 2.5,
                         )
                       : SvgPicture.asset(
                           "assets/icons/${selectedValue}.svg",
-                          height: 80,
+                          height: height * SharedConstants.bigSize * 2.5,
                         ),
-                  iconSize: height * SharedConstants.bigSize,
+                  iconSize: height * SharedConstants.bigSize * 2.5,
                   borderRadius: BorderRadius.circular(
                     height * SharedConstants.bigPadding,
                   ),
@@ -122,7 +124,7 @@ class DeviceSavePage extends ConsumerWidget {
             ),
             child: ElevatedButton(
               onPressed: () async {
-                await prefs.setString('devicenum', selectedValue!);
+                await prefs.setString('devicenum', selectedValue);
                 await prefs.setBool('isDeviceSaved', true);
 
                 int index = 0;
