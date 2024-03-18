@@ -1,3 +1,6 @@
+// library pattern_page;
+// export 'admin_page.dart';
+
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -7,6 +10,7 @@ import 'package:wc_project/shared/constant_shared.dart';
 
 import '../services/provider/all_provider.dart';
 import '../services/controllers/patternpage_controller.dart';
+import '../widgets/appbar_widget.dart';
 
 class PatternPage extends ConsumerStatefulWidget {
   final double height, width;
@@ -92,60 +96,11 @@ class _PatternPageState extends ConsumerState<PatternPage> {
                             ? widget.width * SharedConstants.generalPadding
                             : widget.height * SharedConstants.generalPadding,
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          InkWell(
-                            child: SvgPicture.asset(
-                              SharedConstants.logoImageRoute,
-                              height: widget.height > widget.width
-                                  ? widget.width * SharedConstants.bigSize * 1.1
-                                  : widget.height *
-                                      SharedConstants.bigSize *
-                                      1.1,
-                            ),
-                            onTap: () {
-                              pageIndex == 3
-                                  ? null
-                                  : ref
-                                      .read(pageIndexProvider.notifier)
-                                      .update((state) => 0);
-                            },
-                          ),
-                          Row(
-                            children: [
-                              IconButton(
-                                icon: Icon(
-                                  Icons.logout_outlined,
-                                  size: Theme.of(context)
-                                          .textTheme
-                                          .headlineMedium!
-                                          .fontSize! *
-                                      1.4,
-                                ),
-                                onPressed: () {
-                                  pageIndex == 3
-                                      ? null
-                                      : ref
-                                          .read(pageIndexProvider.notifier)
-                                          .update((state) => 1);
-                                },
-                              ),
-                              DigitalClock(
-                                hourMinuteDigitTextStyle:
-                                    Theme.of(context).textTheme.displayLarge,
-                                secondDigitTextStyle:
-                                    Theme.of(context).textTheme.bodyMedium,
-                                colon: Text(
-                                  ":",
-                                  style:
-                                      Theme.of(context).textTheme.displayLarge,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
+                      child: AppBarWidget(
+                        height: widget.height,
+                        width: widget.width,
+                        pageIndex: pageIndex,
+                        ref: ref,
                       ),
                     ),
                     Expanded(

@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:wc_project/shared/constant_shared.dart';
 import 'package:wc_project/shared/list_shared.dart';
 
+import '../services/controllers/loginpage_controller.dart';
 import '../services/provider/all_provider.dart';
 
 class LoginPage extends ConsumerWidget {
@@ -19,6 +20,7 @@ class LoginPage extends ConsumerWidget {
       TextEditingController(),
       TextEditingController(),
     ];
+    LoginPageController controller = LoginPageController(ref: ref);
     return Column(
       children: [
         Text(
@@ -81,6 +83,7 @@ class LoginPage extends ConsumerWidget {
                         ref
                             .read(pageIndexProvider.notifier)
                             .update((state) => index);
+                        controller.login();
                       },
                       child: Text(
                         SharedConstants.loginText,

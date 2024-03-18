@@ -132,8 +132,8 @@ class SharedConstants {
   //!----------------------------------------------------------------------------------------
   //? General Colors
   //----------------------------------------------------------------------------------------
-  static const Color primaryColor = Color(0xFF0A0A0A); // Primary Color
-  static const Color secondaryColor = Color(0xFF3DA2DB); // Secondary Color
+  static const Color primaryColor = Color(0xFF3DA2DB); // Primary Color
+  static const Color secondaryColor = Color(0xFF0A0A0A); // Secondary Color
   static const Color tertiaryColor = Color(0xFF0A0A0A); // Tertiary Color
   static const Color quaternaryColor = Color(0xFF0A0A0A); // Quaternary Color
   //----------------------------------------------------------------------------------------

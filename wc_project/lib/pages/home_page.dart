@@ -67,7 +67,7 @@ class HomePage extends StatelessWidget {
                 maxValueVisibility: true,
                 valueLabelVisibility: false,
                 animationDuration: const Duration(milliseconds: 800),
-                starColor: SharedConstants.secondaryColor,
+                starColor: SharedConstants.primaryColor,
               ),
             ),
             // Answer Textfield Area

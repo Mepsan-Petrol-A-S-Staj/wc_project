@@ -1,9 +1,6 @@
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:wc_project/shared/constant_shared.dart';
-
-import '../services/provider/all_provider.dart';
 import '../shared/list_shared.dart';
 
 class AdminPage extends StatelessWidget {

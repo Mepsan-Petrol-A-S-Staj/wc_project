@@ -9,3 +9,4 @@ final afkTimeCounter = StateProvider<int>((ref) => 0);
 final tokenProvider = StateProvider<String>((ref) => '');
 final userIdProvider = StateProvider<int>((ref) => 0);
 final providerSelectedFloor = StateProvider<String>((ref) => 'emptyfloor');
+final isLoginedProvider = StateProvider<bool>((ref) => false);
