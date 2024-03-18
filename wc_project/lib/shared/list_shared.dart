@@ -26,4 +26,16 @@ class SharedList {
     "Günlük Görevler",
     "Haftalık Görevler",
   ];
+
+  // Admin Page
+  static List<String> adminPageTabbarTextList = [
+    "Bugün",
+    "Görevler",
+    "Değerlendirmeler",
+  ];
+
+  static List<IconData> adminPageIconList = [
+    Icons.edit,
+    Icons.delete,
+  ];
 }

@@ -3,7 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../services/all_provider.dart';
+import '../services/provider/all_provider.dart';
 
 class DeviceSavePage extends ConsumerWidget {
   final double height, width;

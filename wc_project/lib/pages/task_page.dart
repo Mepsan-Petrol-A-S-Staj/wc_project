@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wc_project/shared/constants_shared.dart';
+import 'package:wc_project/shared/constant_shared.dart';
 
 import '../shared/list_shared.dart';
 

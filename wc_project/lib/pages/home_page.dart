@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:icons_plus/icons_plus.dart';
-import 'package:wc_project/shared/constants_shared.dart';
+import 'package:wc_project/shared/constant_shared.dart';
 import 'package:wc_project/shared/list_shared.dart';
 
-import '../services/all_provider.dart';
+import '../services/provider/all_provider.dart';
 
 class HomePage extends StatelessWidget {
   final double height;

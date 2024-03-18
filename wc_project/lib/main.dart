@@ -8,7 +8,7 @@ import 'package:wc_project/pages/login_page.dart';
 import 'package:wc_project/pages/pattern_page.dart';
 import 'package:wc_project/pages/task_page.dart';
 
-import 'package:wc_project/shared/constants_shared.dart';
+import 'package:wc_project/shared/constant_shared.dart';
 import 'package:wc_project/shared/theme_shared.dart';
 
 void main() {

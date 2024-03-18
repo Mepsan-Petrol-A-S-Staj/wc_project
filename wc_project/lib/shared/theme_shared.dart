@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'constants_shared.dart';
+import 'constant_shared.dart';
 
 class SharedTheme {
   final bool isDarkModeTheme;
@@ -21,7 +21,7 @@ class SharedTheme {
               ? height * SharedConstants.generalPadding * 1
               : width * SharedConstants.generalPadding * 1,
           fontWeight: FontWeight.w400,
-          color: isDarkModeTheme == true ? Colors.white : Colors.black,
+          color: Colors.grey,
         ),
         displayMedium: TextStyle(
           fontSize: height > width
@@ -42,7 +42,7 @@ class SharedTheme {
               ? height * SharedConstants.generalPadding * 0.6
               : width * SharedConstants.generalPadding * 0.6,
           fontWeight: FontWeight.w400,
-          color: isDarkModeTheme == true ? Colors.white : Colors.black,
+          color: Colors.grey,
         ),
         bodyMedium: TextStyle(
           fontSize: height > width

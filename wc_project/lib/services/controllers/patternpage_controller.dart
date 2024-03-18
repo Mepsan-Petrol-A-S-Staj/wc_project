@@ -12,8 +12,8 @@ import '../../pages/admin_page.dart';
 import '../../pages/home_page.dart';
 import '../../pages/login_page.dart';
 import '../../pages/task_page.dart';
-import '../../shared/constants_shared.dart';
-import '../all_provider.dart';
+import '../../shared/constant_shared.dart';
+import '../provider/all_provider.dart';
 
 class PatternPageController {
   Future<void> sharedPreferanceStart(WidgetRef ref) async {

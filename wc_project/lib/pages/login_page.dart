@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:wc_project/shared/constants_shared.dart';
+import 'package:wc_project/shared/constant_shared.dart';
 import 'package:wc_project/shared/list_shared.dart';
 
-import '../services/all_provider.dart';
+import '../services/provider/all_provider.dart';
 
 class LoginPage extends ConsumerWidget {
   final double height, width;

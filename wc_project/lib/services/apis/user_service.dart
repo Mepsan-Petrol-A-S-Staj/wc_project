@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:wc_project/shared/constants_shared.dart';
+import 'package:wc_project/shared/constant_shared.dart';
 
 import '../../models/user_model.dart';
 
@@ -24,7 +24,7 @@ class AuthService {
       final token = data['token'];
       return {'id': id, 'token': token};
     } else {
-      throw Exception('Failed to login');
+      return {'id': 0, 'token': ''};
     }
   }
 }
