@@ -16,7 +16,14 @@ import '../../shared/constant_shared.dart';
 import '../provider/all_provider.dart';
 
 class PatternPageController {
-  Future<void> sharedPreferanceStart(WidgetRef ref) async {
+  final double height, width;
+  final WidgetRef ref;
+  PatternPageController({
+    required this.height,
+    required this.width,
+    required this.ref,
+  });
+  Future<void> sharedPreferanceStart() async {
     bool isDeviceSaved = false;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     isDeviceSaved =
@@ -41,7 +48,7 @@ class PatternPageController {
     return connectionStatus;
   }
 
-  Future<String> getIpAddress(WidgetRef ref) async {
+  Future<String> getIpAddress() async {
     String ipAddress = '';
 
     bool isCheckConnectiviy = await checkConnectivity();
@@ -58,7 +65,39 @@ class PatternPageController {
     return ipAddress;
   }
 
-  // bool isKeyboardOpen() {
+  Widget buildPage(int index, double height, double width, int deviceType) {
+    // bool isKeyboardOpened = isKeyboardOpen();
+    switch (index) {
+      case 0:
+        return deviceType == 0
+            ? HomePage(height: height, width: width)
+            : SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: HomePage(height: height, width: width),
+              );
+
+      case 1:
+        return deviceType == 0
+            ? LoginPage(height: height, width: width)
+            : SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: LoginPage(height: height, width: width),
+              );
+      case 2:
+        return SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: TaskPage(height: height, width: width));
+      case 3:
+        return DeviceSavePage(height: height, width: width);
+      case 4:
+        return AdminPage(height: height, width: width);
+      default:
+        return Container();
+    }
+  }
+}
+
+ // bool isKeyboardOpen() {
   //   bool isKeyboardOpen = false;
   //   var keyboardVisibilityController = KeyboardVisibilityController();
   //   isKeyboardOpen = keyboardVisibilityController.isVisible;
@@ -69,23 +108,3 @@ class PatternPageController {
   //   print('Klavye durumu: $isKeyboardOpen');
   //   return isKeyboardOpen;
   // }
-
-  Widget buildPage(int index, double height, double width) {
-    // bool isKeyboardOpened = isKeyboardOpen();
-    switch (index) {
-      case 0:
-        return HomePage(height: height, width: width);
-      // return LoginPage(height: height, width: width);
-      case 1:
-        return LoginPage(height: height, width: width);
-      case 2:
-        return TaskPage(height: height, width: width);
-      case 3:
-        return DeviceSavePage(height: height, width: width);
-      case 4:
-        return AdminPage(height: height, width: width);
-      default:
-        return Container();
-    }
-  }
-}

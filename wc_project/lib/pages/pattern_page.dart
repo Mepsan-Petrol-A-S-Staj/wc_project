@@ -3,11 +3,12 @@
 
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:slide_digital_clock/slide_digital_clock.dart';
-import 'package:wc_project/shared/constant_shared.dart';
 
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:wc_project/shared/constant_shared.dart';
+import 'package:wc_project/widgets/exitapp_widget.dart';
+
+import '../services/controllers/size_controller.dart';
 import '../services/provider/all_provider.dart';
 import '../services/controllers/patternpage_controller.dart';
 import '../widgets/appbar_widget.dart';
@@ -18,8 +19,8 @@ class PatternPage extends ConsumerStatefulWidget {
   const PatternPage({
     required this.height,
     required this.width,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   ConsumerState<PatternPage> createState() => _PatternPageState();
@@ -30,51 +31,52 @@ class _PatternPageState extends ConsumerState<PatternPage> {
   late int pageIndex;
   String ipAddress = "";
 
-  Future<void> updateIpAddress(WidgetRef ref) async {
-    const Duration updateInterval = Duration(minutes: 5);
-    while (true) {
-      await Future.delayed(updateInterval);
-      if (mounted) {
-        ipAddress = await PatternPageController().getIpAddress(ref);
-      }
-    }
-  }
-
   @override
   void initState() {
     pageIndex = 0;
-    PatternPageController().sharedPreferanceStart(ref);
-    updateIpAddress(ref);
     super.initState();
   }
 
   @override
   void dispose() {
-    // keyboardSubscription.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    MediaQueryData mediaQueryData = MediaQuery.of(context);
+    Future<void> updateIpAddress(WidgetRef ref) async {
+      const Duration updateInterval = Duration(minutes: 5);
+      while (true) {
+        await Future.delayed(updateInterval);
+        if (mounted) {
+          ipAddress = await PatternPageController(
+                  height: widget.height, width: widget.width, ref: ref)
+              .getIpAddress();
+        }
+      }
+    }
+
+    PatternPageController patternPageController = PatternPageController(
+      height: widget.height,
+      width: widget.width,
+      ref: ref,
+    );
+    patternPageController.sharedPreferanceStart();
+    updateIpAddress(ref);
+    SizeController sizeController = SizeController(
+      height: widget.height,
+      width: widget.width,
+    );
     pageIndex = ref.watch(pageIndexProvider);
     return Consumer(
       builder: (context, ref, child) {
+        int deviceType = sizeController.getScreenType(mediaQueryData);
         return PopScope(
           canPop: false,
           onPopInvoked: (didPop) async {
             if (pageIndex == 0 || pageIndex == 3) {
-              await showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                  title: Text('Uygulamadan çıkış yapamazsınız.'),
-                  actions: [
-                    TextButton(
-                      onPressed: () => Navigator.of(context).pop(true),
-                      child: Text('Kapat'),
-                    ),
-                  ],
-                ),
-              );
+              await ExitAppWidget.exitAppShowDialog(context);
             } else {
               ref.read(pageIndexProvider.notifier).update((state) => 0);
             }
@@ -84,7 +86,7 @@ class _PatternPageState extends ConsumerState<PatternPage> {
             body: SafeArea(
               child: Padding(
                 padding: EdgeInsets.symmetric(
-                  horizontal: widget.height > widget.width
+                  horizontal: deviceType > 0
                       ? widget.width * SharedConstants.generalPadding
                       : widget.height * SharedConstants.generalPadding,
                 ),
@@ -92,7 +94,7 @@ class _PatternPageState extends ConsumerState<PatternPage> {
                   children: [
                     Padding(
                       padding: EdgeInsets.only(
-                        top: widget.height > widget.width
+                        top: deviceType > 0
                             ? widget.width * SharedConstants.generalPadding
                             : widget.height * SharedConstants.generalPadding,
                       ),
@@ -108,15 +110,11 @@ class _PatternPageState extends ConsumerState<PatternPage> {
                         padding: EdgeInsets.only(
                           top: widget.height * SharedConstants.generalPadding,
                         ),
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.vertical,
-                          // reverse: true,
-                          physics: const BouncingScrollPhysics(),
-                          child: PatternPageController().buildPage(
-                            pageIndex,
-                            widget.height,
-                            widget.width,
-                          ),
+                        child: patternPageController.buildPage(
+                          pageIndex,
+                          widget.height,
+                          widget.width,
+                          deviceType,
                         ),
                       ),
                     ),

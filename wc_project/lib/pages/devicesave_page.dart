@@ -14,8 +14,8 @@ class DeviceSavePage extends ConsumerWidget {
   const DeviceSavePage({
     required this.height,
     required this.width,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -77,7 +77,7 @@ class DeviceSavePage extends ConsumerWidget {
                           height: height * SharedConstants.bigSize * 2.5,
                         )
                       : SvgPicture.asset(
-                          "assets/icons/${selectedValue}.svg",
+                          "assets/icons/$selectedValue.svg",
                           height: height * SharedConstants.bigSize * 2.5,
                         ),
                   iconSize: height * SharedConstants.bigSize * 2.5,

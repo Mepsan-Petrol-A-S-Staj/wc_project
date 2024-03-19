@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../models/adminpagecard_model.dart';
 import '../models/devspagedropdownitem_model.dart';
 
 class SharedList {
@@ -68,10 +69,27 @@ class SharedList {
   //----------------------------------------------------------------------------------------
   //! Admin Page
   //----------------------------------------------------------------------------------------
-  static List<String> adminPageTabbarTextList = [
-    "Bugün",
-    "Görevler",
-    "Değerlendirmeler",
+  static List<AdminPageCardModel> adminPageCardList = [
+    AdminPageCardModel(
+      key: "Gorevler",
+      value: "Görevler",
+      icon: Icons.assignment,
+    ),
+    AdminPageCardModel(
+      key: "Kullanicilar",
+      value: "Kullanıcılar",
+      icon: Icons.person,
+    ),
+    AdminPageCardModel(
+      key: "Degerlendirmeler",
+      value: "Değerlendirmeler",
+      icon: Icons.feedback,
+    ),
+    AdminPageCardModel(
+      key: "Cihazlar",
+      value: "Cihazlar",
+      icon: Icons.devices,
+    ),
   ];
   static List<IconData> adminPageIconList = [
     Icons.edit,

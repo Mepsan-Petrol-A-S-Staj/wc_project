@@ -14,8 +14,8 @@ class HomePage extends StatelessWidget {
   const HomePage({
     required this.height,
     required this.width,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

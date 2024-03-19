@@ -1,7 +1,9 @@
-import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
 import 'package:flutter/material.dart';
+import 'package:wc_project/services/controllers/size_controller.dart';
 import 'package:wc_project/shared/constant_shared.dart';
-import '../shared/list_shared.dart';
+import 'package:wc_project/shared/list_shared.dart';
+
+import '../services/controllers/adminpage_controller.dart';
 
 class AdminPage extends StatelessWidget {
   final double height, width;
@@ -10,11 +12,16 @@ class AdminPage extends StatelessWidget {
   AdminPage({
     required this.height,
     required this.width,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
+    AdminPageController adminPageController =
+        AdminPageController(height: height, width: width);
+    SizeController sizeController =
+        SizeController(height: height, width: width);
+    int screenType = sizeController.getScreenType(MediaQuery.of(context));
     return Column(
       children: [
         Row(
@@ -28,19 +35,15 @@ class AdminPage extends StatelessWidget {
               padding:
                   EdgeInsets.only(left: width * SharedConstants.largePadding),
               child: DropdownButton<String>(
-                // items: deviceList.map((String value) {
-                //       return DropdownMenuItem<String>(
-                //         value: value,
-                //         child: Text(value),
-                //       );
-                //     }).toList(),
+                // items: deviceList.map((String value) {return DropdownMenuItem<String>(value: value,child: Text(value),);}).toList(),
+
                 items: [
                   DropdownMenuItem(
+                    value: 'device1',
                     child: Text(
                       'device1',
                       style: Theme.of(context).textTheme.displaySmall,
                     ),
-                    value: 'device1',
                   ),
                 ],
                 onChanged: (String? value) {
@@ -51,128 +54,40 @@ class AdminPage extends StatelessWidget {
             ),
           ],
         ),
-        // Tabbar eklenecek
         Padding(
-          padding: EdgeInsets.only(
-            top: height * SharedConstants.generalPadding,
-          ),
+          padding: EdgeInsets.symmetric(
+              vertical: height * SharedConstants.generalPadding),
           child: SizedBox(
-            height: height * 0.8,
-            width: double.infinity,
-            child: ContainedTabBarView(
-              tabs: [
-                for (int i = 0;
-                    i < SharedList.adminPageTabbarTextList.length;
-                    i++)
-                  Text(
-                    SharedList.adminPageTabbarTextList[i],
-                    style: Theme.of(context).textTheme.bodyMedium,
-                    overflow: TextOverflow.ellipsis,
+            height: height * SharedConstants.generalSize / 16,
+            child: Drawer(
+              backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
+              width: double.infinity,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(
+                    height * SharedConstants.generalSize / 16,
                   ),
-              ],
-              views: [
-                Column(
-                  children: [
-                    for (int i = 0; i < 2; i++)
-                      ListTile(
-                        leading: Checkbox(
-                          value: false,
-                          onChanged: (bool? value) {},
-                        ),
-                        title: Text('Görev $i'),
-                        subtitle: Text('Görev Açıklaması $i'),
-                        trailing: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            for (int i = 0;
-                                i < SharedList.adminPageIconList.length;
-                                i++)
-                              IconButton(
-                                icon: Icon(
-                                  SharedList.adminPageIconList[i],
-                                  color: i == 0
-                                      ? Theme.of(context).iconTheme.color
-                                      : Colors.red,
-                                ),
-                                onPressed: () {},
-                              ),
-                          ],
-                        ),
-                      )
-                  ],
+                  bottomRight: Radius.circular(
+                    height * SharedConstants.generalSize / 16,
+                  ),
                 ),
-                Column(
-                  children: [
-                    for (int i = 0; i < 2; i++)
-                      ListTile(
-                        title: Text('Görev $i'),
-                        subtitle: Text('Görev Açıklaması $i'),
-                        trailing: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            for (int i = 0;
-                                i < SharedList.adminPageIconList.length;
-                                i++)
-                              IconButton(
-                                icon: Icon(
-                                  SharedList.adminPageIconList[i],
-                                  color: i == 0
-                                      ? Theme.of(context).iconTheme.color
-                                      : Colors.red,
-                                ),
-                                onPressed: () {},
-                              ),
-                          ],
-                        ),
-                      )
-                  ],
-                ),
-                Column(
-                  children: [
-                    for (int i = 0; i < 2; i++)
-                      ListTile(
-                        title: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              'Değerlendirme $i',
-                              style: Theme.of(context).textTheme.displayMedium,
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                left:
-                                    width * SharedConstants.generalPadding / 2,
-                              ),
-                              child: Icon(Icons.star, color: Colors.yellow),
-                            ),
-                            Text(
-                              "5.0",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .displaySmall!
-                                  .copyWith(color: Colors.yellow),
-                            ),
-                          ],
-                        ),
-                        subtitle: Text(
-                          'Değerlendirme Açıklaması $i',
-                          style: Theme.of(context).textTheme.bodyMedium,
-                        ),
-                        trailing: IconButton(
-                          icon: Icon(
-                            SharedList.adminPageIconList[1],
-                            color: Colors.red,
-                          ),
-                          onPressed: () {},
-                        ),
-                      ),
-                  ],
-                )
-              ],
-              onChange: (index) => print(index),
+              ),
             ),
           ),
-        )
+        ),
+        Expanded(
+          child: GridView.count(
+            crossAxisCount: screenType == 0 ? 2 : 4,
+            mainAxisSpacing: height * SharedConstants.generalPadding,
+            crossAxisSpacing: width * SharedConstants.generalPadding,
+            children: SharedList.adminPageCardList
+                .map(
+                  (e) => adminPageController.buildItem(
+                      e.icon, context, e.key, e.value),
+                )
+                .toList(),
+          ),
+        ),
       ],
     );
   }
