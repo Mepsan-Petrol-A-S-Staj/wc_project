@@ -88,7 +88,9 @@ class PatternPageController {
             physics: const BouncingScrollPhysics(),
             child: TaskPage(height: height, width: width));
       case 3:
-        return DeviceSavePage(height: height, width: width);
+        return SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: DeviceSavePage(height: height, width: width));
       case 4:
         return AdminPage(height: height, width: width);
       default:

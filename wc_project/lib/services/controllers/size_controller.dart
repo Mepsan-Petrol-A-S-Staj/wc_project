@@ -11,9 +11,16 @@ class SizeController {
     // 0 mobile, 1 tablet, 2 desktop
     int index = 0;
     double value = width;
-    bool deviceRotated = mediaQueryData.orientation ==
-        Orientation.portrait; // true: portrait, false: landscape
-    // double value = deviceRotated ? width : height;
+    bool deviceRotated = true;
+    if (mediaQueryData.orientation == Orientation.portrait) {
+      // true: portrait, false: landscape
+      deviceRotated = true;
+      value = width;
+    } else {
+      deviceRotated = false;
+      value = width;
+    }
+
     if (value > 600) {
       // width > 768 -> desktop
       index = 2;

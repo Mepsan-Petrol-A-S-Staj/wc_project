@@ -11,3 +11,5 @@ final userIdProvider = StateProvider<int>((ref) => 0);
 final providerSelectedFloor = StateProvider<String>((ref) => 'emptyfloor');
 final isLoginedProvider = StateProvider<bool>((ref) => false);
 final screenTypeProvider = StateProvider<int>((ref) => 0);
+
+

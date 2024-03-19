@@ -65,8 +65,8 @@ class _PatternPageState extends ConsumerState<PatternPage> {
     patternPageController.sharedPreferanceStart();
     updateIpAddress(ref);
     SizeController sizeController = SizeController(
-      height: widget.height,
-      width: widget.width,
+      height: mediaQueryData.size.height,
+      width: mediaQueryData.size.width,
     );
     pageIndex = ref.watch(pageIndexProvider);
     return Consumer(
@@ -103,6 +103,7 @@ class _PatternPageState extends ConsumerState<PatternPage> {
                         width: widget.width,
                         pageIndex: pageIndex,
                         ref: ref,
+                        screenType: deviceType,
                       ),
                     ),
                     Expanded(

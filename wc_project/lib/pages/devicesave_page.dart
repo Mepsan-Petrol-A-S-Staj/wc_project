@@ -8,7 +8,7 @@ import 'package:wc_project/shared/list_shared.dart';
 import '../services/controllers/devicesavepage_controller.dart';
 import '../services/provider/all_provider.dart';
 
-class DeviceSavePage extends ConsumerWidget {
+class DeviceSavePage extends ConsumerStatefulWidget {
   final double height, width;
 
   const DeviceSavePage({
@@ -18,117 +18,178 @@ class DeviceSavePage extends ConsumerWidget {
   });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    TextEditingController controller = TextEditingController();
-    late SharedPreferences prefs;
-    String selectedValue = ref.watch(providerSelectedFloor);
-    DeviceSavePageController pageController =
-        DeviceSavePageController(ref: ref);
+  ConsumerState<DeviceSavePage> createState() => _DeviceSavePageState();
+}
 
-    void loadPreferences() async {
-      prefs = await SharedPreferences.getInstance();
-      String? deviceNum = prefs.getString('devicenum');
-      if (deviceNum != null) {
-        controller.text = deviceNum;
-      }
-    }
+class _DeviceSavePageState extends ConsumerState<DeviceSavePage> {
+  late TextEditingController controller;
+  late SharedPreferences prefs;
+  late String selectedValue;
+  late DeviceSavePageController pageController;
 
+  @override
+  void initState() {
+    super.initState();
+    controller = TextEditingController();
+    selectedValue = ref.read(providerSelectedFloor);
+    pageController = DeviceSavePageController(ref: ref);
     loadPreferences();
+  }
 
+  void loadPreferences() async {
+    prefs = await SharedPreferences.getInstance();
+    String? deviceNum = prefs.getString('devicenum');
+    if (deviceNum != null) {
+      controller.text = deviceNum;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(
-        horizontal: width * SharedConstants.generalPadding,
-        vertical: height * SharedConstants.generalPadding,
+        horizontal: widget.width * SharedConstants.bigPadding,
+        vertical: widget.height * SharedConstants.generalPadding,
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            'Cihazı Kaydet',
+            'Cihaz Kaydetme Ekranı',
             style: Theme.of(context).textTheme.displayLarge,
           ),
           Padding(
             padding: EdgeInsets.only(
-              top: height * SharedConstants.generalPadding,
+              top: widget.height * SharedConstants.generalPadding,
             ),
-            child: Container(
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.primaryContainer,
-                borderRadius: BorderRadius.circular(
-                    height * SharedConstants.mediumSize * 0.8),
-              ),
-              child: Padding(
-                padding: EdgeInsets.all(
-                    height * SharedConstants.generalPadding * 1.5),
-                child: DropdownButton(
-                  dropdownColor:
-                      Theme.of(context).colorScheme.tertiaryContainer,
-                  itemHeight: width > height
-                      ? width * SharedConstants.bigSize
-                      : height * SharedConstants.bigSize,
-                  isDense: true,
-                  hint: selectedValue == 'emptyfloor'
-                      ? const Text('Kat Seçin')
-                      : Text(
-                          'Kat: ${pageController.getFloorInt(selectedValue)}'),
-                  icon: selectedValue == 'emptyfloor'
-                      ? SvgPicture.asset(
-                          "assets/icons/emptyfloor.svg",
-                          height: height * SharedConstants.bigSize * 2.5,
-                        )
-                      : SvgPicture.asset(
-                          "assets/icons/$selectedValue.svg",
-                          height: height * SharedConstants.bigSize * 2.5,
-                        ),
-                  iconSize: height * SharedConstants.bigSize * 2.5,
-                  borderRadius: BorderRadius.circular(
-                    height * SharedConstants.bigPadding,
-                  ),
-                  underline: const Text(''),
-                  items: [
-                    for (int i = 0;
-                        i <
-                            SharedList
-                                .deviceSavePageDropDownButtonItemList.length;
-                        i++)
-                      DropdownMenuItem(
-                        value: SharedList
-                            .deviceSavePageDropDownButtonItemList[i].value,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Text(
-                              SharedList
-                                  .deviceSavePageDropDownButtonItemList[i].text,
-                            ),
-                            SvgPicture.asset(
-                              SharedList.deviceSavePageDropDownButtonItemList[i]
-                                  .imagePath,
-                              height: 80,
-                            ),
-                          ],
-                        ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.primaryContainer,
+                      borderRadius: BorderRadius.circular(
+                        widget.height * SharedConstants.mediumSize,
                       ),
-                  ],
-                  onChanged: (value) {
-                    selectedValue =
-                        pageController.getSelectedValue(value ?? 'empty');
-                  },
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.all(
+                          widget.height * SharedConstants.generalPadding * 2),
+                      child: DropdownButton(
+                        dropdownColor:
+                            Theme.of(context).colorScheme.tertiaryContainer,
+                        itemHeight: widget.width > widget.height
+                            ? widget.width * SharedConstants.bigSize
+                            : widget.height * SharedConstants.bigSize,
+                        isDense: true,
+                        hint: selectedValue == 'emptyfloor'
+                            ? const Text('Kat Seçin')
+                            : Text(
+                                'Kat: ${pageController.getFloorInt(selectedValue)}'),
+                        icon: selectedValue == 'emptyfloor'
+                            ? SvgPicture.asset(
+                                "assets/icons/emptyfloor.svg",
+                                height: widget.height * SharedConstants.bigSize,
+                              )
+                            : SvgPicture.asset(
+                                "assets/icons/$selectedValue.svg",
+                                height: widget.height * SharedConstants.bigSize,
+                              ),
+                        iconSize: widget.height * SharedConstants.bigSize,
+                        borderRadius: BorderRadius.circular(
+                          widget.height * SharedConstants.generalPadding,
+                        ),
+                        underline: const Text(''),
+                        items: [
+                          for (int i = 0;
+                              i <
+                                  SharedList
+                                      .deviceSavePageDropDownButtonItemList
+                                      .length;
+                              i++)
+                            DropdownMenuItem(
+                              value: SharedList
+                                  .deviceSavePageDropDownButtonItemList[i]
+                                  .value,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Text(
+                                    SharedList
+                                        .deviceSavePageDropDownButtonItemList[i]
+                                        .text,
+                                  ),
+                                  SvgPicture.asset(
+                                    SharedList
+                                        .deviceSavePageDropDownButtonItemList[i]
+                                        .imagePath,
+                                    height: 80,
+                                  ),
+                                ],
+                              ),
+                            ),
+                        ],
+                        onChanged: (value) {
+                          setState(() {
+                            selectedValue = pageController
+                                .getSelectedValue(value ?? 'empty');
+                          });
+                        },
+                      ),
+                    ),
+                  ),
                 ),
-              ),
+                const Expanded(child: SizedBox()),
+
+                // Textfield
+                Expanded(
+                  flex: 4,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.primaryContainer,
+                      borderRadius: BorderRadius.circular(
+                        widget.height * SharedConstants.generalSize,
+                      ),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal:
+                            widget.width * SharedConstants.generalPadding,
+                      ),
+                      child: TextField(
+                        maxLines: 1,
+                        controller: controller,
+                        style: Theme.of(context).textTheme.displayMedium,
+                        decoration: InputDecoration(
+                          hintText: 'Eşsiz bir cihaz numarası girin.',
+                          hintStyle: Theme.of(context).textTheme.displayMedium,
+                          border: InputBorder.none,
+                        ),
+                        onSubmitted: (_) {
+                          _submit();
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
           Padding(
             padding: EdgeInsets.only(
-              top: height * SharedConstants.generalPadding,
+              top: widget.height * SharedConstants.generalPadding,
             ),
             child: ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(
+                  Theme.of(context).colorScheme.secondaryContainer,
+                ),
+              ),
               onPressed: () async {
-                await prefs.setString('devicenum', selectedValue);
-                await prefs.setBool('isDeviceSaved', true);
-
-                int index = 0;
-                ref.read(pageIndexProvider.notifier).update((state) => index);
+                _submit();
               },
               child: Text(
                 'Cihaz Kaydet',
@@ -139,5 +200,19 @@ class DeviceSavePage extends ConsumerWidget {
         ],
       ),
     );
+  }
+
+  void _submit() async {
+    await prefs.setString('devicenum', selectedValue);
+    await prefs.setBool('isDeviceSaved', true);
+
+    int index = 0;
+    ref.read(pageIndexProvider.notifier).update((state) => index);
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 }

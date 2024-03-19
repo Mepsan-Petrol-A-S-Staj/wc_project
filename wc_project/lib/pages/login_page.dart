@@ -20,10 +20,10 @@ class LoginPage extends ConsumerStatefulWidget {
 }
 
 class _LoginPageState extends ConsumerState<LoginPage> {
-  final TextEditingController usernameController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final FocusNode usernameFocusNode = FocusNode();
-  final FocusNode passwordFocusNode = FocusNode();
+  final TextEditingController usernameController = TextEditingController(),
+      passwordController = TextEditingController();
+  final FocusNode usernameFocusNode = FocusNode(),
+      passwordFocusNode = FocusNode();
 
   @override
   void dispose() {
@@ -51,7 +51,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           padding: EdgeInsets.symmetric(
             horizontal: screenType == 0
                 ? widget.width * SharedConstants.generalPadding
-                : widget.width * SharedConstants.bigPadding * 5,
+                : widget.width * SharedConstants.bigPadding * 4,
           ),
           child: Card(
             shape: RoundedRectangleBorder(

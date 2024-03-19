@@ -2,30 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:slide_digital_clock/slide_digital_clock.dart';
-import 'package:wc_project/services/controllers/size_controller.dart';
 import '../services/controllers/appbar_controller.dart';
 import '../shared/constant_shared.dart';
 
 class AppBarWidget extends StatelessWidget {
   final double height, width;
-  final int pageIndex;
+  final int pageIndex,screenType;
   final WidgetRef ref;
   const AppBarWidget({
     required this.height,
     required this.width,
     required this.pageIndex,
+    required this.screenType,
     required this.ref,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    MediaQueryData mediaQueryData = MediaQuery.of(context);
+    // MediaQueryData mediaQueryData = MediaQuery.of(context);
     AppBarController controller = AppBarController(ref: ref);
-    SizeController sizeController =
-        SizeController(height: height, width: width);
+
     return Consumer(builder: (context, ref, child) {
-      int screenType = sizeController.getScreenType(mediaQueryData);
+      // int screenType = sizeController.getScreenType(mediaQueryData);
       IconData iconData = controller.appbarLoginorLogutButton();
       return Row(
         mainAxisAlignment: MainAxisAlignment.start,
