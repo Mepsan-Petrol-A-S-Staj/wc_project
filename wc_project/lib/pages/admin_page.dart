@@ -7,6 +7,7 @@ import '../services/controllers/adminpage_controller.dart';
 
 class AdminPage extends StatelessWidget {
   final double height, width;
+
   final List<String> deviceList = ['device1', 'device2']; // Örnek cihaz listesi
 
   AdminPage({
@@ -17,11 +18,12 @@ class AdminPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AdminPageController adminPageController =
-        AdminPageController(height: height, width: width);
-    SizeController sizeController =
-        SizeController(height: height, width: width);
-    int screenType = sizeController.getScreenType(MediaQuery.of(context));
+    MediaQueryData mediaQueryData = MediaQuery.of(context);
+    AdminPageController adminPageController = AdminPageController(
+        height: mediaQueryData.size.height, width: mediaQueryData.size.width);
+    SizeController sizeController = SizeController(
+        height: mediaQueryData.size.height, width: mediaQueryData.size.width);
+    int screenType = sizeController.getScreenType(mediaQueryData);
     return Column(
       children: [
         Row(

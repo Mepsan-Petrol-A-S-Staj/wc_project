@@ -5,7 +5,10 @@ class ExitAppWidget {
     return showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Uygulamadan çıkış yapamazsınız.'),
+        title: Text(
+          'Uygulamadan çıkış yapamazsınız.',
+          style: Theme.of(context).textTheme.displayLarge,
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(true),

@@ -37,10 +37,11 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    MediaQueryData mediaQueryData = MediaQuery.of(context);
     LoginPageController controller = LoginPageController(ref: ref);
-    SizeController sizeController =
-        SizeController(height: widget.height, width: widget.width);
-    int screenType = sizeController.getScreenType(MediaQuery.of(context));
+    SizeController sizeController = SizeController(
+        height: mediaQueryData.size.height, width: mediaQueryData.size.width);
+    int screenType = sizeController.getScreenType(mediaQueryData);
     return Column(
       children: [
         Text(
