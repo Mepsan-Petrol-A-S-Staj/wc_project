@@ -13,10 +13,12 @@ import '../provider/all_provider.dart';
 class AdminPageController {
   final double height, width;
   final WidgetRef ref;
+  final int screenType;
   AdminPageController({
     required this.height,
     required this.width,
     required this.ref,
+    required this.screenType,
   });
   // Get device list
   Future<List<String>> getDeviceList() async {
@@ -34,7 +36,7 @@ class AdminPageController {
       case 'main':
         ref.read(adminPageWidgetKey.notifier).state = 'main';
         return AdminPageMainWidget(
-          screenType: 0,
+          screenType: screenType,
           height: height,
           width: width,
           adminPageController: this,
@@ -50,7 +52,7 @@ class AdminPageController {
         return const AdminDeviceWidget();
       default:
         return AdminPageMainWidget(
-          screenType: 0,
+          screenType: screenType,
           height: height,
           width: width,
           adminPageController: this,

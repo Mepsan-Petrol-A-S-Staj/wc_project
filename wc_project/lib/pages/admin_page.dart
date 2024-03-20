@@ -30,6 +30,7 @@ class AdminPage extends StatelessWidget {
         height: mediaQueryData.size.height,
         width: mediaQueryData.size.width,
         ref: ref,
+        screenType: screenType,
       );
       String widgetKey = ref.watch(adminPageWidgetKey);
       return Column(
