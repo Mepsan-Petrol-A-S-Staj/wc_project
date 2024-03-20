@@ -7,6 +7,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:network_info_plus/network_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wc_project/pages/devicesave_page.dart';
+import 'package:wc_project/services/controllers/loginpage_controller.dart';
 import 'package:wc_project/widgets/taskpagefab_widget.dart';
 
 import '../../pages/admin_page.dart';
@@ -70,6 +71,8 @@ class PatternPageController {
     // bool isKeyboardOpened = isKeyboardOpen();
     switch (index) {
       case 0:
+        // LoginPageController loginPageController = LoginPageController(ref: ref);
+        // loginPageController.logout();
         return const SingleChildScrollView(
           physics: BouncingScrollPhysics(),
           child: HomePage(),

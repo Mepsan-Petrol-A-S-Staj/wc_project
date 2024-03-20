@@ -39,10 +39,10 @@ class RatingContainerMobileWidget extends StatelessWidget {
               starBuilder: (index, color) => Icon(
                 AntDesign.star_fill,
                 color: color,
-                size: height * SharedConstants.bigIconSize * 0.75,
+                size: height * SharedConstants.bigIconSize * 0.7,
               ),
               starCount: SharedConstants.starCount,
-              starSize: height * SharedConstants.bigIconSize,
+              starSize: height * SharedConstants.bigIconSize * 0.85,
               maxValue: SharedConstants.starCount.toDouble(),
               starSpacing: 1,
               maxValueVisibility: true,

@@ -7,7 +7,7 @@ import '../shared/constant_shared.dart';
 
 class AppBarWidget extends StatelessWidget {
   final double height, width;
-  final int pageIndex,screenType;
+  final int pageIndex, screenType;
   final WidgetRef ref;
   const AppBarWidget({
     required this.height,
@@ -55,22 +55,25 @@ class AppBarWidget extends StatelessWidget {
               children: [
                 Expanded(
                   flex: 1,
-                  child: IconButton(
-                    icon: Icon(
-                      iconData,
-                      size: Theme.of(context)
-                              .textTheme
-                              .headlineMedium!
-                              .fontSize! *
-                          1.4,
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: IconButton(
+                      icon: Icon(
+                        iconData,
+                        size: Theme.of(context)
+                                .textTheme
+                                .headlineMedium!
+                                .fontSize! *
+                            1.4,
+                      ),
+                      onPressed: () {
+                        controller.logoorLoginClick(pageIndex, 1);
+                      },
                     ),
-                    onPressed: () {
-                      controller.logoorLoginClick(pageIndex, 1);
-                    },
                   ),
                 ),
                 Expanded(
-                  flex: 2,
+                  flex: 3,
                   child: DigitalClock(
                     hourMinuteDigitTextStyle:
                         Theme.of(context).textTheme.displayLarge,

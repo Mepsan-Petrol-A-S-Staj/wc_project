@@ -75,22 +75,22 @@ class SharedList {
   //----------------------------------------------------------------------------------------
   static List<AdminPageCardModel> adminPageCardList = [
     AdminPageCardModel(
-      key: "Gorevler",
+      key: "task",
       value: "Görevler",
       icon: Icons.assignment,
     ),
     AdminPageCardModel(
-      key: "Kullanicilar",
+      key: "user",
       value: "Kullanıcılar",
       icon: Icons.person,
     ),
     AdminPageCardModel(
-      key: "Degerlendirmeler",
+      key: "answer",
       value: "Değerlendirmeler",
       icon: Icons.feedback,
     ),
     AdminPageCardModel(
-      key: "Cihazlar",
+      key: "device",
       value: "Cihazlar",
       icon: Icons.devices,
     ),

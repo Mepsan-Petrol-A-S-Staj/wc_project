@@ -72,13 +72,19 @@ class _PatternPageState extends ConsumerState<PatternPage> {
     return Consumer(
       builder: (context, ref, child) {
         int deviceType = sizeController.getScreenType(mediaQueryData);
+        String adminPageKey = ref.watch(adminPageWidgetKey);
+        debugPrint("adminPageKey: $adminPageKey");
         return PopScope(
           canPop: false,
           onPopInvoked: (didPop) async {
             if (pageIndex == 0 || pageIndex == 3) {
               await ExitAppWidget.exitAppShowDialog(context);
+            } else if ((pageIndex == 4 && adminPageKey != "main")) {
+              ref.read(adminPageWidgetKey.notifier).update((state) => 'main');
             } else {
               ref.read(pageIndexProvider.notifier).update((state) => 0);
+
+              // ref.read(adminPageKey).update("main");
             }
           },
           child: Scaffold(

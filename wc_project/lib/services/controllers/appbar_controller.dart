@@ -10,8 +10,8 @@ class AppBarController {
   void logoorLoginClick(int pageIndex, int index) {
     switch (pageIndex) {
       case 0:
-        LoginPageController(ref: ref).logout();
         ref.read(pageIndexProvider.notifier).update((state) => index);
+        LoginPageController(ref: ref).logout();
         break;
       case 3:
         null;
@@ -24,6 +24,7 @@ class AppBarController {
 
   IconData appbarLoginorLogutButton() {
     bool isLogined = ref.watch(isLoginedProvider);
+    debugPrint('isLogined: $isLogined');
     return isLogined == true ? Icons.logout_outlined : Icons.login_outlined;
   }
 }
