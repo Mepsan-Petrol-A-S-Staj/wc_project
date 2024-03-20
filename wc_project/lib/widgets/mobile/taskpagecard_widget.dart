@@ -36,29 +36,37 @@ class TaskPageMobile extends StatelessWidget {
               SharedConstants.taskPageTitle,
               style: Theme.of(context).textTheme.displayLarge,
             ),
-            for (int i = 0;
-                i < SharedList.taskPageCardTextList.length;
-                i++)
+            for (int i = 0; i < SharedList.taskPageCardTextList.length; i++)
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    SharedList.taskPageCardTextList[i],
-                    style: Theme.of(context).textTheme.displayMedium,
-                  ),
-                  for (int i = 0; i < 10; i++)
-                    ListTile(
-                      title: Text(
-                        'Task $i',
-                      ),
-                      subtitle: Text(
-                        'Task $i description',
-                      ),
-                      trailing: Checkbox(
-                        value: false,
-                        onChanged: (bool? value) {},
-                      ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: height * SharedConstants.generalPadding,
                     ),
+                    child: Text(
+                      SharedList.taskPageCardTextList[i],
+                      style: Theme.of(context).textTheme.displayMedium,
+                    ),
+                  ),
+                  ListTile(
+                    title: Text(
+                      'Task $i',
+                    ),
+                    subtitle: Text(
+                      'Task $i description',
+                    ),
+                    trailing: i == 0
+                        ? Checkbox(value: false, onChanged: (value) {})
+                        : IconButton(
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.settings_backup_restore_rounded,
+                              color: Colors.green,
+                              size: 30,
+                            ),
+                          ),
+                  ),
                 ],
               )
           ],

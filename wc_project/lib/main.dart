@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => PatternPage(height: height, width: width),
         '/homepage': (context) => HomePage(height: height, width: width),
         '/loginpage': (context) => LoginPage(height: height, width: width),
-        '/taskpage': (context) => TaskPage(height: height, width: width),
+        '/taskpage': (context) => TaskPage(),
         '/devicesavepage': (context) =>
             DeviceSavePage(height: height, width: width),
       },

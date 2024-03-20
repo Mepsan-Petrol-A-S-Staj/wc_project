@@ -87,8 +87,7 @@ class PatternPageController {
               );
       case 2:
         return SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: TaskPage(height: height, width: width));
+            physics: const BouncingScrollPhysics(), child: TaskPage());
       case 3:
         return SingleChildScrollView(
             physics: const BouncingScrollPhysics(),

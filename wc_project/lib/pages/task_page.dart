@@ -1,31 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:wc_project/services/controllers/taskpage_controller.dart';
 import 'package:wc_project/shared/constant_shared.dart';
 
-import '../shared/list_shared.dart';
-import '../widgets/mobile/taskpagecard_widget.dart';
-import '../widgets/tablet&desktop/taskpagecard_widget.dart';
-
-class TaskPage extends StatelessWidget {
-  final double height, width;
+class TaskPage extends ConsumerWidget {
   const TaskPage({
-    required this.height,
-    required this.width,
     super.key,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    MediaQueryData mediaQueryData = MediaQuery.of(context);
+    double height = mediaQueryData.size.height,
+        width = mediaQueryData.size.width;
+    TaskPageController taskPageController = TaskPageController(
+      height: height,
+      width: width,
+      ref: ref,
+      mediaQueryData: mediaQueryData,
+    );
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: width * SharedConstants.generalPadding,
         vertical: height * SharedConstants.generalPadding,
       ),
-      child: Column(
-        children: [
-          // TaskPageMobile(height: height, width: width),
-          TaskPageTabletandDesktopCardWidget(height: height, width: width),
-        ],
-      ),
+      child: taskPageController.buildTaskPage(),
     );
   }
 }
