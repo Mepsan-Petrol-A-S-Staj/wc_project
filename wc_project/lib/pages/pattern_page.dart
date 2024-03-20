@@ -123,6 +123,11 @@ class _PatternPageState extends ConsumerState<PatternPage> {
                 ),
               ),
             ),
+            floatingActionButton: patternPageController.buildFabWidget(
+              pageIndex,
+              widget.height,
+              widget.width,
+            ),
           ),
         );
       },

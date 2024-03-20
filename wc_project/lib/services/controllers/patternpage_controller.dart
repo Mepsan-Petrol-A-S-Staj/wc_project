@@ -7,12 +7,14 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:network_info_plus/network_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wc_project/pages/devicesave_page.dart';
+import 'package:wc_project/widgets/taskpagefab_widget.dart';
 
 import '../../pages/admin_page.dart';
 import '../../pages/home_page.dart';
 import '../../pages/login_page.dart';
 import '../../pages/task_page.dart';
 import '../../shared/constant_shared.dart';
+import '../../widgets/adminpagefab_widget.dart';
 import '../provider/all_provider.dart';
 
 class PatternPageController {
@@ -95,6 +97,21 @@ class PatternPageController {
         return AdminPage(height: height, width: width);
       default:
         return Container();
+    }
+  }
+
+  Widget buildFabWidget(int index, double height, double width) {
+    switch (index) {
+      // case 1:
+      //   return Container();
+      case 2:
+        return const TaskPageFABWidget();
+      // case 3:
+      //   return Container();
+      // case 4:
+      //   return const AdminPageFABWidget();
+      default:
+        return const SizedBox();
     }
   }
 }

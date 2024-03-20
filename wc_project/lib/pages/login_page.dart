@@ -44,9 +44,14 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     int screenType = sizeController.getScreenType(mediaQueryData);
     return Column(
       children: [
-        Text(
-          SharedConstants.loginText,
-          style: Theme.of(context).textTheme.displayLarge,
+        Padding(
+          padding: EdgeInsets.symmetric(
+            vertical: widget.height * SharedConstants.generalPadding,
+          ),
+          child: Text(
+            SharedConstants.loginText,
+            style: Theme.of(context).textTheme.displayLarge,
+          ),
         ),
         Padding(
           padding: EdgeInsets.symmetric(

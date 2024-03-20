@@ -65,6 +65,10 @@ class SharedList {
     "Yapılacak Görevler",
     "Tamamlanmış Görevler",
   ];
+  static List<IconData> taskPageCardWidgetIconList = [
+    Icons.error_outline,
+    Icons.done,
+  ];
 
   //----------------------------------------------------------------------------------------
   //! Admin Page
