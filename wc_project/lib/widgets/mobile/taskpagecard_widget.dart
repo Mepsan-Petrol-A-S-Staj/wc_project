@@ -62,8 +62,8 @@ class TaskPageMobile extends StatelessWidget {
                             onPressed: () {},
                             icon: Icon(
                               Icons.settings_backup_restore_rounded,
-                              color: Colors.green,
-                              size: 30,
+                              color: Colors.red,
+                              size: height * SharedConstants.mediumSize,
                             ),
                           ),
                   ),

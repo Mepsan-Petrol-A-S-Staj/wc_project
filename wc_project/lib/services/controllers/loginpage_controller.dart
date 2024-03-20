@@ -1,7 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../models/user_model.dart';
-import '../apis/user_service.dart';
 import '../provider/all_provider.dart';
 
 class LoginPageController {

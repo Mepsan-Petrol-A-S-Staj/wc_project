@@ -14,7 +14,6 @@ import '../../pages/home_page.dart';
 import '../../pages/login_page.dart';
 import '../../pages/task_page.dart';
 import '../../shared/constant_shared.dart';
-import '../../widgets/adminpagefab_widget.dart';
 import '../provider/all_provider.dart';
 
 class PatternPageController {
@@ -71,12 +70,10 @@ class PatternPageController {
     // bool isKeyboardOpened = isKeyboardOpen();
     switch (index) {
       case 0:
-        return deviceType == 0
-            ? HomePage(height: height, width: width)
-            : SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: HomePage(height: height, width: width),
-              );
+        return const SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
+          child: HomePage(),
+        );
 
       case 1:
         return deviceType == 0
@@ -86,8 +83,8 @@ class PatternPageController {
                 child: LoginPage(height: height, width: width),
               );
       case 2:
-        return SingleChildScrollView(
-            physics: const BouncingScrollPhysics(), child: TaskPage());
+        return const SingleChildScrollView(
+            physics: BouncingScrollPhysics(), child: TaskPage());
       case 3:
         return SingleChildScrollView(
             physics: const BouncingScrollPhysics(),

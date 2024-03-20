@@ -56,9 +56,9 @@ class MyApp extends StatelessWidget {
       darkTheme: SharedTheme.darkTheme(isDarkModeTheme, width, height),
       routes: {
         '/': (context) => PatternPage(height: height, width: width),
-        '/homepage': (context) => HomePage(height: height, width: width),
+        '/homepage': (context) => const HomePage(),
         '/loginpage': (context) => LoginPage(height: height, width: width),
-        '/taskpage': (context) => TaskPage(),
+        '/taskpage': (context) => const TaskPage(),
         '/devicesavepage': (context) =>
             DeviceSavePage(height: height, width: width),
       },

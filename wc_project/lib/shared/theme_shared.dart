@@ -4,7 +4,7 @@ import 'constant_shared.dart';
 
 class SharedTheme {
   final bool isDarkModeTheme;
-  final double width, height;
+  double width, height;
 
   SharedTheme({
     required this.isDarkModeTheme,

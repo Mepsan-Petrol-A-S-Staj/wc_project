@@ -5,30 +5,38 @@ import 'package:icons_plus/icons_plus.dart';
 import 'package:wc_project/shared/constant_shared.dart';
 import 'package:wc_project/shared/list_shared.dart';
 
+import '../services/controllers/homepage_controller.dart';
 import '../services/provider/all_provider.dart';
+import '../widgets/mobile/homepage/homepage_widget.dart';
+import '../widgets/mobile/homepage/ratingcontainer_widget.dart';
 
 class HomePage extends StatelessWidget {
-  final double height;
-  final double width;
-
   const HomePage({
-    required this.height,
-    required this.width,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
+    final MediaQueryData mediaQuery = MediaQuery.of(context);
+    final double height = mediaQuery.size.height, width = mediaQuery.size.width;
+
     return Consumer(
       builder: (context, ref, child) {
-        int value = ref.watch(rateProvider);
+        HomePageController homePageController = HomePageController(
+          mediaQueryData: mediaQuery,
+          height: height,
+          width: width,
+          ref: ref,
+        );
+
         return Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             for (int i = 0; i < SharedList.welcomeTextList.length; i++)
               Padding(
                 padding: EdgeInsets.symmetric(
-                  vertical: i == 0 ? 0 : height * SharedConstants.mediumPadding,
+                  vertical:
+                      i == 0 ? 0 : height * SharedConstants.generalPadding,
                 ),
                 child: Text(
                   SharedList.welcomeTextList[i],
@@ -39,151 +47,13 @@ class HomePage extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
               ),
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.black12,
-                borderRadius: BorderRadius.circular(
-                  width * SharedConstants.mediumPadding,
-                ),
-              ),
-              child: RatingStars(
-                value: value.toDouble(),
-                onValueChanged: (v) {
-                  ref.read(rateProvider.notifier).update((state) => v.toInt());
-                },
-                starBuilder: (index, color) => Icon(
-                  AntDesign.star_fill,
-                  color: color,
-                  size: width > height
-                      ? height * SharedConstants.bigIconSize * 2
-                      : width * SharedConstants.bigIconSize * 1.75,
-                ),
-                starCount: SharedConstants.starCount,
-                starSize: width > height
-                    ? height * SharedConstants.bigIconSize * 2.25
-                    : width * SharedConstants.bigIconSize * 2,
-                maxValue: SharedConstants.starCount.toDouble(),
-                starSpacing: 1,
-                maxValueVisibility: true,
-                valueLabelVisibility: false,
-                animationDuration: const Duration(milliseconds: 800),
-                starColor: SharedConstants.primaryColor,
-              ),
-            ),
+            homePageController.buildRatingWidget(),
             // Answer Textfield Area
             Padding(
               padding: EdgeInsets.only(
-                top: height * SharedConstants.largePadding,
+                top: height * SharedConstants.generalPadding,
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: TextField(
-                      textAlign: TextAlign.start,
-                      style: Theme.of(context).textTheme.displayMedium,
-                      maxLines: 2,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(
-                            width * SharedConstants.mediumSize,
-                          ),
-                        ),
-                        labelText: SharedConstants.answerHintText,
-                        // hintStyle: Theme.of(context).textTheme.displaySmall,
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: width * SharedConstants.generalPadding),
-                  Expanded(
-                    flex: 1,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            Theme.of(context).colorScheme.primaryContainer,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                            width * SharedConstants.mediumSize,
-                          ),
-                        ),
-                      ),
-                      onPressed: () {
-                        showDialog(
-                          barrierDismissible: false,
-                          context: context,
-                          builder: (context) {
-                            return PopScope(
-                              canPop: false,
-                              child: AlertDialog(
-                                backgroundColor: Theme.of(context)
-                                    .colorScheme
-                                    .tertiaryContainer,
-                                title: Column(
-                                  children: [
-                                    Icon(
-                                      Icons.task_alt_outlined,
-                                      size: height > width
-                                          ? width * SharedConstants.bigSize
-                                          : height * SharedConstants.bigSize,
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          top: height *
-                                              SharedConstants.generalPadding),
-                                      child: Text(
-                                        SharedConstants.surveySendedPopText,
-                                        style: TextStyle(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .primary,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
-                        );
-                        Future.delayed(
-                          const Duration(
-                            seconds: SharedConstants.timerPopup,
-                          ),
-                          () {
-                            ref
-                                .read(rateProvider.notifier)
-                                .update((state) => 1);
-                            Navigator.of(context).pop();
-                          },
-                        );
-                      },
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                          vertical: Theme.of(context)
-                                  .textTheme
-                                  .displayMedium!
-                                  .fontSize! *
-                              1.5,
-                        ),
-                        child: Text(
-                          SharedConstants.submitText,
-                          style: Theme.of(context)
-                              .textTheme
-                              .displaySmall!
-                              .copyWith(
-                                  color: Theme.of(context)
-                                      .textTheme
-                                      .displayLarge!
-                                      .color),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              child: homePageController.buildAnswerandSubmitWidget(),
             ),
           ],
         );
