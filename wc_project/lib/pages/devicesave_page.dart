@@ -4,7 +4,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wc_project/shared/constant_shared.dart';
 import 'package:wc_project/shared/list_shared.dart';
-
 import '../services/controllers/devicesavepage_controller.dart';
 import '../services/provider/all_provider.dart';
 
@@ -55,8 +54,12 @@ class _DeviceSavePageState extends ConsumerState<DeviceSavePage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            'Cihaz Kaydetme Ekranı',
-            style: Theme.of(context).textTheme.displayLarge,
+            'Uygulamaya başlamadan önce cihazı kaydediniz',
+            textAlign: TextAlign.center,
+            style: Theme.of(context)
+                .textTheme
+                .displayMedium!
+                .copyWith(fontWeight: FontWeight.w300),
           ),
           Padding(
             padding: EdgeInsets.only(
@@ -121,6 +124,10 @@ class _DeviceSavePageState extends ConsumerState<DeviceSavePage> {
                                     SharedList
                                         .deviceSavePageDropDownButtonItemList[i]
                                         .text,
+                                    style: TextStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onTertiaryContainer),
                                   ),
                                   SvgPicture.asset(
                                     SharedList
@@ -149,23 +156,32 @@ class _DeviceSavePageState extends ConsumerState<DeviceSavePage> {
                   flex: 4,
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.primaryContainer,
+                      color: Theme.of(context).colorScheme.tertiaryContainer,
                       borderRadius: BorderRadius.circular(
                         widget.height * SharedConstants.generalSize,
                       ),
                     ),
                     child: Padding(
                       padding: EdgeInsets.symmetric(
+                        vertical: 20,
                         horizontal:
                             widget.width * SharedConstants.generalPadding,
                       ),
                       child: TextField(
+                        cursorColor: Theme.of(context).colorScheme.tertiary,
                         maxLines: 1,
                         controller: controller,
                         style: Theme.of(context).textTheme.displayMedium,
                         decoration: InputDecoration(
                           hintText: 'Eşsiz bir cihaz numarası girin.',
-                          hintStyle: Theme.of(context).textTheme.displayMedium,
+                          hintStyle: Theme.of(context)
+                              .textTheme
+                              .titleMedium!
+                              .copyWith(
+                                  fontWeight: FontWeight.w300,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onTertiaryContainer),
                           border: InputBorder.none,
                         ),
                         onSubmitted: (_) {
@@ -191,9 +207,14 @@ class _DeviceSavePageState extends ConsumerState<DeviceSavePage> {
               onPressed: () async {
                 _submit();
               },
-              child: Text(
-                'Cihaz Kaydet',
-                style: Theme.of(context).textTheme.displayMedium,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  'Cihazı Kaydet',
+                  style: Theme.of(context).textTheme.displaySmall!.copyWith(
+                      color:
+                          Theme.of(context).colorScheme.onSecondaryContainer),
+                ),
               ),
             ),
           ),

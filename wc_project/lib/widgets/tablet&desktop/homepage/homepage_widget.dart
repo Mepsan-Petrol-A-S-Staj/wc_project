@@ -100,7 +100,7 @@ class HomePageTabletandDesktopWidget extends StatelessWidget {
               child: Text(
                 SharedConstants.submitText,
                 style: Theme.of(context).textTheme.displaySmall!.copyWith(
-                    color: Theme.of(context).textTheme.displayLarge!.color),
+                    color: Theme.of(context).colorScheme.onPrimaryContainer),
               ),
             ),
           ),

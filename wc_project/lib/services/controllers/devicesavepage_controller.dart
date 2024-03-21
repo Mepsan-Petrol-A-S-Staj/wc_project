@@ -1,5 +1,4 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
 import '../provider/all_provider.dart';
 
 class DeviceSavePageController {

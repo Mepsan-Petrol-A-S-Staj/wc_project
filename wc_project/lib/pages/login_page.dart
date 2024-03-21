@@ -50,16 +50,20 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           ),
           child: Text(
             SharedConstants.loginText,
-            style: Theme.of(context).textTheme.displayLarge,
+            style: Theme.of(context)
+                .textTheme
+                .displayLarge!
+                .copyWith(fontWeight: FontWeight.w300),
           ),
         ),
         Padding(
           padding: EdgeInsets.symmetric(
             horizontal: screenType == 0
                 ? widget.width * SharedConstants.generalPadding
-                : widget.width * SharedConstants.bigPadding * 4,
+                : widget.width * SharedConstants.bigPadding * 3,
           ),
           child: Card(
+            elevation: 5,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(
                 widget.height * SharedConstants.generalPadding,
@@ -79,14 +83,18 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       focusNode: usernameFocusNode,
                       controller: usernameController,
                       decoration: InputDecoration(
-                        icon: SharedList.loginPageTextFieldIconList[0],
+                        icon: SharedList.loginPageTextFieldIconList.first,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(
                             widget.height * SharedConstants.generalPadding,
                           ),
                         ),
-                        hintText: SharedList.loginPageTextfieldHintTextList[0],
-                        hintStyle: Theme.of(context).textTheme.displayMedium,
+                        hintText:
+                            SharedList.loginPageTextfieldHintTextList.first,
+                        hintStyle: Theme.of(context)
+                            .textTheme
+                            .displayMedium!
+                            .copyWith(fontWeight: FontWeight.w300),
                       ),
                       onSubmitted: (_) {
                         FocusScope.of(context).requestFocus(passwordFocusNode);
@@ -101,14 +109,18 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       focusNode: passwordFocusNode,
                       controller: passwordController,
                       decoration: InputDecoration(
-                        icon: SharedList.loginPageTextFieldIconList[1],
+                        icon: (SharedList.loginPageTextFieldIconList.last),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(
                             widget.height * SharedConstants.generalPadding,
                           ),
                         ),
-                        hintText: SharedList.loginPageTextfieldHintTextList[1],
-                        hintStyle: Theme.of(context).textTheme.displayMedium,
+                        hintText:
+                            SharedList.loginPageTextfieldHintTextList.last,
+                        hintStyle: Theme.of(context)
+                            .textTheme
+                            .displayMedium!
+                            .copyWith(fontWeight: FontWeight.w300),
                       ),
                       onSubmitted: (_) => _submit(controller),
                       obscureText: true,
@@ -131,7 +143,13 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       onPressed: () => _submit(controller),
                       child: Text(
                         SharedConstants.loginText,
-                        style: Theme.of(context).textTheme.displayMedium,
+                        style: Theme.of(context)
+                            .textTheme
+                            .displayMedium!
+                            .copyWith(
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onSecondaryContainer),
                       ),
                     ),
                   ),

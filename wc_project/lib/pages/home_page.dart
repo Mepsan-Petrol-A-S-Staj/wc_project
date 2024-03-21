@@ -1,14 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:icons_plus/icons_plus.dart';
 import 'package:wc_project/shared/constant_shared.dart';
 import 'package:wc_project/shared/list_shared.dart';
-
 import '../services/controllers/homepage_controller.dart';
-import '../services/provider/all_provider.dart';
-import '../widgets/mobile/homepage/homepage_widget.dart';
-import '../widgets/mobile/homepage/ratingcontainer_widget.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({
@@ -29,33 +23,39 @@ class HomePage extends StatelessWidget {
           ref: ref,
         );
 
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            for (int i = 0; i < SharedList.welcomeTextList.length; i++)
+        return Padding(
+          padding: const EdgeInsets.only(top: 30.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              for (int i = 0; i < SharedList.welcomeTextList.length; i++)
+                Padding(
+                  padding: EdgeInsets.only(
+                    top: i == 0 ? 0 : height * SharedConstants.generalPadding,
+                  ),
+                  child: Text(
+                    SharedList.welcomeTextList[i],
+                    style: Theme.of(context).textTheme.displayLarge!.copyWith(
+                          color: i == 0
+                              ? null
+                              : SharedConstants.secondaryTextColor,
+                        ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
               Padding(
-                padding: EdgeInsets.symmetric(
-                  vertical:
-                      i == 0 ? 0 : height * SharedConstants.generalPadding,
-                ),
-                child: Text(
-                  SharedList.welcomeTextList[i],
-                  style: Theme.of(context).textTheme.displayLarge!.copyWith(
-                        color:
-                            i == 0 ? null : SharedConstants.secondaryTextColor,
-                      ),
-                  textAlign: TextAlign.center,
-                ),
+                padding: const EdgeInsets.only(top: 22.0),
+                child: homePageController.buildRatingWidget(),
               ),
-            homePageController.buildRatingWidget(),
-            // Answer Textfield Area
-            Padding(
-              padding: EdgeInsets.only(
-                top: height * SharedConstants.generalPadding,
+              // Answer Textfield Area
+              Padding(
+                padding: EdgeInsets.only(
+                  top: height * 0.07,
+                ),
+                child: homePageController.buildAnswerandSubmitWidget(),
               ),
-              child: homePageController.buildAnswerandSubmitWidget(),
-            ),
-          ],
+            ],
+          ),
         );
       },
     );

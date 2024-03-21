@@ -51,42 +51,47 @@ class AppBarWidget extends StatelessWidget {
           Expanded(
             flex: 1,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Expanded(
-                  flex: 1,
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: IconButton(
-                      icon: Icon(
-                        iconData,
-                        size: Theme.of(context)
-                                .textTheme
-                                .headlineMedium!
-                                .fontSize! *
-                            1.4,
-                      ),
-                      onPressed: () {
-                        controller.logoorLoginClick(pageIndex, 1);
-                      },
+                  flex: 4,
+                  child: DigitalClock(
+                    hourMinuteDigitTextStyle: Theme.of(context)
+                        .textTheme
+                        .headlineLarge!
+                        .copyWith(
+                            fontWeight: FontWeight.w300,
+                            color: Theme.of(context).colorScheme.onSurface),
+                    secondDigitTextStyle: Theme.of(context)
+                        .textTheme
+                        .displayMedium!
+                        .copyWith(
+                            color: SharedConstants.primaryColor,
+                            fontWeight: FontWeight.w300),
+                    colon: Text(
+                      ":",
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineSmall!
+                          .copyWith(
+                              color: SharedConstants.primaryColor,
+                              fontWeight: FontWeight.w300),
                     ),
                   ),
                 ),
                 Expanded(
-                  flex: 3,
-                  child: DigitalClock(
-                    hourMinuteDigitTextStyle:
-                        Theme.of(context).textTheme.displayLarge,
-                    secondDigitTextStyle:
-                        Theme.of(context).textTheme.bodyMedium!.copyWith(
-                              color: SharedConstants.primaryColor,
-                            ),
-                    colon: Text(
-                      ":",
-                      style: Theme.of(context).textTheme.displayLarge!.copyWith(
-                            color: SharedConstants.primaryColor,
-                          ),
+                  flex: 1,
+                  child: IconButton(
+                    icon: Icon(
+                      iconData,
+                      size: Theme.of(context)
+                              .textTheme
+                              .headlineMedium!
+                              .fontSize! *
+                          1,
                     ),
+                    onPressed: () {
+                      controller.logoorLoginClick(pageIndex, 1);
+                    },
                   ),
                 ),
               ],

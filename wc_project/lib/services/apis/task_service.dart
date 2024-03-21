@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:wc_project/shared/constant_shared.dart';
-
 import '../../models/task_model.dart';
-class TaskService{
+
+class TaskService {
   static const String _baseUrl = SharedConstants.apiBaseUrl;
   // Task Save - Post Method
   Future<void> saveTask(Task task, String token) async {
@@ -22,6 +22,7 @@ class TaskService{
       throw Exception('Failed to save task');
     }
   }
+
   // Get Task with id - Get Method
   Future<Task> getTask(int id, String token) async {
     final url = Uri.parse('$_baseUrl${SharedConstants.taskGetwithId}$id');
@@ -40,6 +41,7 @@ class TaskService{
       throw Exception('Failed to get task');
     }
   }
+
   // Delete Task with id - Get Method
   Future<void> deleteTask(int id, String token) async {
     final url = Uri.parse('$_baseUrl${SharedConstants.taskDeletewithId}/$id');
@@ -54,6 +56,7 @@ class TaskService{
       throw Exception('Failed to delete task');
     }
   }
+
   // Get Task All - Get Method
   Future<List<Task>> getAllTask(String token) async {
     final url = Uri.parse('$_baseUrl${SharedConstants.taskGetAll}');
@@ -72,6 +75,7 @@ class TaskService{
       throw Exception('Failed to get all task');
     }
   }
+
   // ?Get Task AllRE - Get Method
   Future<List<Task>> getAllTaskRE(String token) async {
     final url = Uri.parse('$_baseUrl${SharedConstants.taskGetAllRE}');

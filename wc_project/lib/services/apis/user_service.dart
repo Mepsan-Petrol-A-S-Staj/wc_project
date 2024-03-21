@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:wc_project/shared/constant_shared.dart';
-
 import '../../models/user_model.dart';
 
 // User Login - Get Method

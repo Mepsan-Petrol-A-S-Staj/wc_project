@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:icons_plus/icons_plus.dart';
-
 import '../../../services/provider/all_provider.dart';
 import '../../../shared/constant_shared.dart';
 
@@ -23,15 +22,13 @@ class RatingContainerTabletandDesktopWidget extends StatelessWidget {
         int value = ref.watch(rateProvider);
         return Container(
           decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.primaryContainer,
-            borderRadius: BorderRadius.circular(
-              width * SharedConstants.largePadding,
-            ),
+            color: Theme.of(context).colorScheme.tertiary.withOpacity(.3),
+            borderRadius: BorderRadius.circular(40),
           ),
           child: Padding(
             padding: EdgeInsets.symmetric(
               vertical: width * SharedConstants.generalPadding,
-              horizontal: width * SharedConstants.mediumPadding * 2,
+              horizontal: width * SharedConstants.mediumPadding * 1.5,
             ),
             child: RatingStars(
               value: value.toDouble(),
@@ -41,10 +38,10 @@ class RatingContainerTabletandDesktopWidget extends StatelessWidget {
               starBuilder: (index, color) => Icon(
                 AntDesign.star_fill,
                 color: color,
-                size: width * SharedConstants.bigIconSize,
+                size: width * SharedConstants.bigIconSize * 1.1,
               ),
               starCount: SharedConstants.starCount,
-              starSize: width * SharedConstants.bigIconSize,
+              starSize: width * SharedConstants.bigIconSize * 1.2,
               maxValue: SharedConstants.starCount.toDouble(),
               starSpacing: 1,
               maxValueVisibility: true,

@@ -3,7 +3,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:wc_project/widgets/admin_page/adminanswer_widget.dart';
 import 'package:wc_project/widgets/admin_page/admindevice_widget.dart';
 import 'package:wc_project/widgets/admin_page/adminuser_widget.dart';
-
 import '../../shared/constant_shared.dart';
 import '../../widgets/admin_page/adminpagemain_widget.dart';
 import '../../widgets/admin_page/admintask_widget.dart';
@@ -67,32 +66,27 @@ class AdminPageController {
         ref.read(adminPageWidgetKey.notifier).state = key;
       },
       child: Card(
-        color: Theme.of(context).colorScheme.secondaryContainer,
-        key: ValueKey(key),
-        child: title != ''
-            ? Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    title,
-                    style: Theme.of(context).textTheme.displaySmall,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      top: height * SharedConstants.generalPadding,
-                    ),
-                    child: Icon(
-                      icondata,
-                      color: Theme.of(context).iconTheme.color,
-                    ),
-                  ),
-                ],
-              )
-            : Icon(
-                icondata,
-                color: Theme.of(context).iconTheme.color,
+          color: Theme.of(context).colorScheme.tertiaryContainer,
+          key: ValueKey(key),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                title,
+                style: Theme.of(context).textTheme.displaySmall!.copyWith(
+                    color: Theme.of(context).colorScheme.onTertiaryContainer),
               ),
-      ),
+              Padding(
+                padding: EdgeInsets.only(
+                  top: height * SharedConstants.generalPadding,
+                ),
+                child: Icon(
+                  icondata,
+                  color: Theme.of(context).colorScheme.onTertiaryContainer,
+                ),
+              ),
+            ],
+          )),
     );
   }
 }

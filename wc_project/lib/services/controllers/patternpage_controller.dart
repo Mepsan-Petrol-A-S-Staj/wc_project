@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
@@ -7,9 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:network_info_plus/network_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wc_project/pages/devicesave_page.dart';
-import 'package:wc_project/services/controllers/loginpage_controller.dart';
 import 'package:wc_project/widgets/taskpagefab_widget.dart';
-
 import '../../pages/admin_page.dart';
 import '../../pages/home_page.dart';
 import '../../pages/login_page.dart';

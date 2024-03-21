@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:wc_project/services/controllers/loginpage_controller.dart';
-
 import '../provider/all_provider.dart';
 
 class AppBarController {
@@ -25,6 +24,6 @@ class AppBarController {
   IconData appbarLoginorLogutButton() {
     bool isLogined = ref.watch(isLoginedProvider);
     debugPrint('isLogined: $isLogined');
-    return isLogined == true ? Icons.logout_outlined : Icons.login_outlined;
+    return isLogined == true ? Icons.logout_rounded : Icons.lock_outline;
   }
 }

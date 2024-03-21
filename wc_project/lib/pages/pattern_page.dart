@@ -3,11 +3,9 @@
 
 import 'dart:async';
 import 'package:flutter/material.dart';
-
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:wc_project/shared/constant_shared.dart';
 import 'package:wc_project/widgets/exitapp_widget.dart';
-
 import '../services/controllers/size_controller.dart';
 import '../services/provider/all_provider.dart';
 import '../services/controllers/patternpage_controller.dart';

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:icons_plus/icons_plus.dart';
-
 import '../../../services/provider/all_provider.dart';
 import '../../../shared/constant_shared.dart';
 
@@ -24,10 +23,8 @@ class RatingContainerMobileWidget extends StatelessWidget {
         int value = ref.watch(rateProvider);
         return Container(
           decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.primaryContainer,
-            borderRadius: BorderRadius.circular(
-              height * SharedConstants.largePadding,
-            ),
+            color: Theme.of(context).colorScheme.tertiary.withOpacity(.3),
+            borderRadius: BorderRadius.circular(40),
           ),
           child: Padding(
             padding: EdgeInsets.all(height * SharedConstants.generalPadding),
