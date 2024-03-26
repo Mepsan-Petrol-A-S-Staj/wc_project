@@ -33,7 +33,8 @@ class SharedConstants {
   static const String userSave = '/user/save'; // Users Save
   static const String userGetwithId = '/user/'; // Get user with Id
   static const String userEmployee = '/user/employee'; //? Users Employee
-  static const String userDeletewithId = '/user/delete/'; // Users Delete with Id
+  static const String userDeletewithId =
+      '/user/delete/'; // Users Delete with Id
   static const String userGetAll = '/user/all'; // Users Get All
   //----------------------------------------------------------------------------------------
   //* -> Task
@@ -77,7 +78,8 @@ class SharedConstants {
   //----------------------------------------------------------------------------------------
   static const String answerHintText = 'Lütfen yorumunuzu buraya yazınız.';
   static const String submitText = 'Gönder'; // Submit Text
-  static const String surveySendedPopText = 'Cevap Gönderildi';
+  static const String surveySendedPopText =
+      'Değerlendirme Gönderildi, \nTeşekkürler';
   //----------------------------------------------------------------------------------------
   //* -> Login Page
   //----------------------------------------------------------------------------------------

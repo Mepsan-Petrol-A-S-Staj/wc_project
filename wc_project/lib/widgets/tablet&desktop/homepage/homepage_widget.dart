@@ -70,6 +70,7 @@ class HomePageTabletandDesktopWidget extends StatelessWidget {
                             padding: EdgeInsets.only(
                                 top: height * SharedConstants.generalPadding),
                             child: Text(
+                              textAlign: TextAlign.center,
                               SharedConstants.surveySendedPopText,
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.primary,
