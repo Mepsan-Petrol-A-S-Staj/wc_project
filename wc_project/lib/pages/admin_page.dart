@@ -23,12 +23,17 @@ class AdminPage extends StatelessWidget {
     SizeController sizeController = SizeController(
         height: mediaQueryData.size.height, width: mediaQueryData.size.width);
     int screenType = sizeController.getScreenType(mediaQueryData);
+
     return Consumer(builder: (context, ref, child) {
+      String deviceValue = ref.watch(selectedDevice);
+      String token = ref.watch(tokenProvider);
       AdminPageController adminPageController = AdminPageController(
         height: mediaQueryData.size.height,
         width: mediaQueryData.size.width,
         ref: ref,
         screenType: screenType,
+        device: deviceValue,
+        token: token,
       );
       String widgetKey = ref.watch(adminPageWidgetKey);
       return Column(
@@ -43,9 +48,9 @@ class AdminPage extends StatelessWidget {
               Padding(
                 padding:
                     EdgeInsets.only(left: width * SharedConstants.largePadding),
-                child: DropdownButton<String>(
+                // child: adminPageController.buildDeviceList(context),
+                child: DropdownButton(
                   // items: deviceList.map((String value) {return DropdownMenuItem<String>(value: value,child: Text(value),);}).toList(),
-
                   items: [
                     DropdownMenuItem(
                       value: 'device1',
@@ -54,11 +59,20 @@ class AdminPage extends StatelessWidget {
                         style: Theme.of(context).textTheme.displaySmall,
                       ),
                     ),
+                    DropdownMenuItem(
+                      value: 'device2',
+                      child: Text(
+                        'device2',
+                        style: Theme.of(context).textTheme.displaySmall,
+                      ),
+                    ),
                   ],
                   onChanged: (String? value) {
-                    // ref.read(selectedDevice.notifier).state = value!;
+                    ref.read(selectedDevice.notifier).update((state) => value!);
+                    debugPrint('Selected Device: $value');
+                    // value = ref.read(selectedDevice);
                   },
-                  value: 'device1',
+                  value: deviceValue,
                 ),
               ),
             ],

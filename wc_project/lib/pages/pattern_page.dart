@@ -77,7 +77,7 @@ class _PatternPageState extends ConsumerState<PatternPage> {
           onPopInvoked: (didPop) async {
             if (pageIndex == 0 || pageIndex == 3) {
               await ExitAppWidget.exitAppShowDialog(context);
-            } else if ((pageIndex == 4 && adminPageKey != "main")) {
+            } else if ((pageIndex == 4 &&( adminPageKey != "main" ||  adminPageKey != "taskedit"))) {
               ref.read(adminPageWidgetKey.notifier).update((state) => 'main');
             } else {
               ref.read(pageIndexProvider.notifier).update((state) => 0);

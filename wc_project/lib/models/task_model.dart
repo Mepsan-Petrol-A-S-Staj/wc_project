@@ -1,6 +1,5 @@
 class Task {
-  final String name;
-  final String frequency;
+  final String name, frequency;
 
   Task({
     required this.name,

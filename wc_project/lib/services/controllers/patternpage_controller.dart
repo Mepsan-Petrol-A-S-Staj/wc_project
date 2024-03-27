@@ -91,6 +91,7 @@ class PatternPageController {
             child: DeviceSavePage(height: height, width: width));
       case 4:
         return AdminPage(height: height, width: width);
+
       default:
         return Container();
     }

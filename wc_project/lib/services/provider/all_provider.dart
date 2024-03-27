@@ -4,7 +4,7 @@ final firstAppProvider = StateProvider<bool>((ref) => false);
 final pageIndexProvider = StateProvider<int>((ref) => 0);
 final rateProvider = StateProvider<int>((ref) => 1);
 final deviceIpAdressProvider = StateProvider<String>((ref) => '');
-final selectedDevice = StateProvider<String>((ref) => '');
+final selectedDevice = StateProvider<String>((ref) => 'device1');
 final afkTimeCounter = StateProvider<int>((ref) => 0);
 final tokenProvider = StateProvider<String>((ref) => '');
 final userIdProvider = StateProvider<int>((ref) => 0);
@@ -13,4 +13,5 @@ final isLoginedProvider = StateProvider<bool>((ref) => false);
 final screenTypeProvider = StateProvider<int>((ref) => 0);
 final adminPageWidgetKey = StateProvider<String>((ref) => 'main');
 
-
+final adminPageSelectedDevice = StateProvider<String>((ref) => '');
+final adminPageSelectedTask = StateProvider<String>((ref) => '');
