@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:wc_project/pages/admin_page.dart';
 
-import '../../services/controllers/adminpage_controller.dart';
+import '../../services/controllers/pages/adminpage_controller.dart';
+// ignore: unused_import
 import '../../services/provider/all_provider.dart';
 
 class AdminTaskEditWidget extends StatelessWidget {
@@ -19,9 +19,22 @@ class AdminTaskEditWidget extends StatelessWidget {
       width: 0,
       ref: ref,
       screenType: 0,
-      device: '',
       token: '',
     );
-    return adminPageController.adminBuildPage('taskedit');
+
+    return FutureBuilder<Widget>(
+      future: adminPageController.adminBuildPage('taskedit'),
+      builder: (BuildContext context, AsyncSnapshot<Widget> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const CircularProgressIndicator();
+        } else {
+          if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else {
+            return snapshot.data ?? const SizedBox(); // widget here
+          }
+        }
+      },
+    );
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:wc_project/services/controllers/taskpage_controller.dart';
+import 'package:wc_project/services/controllers/pages/taskpage_controller.dart';
 import 'package:wc_project/shared/constant_shared.dart';
 
 class TaskPage extends ConsumerWidget {

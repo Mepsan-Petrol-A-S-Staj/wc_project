@@ -4,7 +4,7 @@ import 'package:wc_project/services/controllers/size_controller.dart';
 import 'package:wc_project/shared/constant_shared.dart';
 import 'package:wc_project/shared/list_shared.dart';
 
-import '../services/controllers/loginpage_controller.dart';
+import '../services/controllers/pages/loginpage_controller.dart';
 import '../services/provider/all_provider.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
@@ -162,11 +162,18 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     );
   }
 
-  void _submit(LoginPageController controller) {
-    String username = usernameController.text;
-    // String password = passwordController.text;
-    int index = username == "admin" ? 4 : 2;
-    ref.read(pageIndexProvider.notifier).update((state) => index);
-    controller.login();
+  void _submit(LoginPageController controller) async {
+    String username = usernameController.text,
+        password = passwordController.text;
+    LoginResult result = await controller.login(username, password);
+    if (result == LoginResult.userNotFound) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(SharedConstants.userNotFounded),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    }
+
   }
 }

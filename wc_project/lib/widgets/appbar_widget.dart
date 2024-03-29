@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:slide_digital_clock/slide_digital_clock.dart';
-import '../services/controllers/appbar_controller.dart';
+import '../services/controllers/widgets/appbar_controller.dart';
+import '../services/controllers/device_controller.dart';
 import '../shared/constant_shared.dart';
 
 class AppBarWidget extends StatelessWidget {
@@ -24,6 +25,14 @@ class AppBarWidget extends StatelessWidget {
     AppBarController controller = AppBarController(ref: ref);
 
     return Consumer(builder: (context, ref, child) {
+      DeviceController deviceController = DeviceController(ref: ref);
+      bool isDeviceSaved = false;
+      void fetchDeviceSetup() async {
+        isDeviceSaved = await deviceController.getDeviceSetupStatus();
+      }
+
+      fetchDeviceSetup();
+
       // int screenType = sizeController.getScreenType(mediaQueryData);
       IconData iconData = controller.appbarLoginorLogutButton();
       return Row(
@@ -44,7 +53,11 @@ class AppBarWidget extends StatelessWidget {
                 //     : height * SharedConstants.bigSize * 1.1,
               ),
               onTap: () {
-                controller.logoorLoginClick(pageIndex, 0);
+                if (pageIndex == 1 && isDeviceSaved == false) {
+                  null;
+                } else {
+                  controller.logoorLoginClick(pageIndex, 0);
+                }
               },
             ),
           ),

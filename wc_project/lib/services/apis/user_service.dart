@@ -18,15 +18,17 @@ class AuthService {
         headers: {"Content-Type": "application/json"},
         body: body,
       );
-
+      debugPrint('Response: ${response.body}');
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
         final data = responseData['data'];
-        final id = data['id'];
+        // final isAdmin = data['isAdmin'];
         final token = data['token'];
-        return {'id': id, 'token': token};
+        // return {'id': isAdmin, 'token': token};
+        debugPrint('Token: $token');
+        return {'token': token};
       } else {
-        return {'id': 0, 'token': ''};
+        return {'token': ''};
       }
     } catch (e) {
       debugPrint('Exception occurred while logging in: $e');

@@ -4,15 +4,11 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wc_project/shared/constant_shared.dart';
 import 'package:wc_project/shared/list_shared.dart';
-import '../services/controllers/devicesavepage_controller.dart';
+import '../services/controllers/pages/devicesavepage_controller.dart';
 import '../services/provider/all_provider.dart';
 
 class DeviceSavePage extends ConsumerStatefulWidget {
-  final double height, width;
-
   const DeviceSavePage({
-    required this.height,
-    required this.width,
     super.key,
   });
 
@@ -45,10 +41,12 @@ class _DeviceSavePageState extends ConsumerState<DeviceSavePage> {
 
   @override
   Widget build(BuildContext context) {
+    MediaQueryData mediaQuery = MediaQuery.of(context);
+    double height = mediaQuery.size.height, width = mediaQuery.size.width;
     return Padding(
       padding: EdgeInsets.symmetric(
-        horizontal: widget.width * SharedConstants.bigPadding,
-        vertical: widget.height * SharedConstants.generalPadding,
+        horizontal: width * SharedConstants.bigPadding,
+        vertical: height * SharedConstants.generalPadding,
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -63,7 +61,7 @@ class _DeviceSavePageState extends ConsumerState<DeviceSavePage> {
           ),
           Padding(
             padding: EdgeInsets.only(
-              top: widget.height * SharedConstants.generalPadding,
+              top: height * SharedConstants.generalPadding,
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -74,18 +72,18 @@ class _DeviceSavePageState extends ConsumerState<DeviceSavePage> {
                     decoration: BoxDecoration(
                       color: Theme.of(context).colorScheme.primaryContainer,
                       borderRadius: BorderRadius.circular(
-                        widget.height * SharedConstants.mediumSize,
+                        height * SharedConstants.mediumSize,
                       ),
                     ),
                     child: Padding(
                       padding: EdgeInsets.all(
-                          widget.height * SharedConstants.generalPadding * 2),
+                          height * SharedConstants.generalPadding * 2),
                       child: DropdownButton(
                         dropdownColor:
                             Theme.of(context).colorScheme.tertiaryContainer,
-                        itemHeight: widget.width > widget.height
-                            ? widget.width * SharedConstants.bigSize
-                            : widget.height * SharedConstants.bigSize,
+                        itemHeight: width > height
+                            ? width * SharedConstants.bigSize
+                            : height * SharedConstants.bigSize,
                         isDense: true,
                         hint: selectedValue == 'emptyfloor'
                             ? const Text('Kat Seçin')
@@ -94,15 +92,15 @@ class _DeviceSavePageState extends ConsumerState<DeviceSavePage> {
                         icon: selectedValue == 'emptyfloor'
                             ? SvgPicture.asset(
                                 "assets/icons/emptyfloor.svg",
-                                height: widget.height * SharedConstants.bigSize,
+                                height: height * SharedConstants.bigSize,
                               )
                             : SvgPicture.asset(
                                 "assets/icons/$selectedValue.svg",
-                                height: widget.height * SharedConstants.bigSize,
+                                height: height * SharedConstants.bigSize,
                               ),
-                        iconSize: widget.height * SharedConstants.bigSize,
+                        iconSize: height * SharedConstants.bigSize,
                         borderRadius: BorderRadius.circular(
-                          widget.height * SharedConstants.generalPadding,
+                          height * SharedConstants.generalPadding,
                         ),
                         underline: const Text(''),
                         items: [
@@ -158,14 +156,13 @@ class _DeviceSavePageState extends ConsumerState<DeviceSavePage> {
                     decoration: BoxDecoration(
                       color: Theme.of(context).colorScheme.tertiaryContainer,
                       borderRadius: BorderRadius.circular(
-                        widget.height * SharedConstants.generalSize,
+                        height * SharedConstants.generalSize,
                       ),
                     ),
                     child: Padding(
                       padding: EdgeInsets.symmetric(
                         vertical: 20,
-                        horizontal:
-                            widget.width * SharedConstants.generalPadding,
+                        horizontal: width * SharedConstants.generalPadding,
                       ),
                       child: TextField(
                         cursorColor: Theme.of(context).colorScheme.tertiary,
@@ -196,7 +193,7 @@ class _DeviceSavePageState extends ConsumerState<DeviceSavePage> {
           ),
           Padding(
             padding: EdgeInsets.only(
-              top: widget.height * SharedConstants.generalPadding,
+              top: height * SharedConstants.generalPadding,
             ),
             child: ElevatedButton(
               style: ButtonStyle(

@@ -3,8 +3,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:wc_project/services/controllers/size_controller.dart';
 import 'package:wc_project/widgets/mobile/homepage/homepage_widget.dart';
 import 'package:wc_project/widgets/tablet&desktop/homepage/homepage_widget.dart';
-import '../../widgets/mobile/homepage/ratingcontainer_widget.dart';
-import '../../widgets/tablet&desktop/homepage/ratingcontainer_widget.dart';
+import '../../../widgets/mobile/homepage/ratingcontainer_widget.dart';
+import '../../../widgets/tablet&desktop/homepage/ratingcontainer_widget.dart';
 
 class HomePageController {
   final MediaQueryData mediaQueryData;

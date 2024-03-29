@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../services/controllers/adminpage_controller.dart';
+import '../../services/controllers/pages/adminpage_controller.dart';
 import '../../shared/constant_shared.dart';
 import '../../shared/list_shared.dart';
 

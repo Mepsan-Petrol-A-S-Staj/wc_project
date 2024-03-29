@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:wc_project/shared/constant_shared.dart';
 import 'package:wc_project/shared/list_shared.dart';
-import '../services/controllers/homepage_controller.dart';
+import '../services/controllers/pages/homepage_controller.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({

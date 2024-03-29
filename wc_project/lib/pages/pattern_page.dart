@@ -1,14 +1,9 @@
-// library pattern_page;
-// export 'admin_page.dart';
-
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:wc_project/shared/constant_shared.dart';
-import 'package:wc_project/widgets/exitapp_widget.dart';
 import '../services/controllers/size_controller.dart';
 import '../services/provider/all_provider.dart';
-import '../services/controllers/patternpage_controller.dart';
+import '../services/controllers/pages/patternpage_controller.dart';
 import '../widgets/appbar_widget.dart';
 
 class PatternPage extends ConsumerStatefulWidget {
@@ -25,13 +20,18 @@ class PatternPage extends ConsumerStatefulWidget {
 }
 
 class _PatternPageState extends ConsumerState<PatternPage> {
-  // late StreamSubscription<bool> keyboardSubscription;
   late int pageIndex;
-  String ipAddress = "";
+  late String ipAddress;
+  late PatternPageController patternPageController;
 
   @override
   void initState() {
+    patternPageController = PatternPageController(
+      ref: ref,
+    );
+    patternPageController.sharedPreferanceStart();
     pageIndex = 0;
+    ipAddress = '';
     super.initState();
   }
 
@@ -43,48 +43,22 @@ class _PatternPageState extends ConsumerState<PatternPage> {
   @override
   Widget build(BuildContext context) {
     MediaQueryData mediaQueryData = MediaQuery.of(context);
-    Future<void> updateIpAddress(WidgetRef ref) async {
-      const Duration updateInterval = Duration(minutes: 5);
-      while (true) {
-        await Future.delayed(updateInterval);
-        if (mounted) {
-          ipAddress = await PatternPageController(
-                  height: widget.height, width: widget.width, ref: ref)
-              .getIpAddress();
-        }
-      }
-    }
-
-    PatternPageController patternPageController = PatternPageController(
-      height: widget.height,
-      width: widget.width,
-      ref: ref,
-    );
-    patternPageController.sharedPreferanceStart();
-    updateIpAddress(ref);
     SizeController sizeController = SizeController(
       height: mediaQueryData.size.height,
       width: mediaQueryData.size.width,
     );
+
+    patternPageController.updateIpAddress();
+
     pageIndex = ref.watch(pageIndexProvider);
+
     return Consumer(
       builder: (context, ref, child) {
         int deviceType = sizeController.getScreenType(mediaQueryData);
-        String adminPageKey = ref.watch(adminPageWidgetKey);
-        debugPrint("adminPageKey: $adminPageKey");
+        
         return PopScope(
           canPop: false,
-          onPopInvoked: (didPop) async {
-            if (pageIndex == 0 || pageIndex == 3) {
-              await ExitAppWidget.exitAppShowDialog(context);
-            } else if ((pageIndex == 4 &&( adminPageKey != "main" ||  adminPageKey != "taskedit"))) {
-              ref.read(adminPageWidgetKey.notifier).update((state) => 'main');
-            } else {
-              ref.read(pageIndexProvider.notifier).update((state) => 0);
-
-              // ref.read(adminPageKey).update("main");
-            }
-          },
+          onPopInvoked: patternPageController.onPopInvoked,
           child: Scaffold(
             extendBody: true,
             body: SafeArea(
@@ -92,7 +66,7 @@ class _PatternPageState extends ConsumerState<PatternPage> {
                 padding: EdgeInsets.symmetric(
                   horizontal: deviceType > 0
                       ? widget.width * SharedConstants.generalPadding
-                      : widget.height * SharedConstants.generalPadding,
+                      : widget.width * SharedConstants.mediumPadding,
                 ),
                 child: Column(
                   children: [

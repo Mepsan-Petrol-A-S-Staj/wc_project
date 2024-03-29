@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:wc_project/services/controllers/size_controller.dart';
 import 'package:wc_project/shared/constant_shared.dart';
-import '../services/controllers/adminpage_controller.dart';
+import '../services/controllers/pages/adminpage_controller.dart';
 import '../services/provider/all_provider.dart';
 
 class AdminPage extends StatelessWidget {
@@ -25,58 +25,20 @@ class AdminPage extends StatelessWidget {
     int screenType = sizeController.getScreenType(mediaQueryData);
 
     return Consumer(builder: (context, ref, child) {
-      String deviceValue = ref.watch(selectedDevice);
+      
       String token = ref.watch(tokenProvider);
       AdminPageController adminPageController = AdminPageController(
         height: mediaQueryData.size.height,
         width: mediaQueryData.size.width,
         ref: ref,
         screenType: screenType,
-        device: deviceValue,
+        
         token: token,
       );
       String widgetKey = ref.watch(adminPageWidgetKey);
       return Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text(
-                "Cihaz : ",
-                style: Theme.of(context).textTheme.displayLarge,
-              ),
-              Padding(
-                padding:
-                    EdgeInsets.only(left: width * SharedConstants.largePadding),
-                // child: adminPageController.buildDeviceList(context),
-                child: DropdownButton(
-                  // items: deviceList.map((String value) {return DropdownMenuItem<String>(value: value,child: Text(value),);}).toList(),
-                  items: [
-                    DropdownMenuItem(
-                      value: 'device1',
-                      child: Text(
-                        'device1',
-                        style: Theme.of(context).textTheme.displaySmall,
-                      ),
-                    ),
-                    DropdownMenuItem(
-                      value: 'device2',
-                      child: Text(
-                        'device2',
-                        style: Theme.of(context).textTheme.displaySmall,
-                      ),
-                    ),
-                  ],
-                  onChanged: (String? value) {
-                    ref.read(selectedDevice.notifier).update((state) => value!);
-                    debugPrint('Selected Device: $value');
-                    // value = ref.read(selectedDevice);
-                  },
-                  value: deviceValue,
-                ),
-              ),
-            ],
-          ),
+          
           Padding(
             padding: EdgeInsets.symmetric(
                 vertical: height * SharedConstants.generalPadding),
@@ -95,10 +57,23 @@ class AdminPage extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: adminPageController.adminBuildPage(widgetKey),
-          ),
+              child: FutureBuilder<Widget>(
+            future: adminPageController.adminBuildPage(widgetKey),
+            builder: (BuildContext context, AsyncSnapshot<Widget> snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const CircularProgressIndicator();
+              } else {
+                if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                } else {
+                  return snapshot.data ?? const SizedBox(); // widget here
+                }
+              }
+            },
+          )),
         ],
       );
     });
   }
 }
+

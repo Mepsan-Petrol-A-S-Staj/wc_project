@@ -58,8 +58,7 @@ class MyApp extends StatelessWidget {
         '/homepage': (context) => const HomePage(),
         '/loginpage': (context) => LoginPage(height: height, width: width),
         '/taskpage': (context) => const TaskPage(),
-        '/devicesavepage': (context) =>
-            DeviceSavePage(height: height, width: width),
+        '/devicesavepage': (context) => const DeviceSavePage(),
       },
       initialRoute: '/',
     );

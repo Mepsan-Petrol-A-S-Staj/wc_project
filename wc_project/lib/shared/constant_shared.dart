@@ -21,8 +21,8 @@ class SharedConstants {
   //----------------------------------------------------------------------------------------
   //? Api Routes
   //----------------------------------------------------------------------------------------
-  static const String apiBaseUrl =
-      'http://192.168.137.101:8090/api'; // Base Url
+  static const String apiBaseUrl = 'http://192.168.101.17:8085/api'; // Base Url
+
   //----------------------------------------------------------------------------------------
   //* -> Auth
   //----------------------------------------------------------------------------------------
@@ -87,6 +87,8 @@ class SharedConstants {
   static const String registerText = 'Kayıt Ol'; // Register Text
   static const String forgotPasswordText =
       'Şifremi Unuttum'; // Forgot Password Text
+  static const String userNotFounded =
+      'Kullanıcı Bulunamadı veya şifre yalış'; // Login Page Title
   //----------------------------------------------------------------------------------------
   //* -> Task Page
   //----------------------------------------------------------------------------------------

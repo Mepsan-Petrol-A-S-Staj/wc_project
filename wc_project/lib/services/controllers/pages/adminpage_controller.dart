@@ -1,32 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wc_project/widgets/admin_page/adminanswer_widget.dart';
 import 'package:wc_project/widgets/admin_page/admindevice_widget.dart';
 import 'package:wc_project/widgets/admin_page/adminuser_widget.dart';
-import '../../shared/constant_shared.dart';
-import '../../widgets/admin_page/adminpagemain_widget.dart';
-import '../../widgets/admin_page/admintask_widget.dart';
-import '../../widgets/admin_page/admintaskedit_widget.dart';
-import '../apis/device_service.dart';
-import '../apis/task-devicecon_service.dart';
-import '../provider/all_provider.dart';
+import '../../../pages/devicesave_page.dart';
+import '../../../shared/constant_shared.dart';
+import '../../../widgets/admin_page/adminpagedeviceselect_widget.dart';
+import '../../../widgets/admin_page/adminpagemain_widget.dart';
+import '../../../widgets/admin_page/admintask_widget.dart';
+import '../../../widgets/admin_page/admintaskedit_widget.dart';
+import '../../apis/device_service.dart';
+import '../../apis/task-devicecon_service.dart';
+import '../../provider/all_provider.dart';
 // import 'package:wc_project/services/apis/device_service.dart';
 
 class AdminPageController {
   final double height, width;
   final WidgetRef ref;
   final int screenType;
-  final String device;
+
   final String token;
   AdminPageController({
     required this.height,
     required this.width,
     required this.ref,
     required this.screenType,
-    required this.device,
     required this.token,
   });
-  
+
   // Get device list
   Future<List<String>> getDeviceList() async {
     String token = ref.watch(tokenProvider);
@@ -57,8 +59,35 @@ class AdminPageController {
     }
   }
 
-  Widget adminBuildPage(String widgetKey) {
+  Future<bool> getDeviceSetupStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool isDeviceSaved =
+        prefs.getBool(SharedConstants.preferanceDeviceSavedControllText) ??
+            false;
+
+    return isDeviceSaved;
+  }
+
+  Future<Widget> adminBuildSecondAppBar() async {
+    bool isDeviceSaved = await getDeviceSetupStatus();
+    String deviceValue = ref.read(selectedDevice);
+
+    if (isDeviceSaved) {
+      return AdminPageDeviceSelectWidget(
+          width: width, deviceValue: deviceValue, ref: ref);
+    } else {
+      return const DeviceSavePage();
+    }
+  }
+
+  Future<Widget> adminBuildPage(String widgetKey) async {
+    bool isDeviceSaved = await getDeviceSetupStatus();
+    if (isDeviceSaved == false) {
+      widgetKey = 'savedevice';
+    }
     switch (widgetKey) {
+      case 'savedevice':
+        return const DeviceSavePage();
       case 'main':
         ref.read(adminPageWidgetKey.notifier).state = 'main';
         return AdminPageMainWidget(
@@ -121,6 +150,7 @@ class AdminPageController {
   }
 
   Widget buildDeviceList(BuildContext context) {
+    String device = ref.read(selectedDevice);
     return FutureBuilder(
       future: getDeviceList(),
       builder: (context, snapshot) {
