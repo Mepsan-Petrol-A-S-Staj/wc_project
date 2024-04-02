@@ -1,6 +1,4 @@
 // Main Libs
-import 'dart:js';
-
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -30,12 +28,11 @@ class PatternPageController {
 
   // Device Saved Controll Function
   Future<void> sharedPreferanceStart() async {
-    int isDeviceSaved = 0;
+    bool isDeviceSaved = false;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     isDeviceSaved =
-        prefs.getBool(SharedConstants.preferanceDeviceSavedControllText) == true
-            ? 1
-            : 0;
+        prefs.getBool(SharedConstants.preferanceDeviceSavedControllText) ??
+            false;
     ref.read(isDeviceSavedProvider.notifier).update((state) => isDeviceSaved);
     debugPrint("isDeviceSaved durumu: $isDeviceSaved");
     isDeviceSaved == 1

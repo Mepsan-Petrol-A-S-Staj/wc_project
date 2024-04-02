@@ -4,6 +4,7 @@ import 'package:wc_project/services/controllers/size_controller.dart';
 import 'package:wc_project/shared/constant_shared.dart';
 import '../services/controllers/pages/adminpage_controller.dart';
 import '../services/provider/all_provider.dart';
+import '../widgets/admin_page/adminpagedeviceselect_widget.dart';
 
 class AdminPage extends StatelessWidget {
   final double height, width;
@@ -25,20 +26,29 @@ class AdminPage extends StatelessWidget {
     int screenType = sizeController.getScreenType(mediaQueryData);
 
     return Consumer(builder: (context, ref, child) {
-      
-      String token = ref.watch(tokenProvider);
       AdminPageController adminPageController = AdminPageController(
         height: mediaQueryData.size.height,
         width: mediaQueryData.size.width,
         ref: ref,
         screenType: screenType,
-        
-        token: token,
       );
       String widgetKey = ref.watch(adminPageWidgetKey);
       return Column(
         children: [
-          
+          FutureBuilder<Widget>(
+            future: adminPageController.adminBuildSecondAppBar(),
+            builder: (BuildContext context, AsyncSnapshot<Widget> snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const CircularProgressIndicator();
+              } else {
+                if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                } else {
+                  return snapshot.data ?? const SizedBox(); // widget here
+                }
+              }
+            },
+          ),
           Padding(
             padding: EdgeInsets.symmetric(
                 vertical: height * SharedConstants.generalPadding),
@@ -57,23 +67,23 @@ class AdminPage extends StatelessWidget {
             ),
           ),
           Expanded(
-              child: FutureBuilder<Widget>(
-            future: adminPageController.adminBuildPage(widgetKey),
-            builder: (BuildContext context, AsyncSnapshot<Widget> snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const CircularProgressIndicator();
-              } else {
-                if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
+            child: FutureBuilder<Widget>(
+              future: adminPageController.adminBuildPage(widgetKey),
+              builder: (BuildContext context, AsyncSnapshot<Widget> snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator();
                 } else {
-                  return snapshot.data ?? const SizedBox(); // widget here
+                  if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  } else {
+                    return snapshot.data ?? const SizedBox(); // widget here
+                  }
                 }
-              }
-            },
-          )),
+              },
+            ),
+          ),
         ],
       );
     });
   }
 }
-

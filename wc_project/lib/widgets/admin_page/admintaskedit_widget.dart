@@ -19,7 +19,6 @@ class AdminTaskEditWidget extends StatelessWidget {
       width: 0,
       ref: ref,
       screenType: 0,
-      token: '',
     );
 
     return FutureBuilder<Widget>(

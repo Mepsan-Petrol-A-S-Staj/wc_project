@@ -7,6 +7,7 @@ import '../device_controller.dart';
 
 enum LoginResult {
   success,
+  notunauthorized,
   incorrectPassword,
   userNotFound,
 }
@@ -17,12 +18,11 @@ class LoginPageController {
   Future<bool> userCheck(String userName, String userPassword) async {
     Map<String, dynamic> response =
         await AuthService().login(userName, userPassword);
-    // if (value['isAdmin'] != 0 && value['token'] != '') {
-    if (response['token'] != '') {
-      // ref.read(userIsAdmin.notifier).update((state) => value['isAdmin']);
-      ref
-          .read(tokenProvider.notifier)
-          .update((state) => response['token'].toString());
+    if (response['success'] == true) {
+      // Updae the provider values
+      ref.read(userIdProvider.notifier).update((state) => response['id']);
+      ref.read(tokenProvider.notifier).update((state) => response['token']);
+      ref.read(userIsAdmin.notifier).update((state) => response['isAdmin']);
       debugPrint('\nToken: ${response['token']}'); // User id: ${value['id']}
       return true;
     } else {
@@ -30,37 +30,44 @@ class LoginPageController {
     }
   }
 
-  Future<LoginResult> login(
-    String userName,
-    String userPassword,
-  ) async {
-    int index = 0;
+  Future<LoginResult> login(String userName, String userPassword) async {
+    int index = 1;
     DeviceController deviceController = DeviceController(ref: ref);
     late bool isSetup;
-    if (userName == "admin" && userPassword == "adminPassword") {
+    bool isUser = await userCheck(userName, userPassword);
+    debugPrint('Is User: $isUser');
+    if (isUser) {
       isSetup = await deviceController.getDeviceSetupStatus();
-      index = isSetup ? 2 : 3;
+      bool isAdmin = ref.watch(userIsAdmin);
+      if (isSetup == false) {
+        // If the device is not set up
+        if (isAdmin) {
+          index = 3;
+        } else {
+          return LoginResult.notunauthorized;
+        }
+      } else {
+        // If the device is set up
+        if (isAdmin) {
+          index = 4;
+        } else {
+          index = 2;
+        }
+      }
       ref.read(pageIndexProvider.notifier).update((state) => index);
       ref.read(isLoginedProvider.notifier).update((state) => true);
       return LoginResult.success;
     } else {
-      bool isUser = await userCheck(userName, userPassword);
-      debugPrint('Is User: $isUser');
-      if (isUser) {
-        isSetup = await deviceController.getDeviceSetupStatus();
-        index = isSetup ? 2 : 3;
-        ref.read(pageIndexProvider.notifier).update((state) => index);
-        ref.read(isLoginedProvider.notifier).update((state) => true);
-        return LoginResult.success;
-      } else {
-        debugPrint('User not found');
-        return LoginResult.userNotFound;
-      }
+      debugPrint('User not found');
+      return LoginResult.userNotFound;
     }
   }
 
   void logout() {
     ref.watch(isLoginedProvider.notifier).update((state) => false);
+    ref.watch(userIsAdmin.notifier).update((state) => false);
+    ref.watch(userIdProvider.notifier).update((state) => 0);
+    ref.watch(tokenProvider.notifier).update((state) => '');
   }
 
   void isAFK() async {

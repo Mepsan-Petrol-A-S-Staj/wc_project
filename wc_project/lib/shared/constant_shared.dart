@@ -22,6 +22,8 @@ class SharedConstants {
   //? Api Routes
   //----------------------------------------------------------------------------------------
   static const String apiBaseUrl = 'http://192.168.101.17:8085/api'; // Base Url
+  static const String apiBaseUrlV2 =
+      'http://192.168.101.17:8085/api/v2'; // Base Url
 
   //----------------------------------------------------------------------------------------
   //* -> Auth
@@ -94,9 +96,16 @@ class SharedConstants {
   //----------------------------------------------------------------------------------------
   static const String taskPageTitle = 'Görevler'; // Task Page Title
   //----------------------------------------------------------------------------------------
+  //* -> Device Save Page
+  //----------------------------------------------------------------------------------------
+  static const String deviceSavedSuccessText = 'Cihaz Kaydedildi.';
+  static const String deviceSavedErrorText = 'Cihaz Kaydedilemedi!';
+  //----------------------------------------------------------------------------------------
+
   //? Other
   //----------------------------------------------------------------------------------------
   static const preferanceDeviceSavedControllText = "isDeviceSaved";
+  static const preferaceDeviceName = "deviceName";
   //----------------------------------------------------------------------------------------
 
   //!----------------------------------------------------------------------------------------

@@ -88,7 +88,7 @@ class _DeviceSavePageState extends ConsumerState<DeviceSavePage> {
                         hint: selectedValue == 'emptyfloor'
                             ? const Text('Kat Seçin')
                             : Text(
-                                'Kat: ${pageController.getFloorInt(selectedValue)}'),
+                                'Kat: ${pageController.getFloorString(selectedValue)}'),
                         icon: selectedValue == 'emptyfloor'
                             ? SvgPicture.asset(
                                 "assets/icons/emptyfloor.svg",
@@ -140,7 +140,8 @@ class _DeviceSavePageState extends ConsumerState<DeviceSavePage> {
                         onChanged: (value) {
                           setState(() {
                             selectedValue = pageController
-                                .getSelectedValue(value ?? 'empty');
+                                .getSelectedfloorValue(value.toString());
+                            debugPrint('selectedValue: $selectedValue');
                           });
                         },
                       ),
@@ -181,9 +182,6 @@ class _DeviceSavePageState extends ConsumerState<DeviceSavePage> {
                                       .onTertiaryContainer),
                           border: InputBorder.none,
                         ),
-                        onSubmitted: (_) {
-                          _submit();
-                        },
                       ),
                     ),
                   ),
@@ -202,7 +200,11 @@ class _DeviceSavePageState extends ConsumerState<DeviceSavePage> {
                 ),
               ),
               onPressed: () async {
-                _submit();
+                bool deviceSavedStatus = await _submit(
+                    selectedValue, controller.text, height, width);
+                // TODO: implement showDialogFunc!
+                // ignore: use_build_context_synchronously
+                showDialogFunc(deviceSavedStatus, height, width, context);
               },
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -220,12 +222,68 @@ class _DeviceSavePageState extends ConsumerState<DeviceSavePage> {
     );
   }
 
-  void _submit() async {
-    await prefs.setString('devicenum', selectedValue);
-    await prefs.setBool('isDeviceSaved', true);
+  Future<bool> _submit(
+      String floorValue, String extraValue, double height, double width) async {
+    bool isDeviceSaved =
+        await pageController.deviceProviderService(floorValue, extraValue);
+    int index = 1;
+    isDeviceSaved ? index = 0 : null;
+    return index == 0 ? true : false;
+    // showDialogFunc(index, height, width);
+    // ref.read(pageIndexProvider.notifier).update((state) => index);
+  }
 
-    int index = 0;
-    ref.read(pageIndexProvider.notifier).update((state) => index);
+  void showDialogFunc(bool deviceSavedStatus, double height, double width,
+      BuildContext context) async {
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (context) {
+        return PopScope(
+          canPop: false,
+          child: AlertDialog(
+            backgroundColor: Theme.of(context).colorScheme.tertiaryContainer,
+            title: Column(
+              children: [
+                Icon(
+                  deviceSavedStatus
+                      ? Icons.task_alt_outlined
+                      : Icons.error_outline,
+                  size: height > width
+                      ? width * SharedConstants.bigSize
+                      : height * SharedConstants.bigSize,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(
+                      top: height * SharedConstants.generalPadding),
+                  child: Text(
+                    textAlign: TextAlign.center,
+                    deviceSavedStatus
+                        ? SharedConstants.deviceSavedSuccessText
+                        : SharedConstants.deviceSavedErrorText,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+    Future.delayed(
+      const Duration(
+        seconds: SharedConstants.timerPopup,
+      ),
+      () {
+        deviceSavedStatus
+            ? ref.read(pageIndexProvider.notifier).update((state) => 0)
+            : null;
+        Navigator.of(context).pop();
+      },
+    );
   }
 
   @override

@@ -4,11 +4,12 @@ import 'package:http/http.dart' as http;
 import 'package:wc_project/shared/constant_shared.dart';
 
 import '../../models/device_model.dart';
+import '../controllers/pages/devicesavepage_controller.dart';
 
 class DeviceService {
-  static const String _baseUrl = SharedConstants.apiBaseUrl;
+  static const String _baseUrl = SharedConstants.apiBaseUrlV2;
   // Device Save - Post Method
-  Future<void> saveDevice(Device device, String token) async {
+  Future<DeviceSaveResult> saveDevice(Device device, String token) async {
     final url = Uri.parse('$_baseUrl${SharedConstants.deviceSave}');
     final body = jsonEncode(device);
 
@@ -20,8 +21,23 @@ class DeviceService {
       },
       body: body,
     );
-    if (response.statusCode != 200) {
-      throw Exception('Failed to save device');
+    switch (response.statusCode) {
+      case 200:
+        return DeviceSaveResult.success;
+      case 201:
+        return DeviceSaveResult.success;
+      case 401:
+        debugPrint('Unauthorized Error');
+        return DeviceSaveResult.notunauthorized;
+      case 403:
+        debugPrint('Forbidden Error');
+        return DeviceSaveResult.incorrectToken;
+      case 404:
+        debugPrint('Not Found Error');
+        return DeviceSaveResult.internetNotFound;
+      default:
+        debugPrint('Failed to save device');
+        return DeviceSaveResult.internetNotFound;
     }
   }
 
@@ -60,7 +76,7 @@ class DeviceService {
   }
 
   // Get Device All - Get Method
-  Future<List<dynamic>> getAllDevice(String token) async {
+  Future<List<Device>> getAllDevice(String token) async {
     try {
       final url = Uri.parse('$_baseUrl${SharedConstants.deviceGetAll}');
       final response = await http.get(

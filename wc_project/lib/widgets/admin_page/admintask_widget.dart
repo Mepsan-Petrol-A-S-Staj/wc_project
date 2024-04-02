@@ -5,6 +5,9 @@ class AdminTaskWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text("Admin Task Page");
+    int deviceId = 61;
+    // Return map of task with device id
+    // return ;
+    return Text('Admin Task Widget');
   }
 }

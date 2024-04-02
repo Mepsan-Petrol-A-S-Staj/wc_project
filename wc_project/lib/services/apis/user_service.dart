@@ -21,14 +21,24 @@ class AuthService {
       debugPrint('Response: ${response.body}');
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
-        final data = responseData['data'];
-        // final isAdmin = data['isAdmin'];
-        final token = data['token'];
-        // return {'id': isAdmin, 'token': token};
-        debugPrint('Token: $token');
-        return {'token': token};
+        final isSucces = responseData['success'];
+        if (isSucces) {
+          final data = responseData['data'];
+          final bool isAdmin = data['isAdmin'];
+          final String token = data['token'];
+          final int id = data['id'];
+          debugPrint('isAdmin: $isAdmin, token : $token, id: $id');
+          return {
+            'success': true,
+            'isAdmin': isAdmin,
+            'token': token,
+            'id': id
+          };
+        } else {
+          return {'success': false};
+        }
       } else {
-        return {'token': ''};
+        return {'success': false};
       }
     } catch (e) {
       debugPrint('Exception occurred while logging in: $e');

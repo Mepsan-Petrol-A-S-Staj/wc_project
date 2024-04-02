@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wc_project/widgets/admin_page/adminanswer_widget.dart';
 import 'package:wc_project/widgets/admin_page/admindevice_widget.dart';
 import 'package:wc_project/widgets/admin_page/adminuser_widget.dart';
+import '../../../models/device_model.dart';
 import '../../../pages/devicesave_page.dart';
 import '../../../shared/constant_shared.dart';
 import '../../../widgets/admin_page/adminpagedeviceselect_widget.dart';
@@ -19,28 +20,21 @@ class AdminPageController {
   final double height, width;
   final WidgetRef ref;
   final int screenType;
-
-  final String token;
   AdminPageController({
     required this.height,
     required this.width,
     required this.ref,
     required this.screenType,
-    required this.token,
   });
 
   // Get device list
   Future<List<String>> getDeviceList() async {
     String token = ref.watch(tokenProvider);
+    debugPrint('Token Degeri: $token');
     List<String> deviceList = [];
     try {
-      final response = await DeviceService()
-          .getAllDevice(token); // getAllDevice fonksiyonu çağrıldı
-      if (response.isNotEmpty) {
-        for (var i = 0; i < response.length; i++) {
-          deviceList.add(response[i].name);
-        }
-      }
+      final List<Device> devices = await DeviceService().getAllDevice(token);
+      deviceList = devices.map((device) => device.name).toList();
     } catch (e) {
       debugPrint('Error: $e');
     }
@@ -70,11 +64,9 @@ class AdminPageController {
 
   Future<Widget> adminBuildSecondAppBar() async {
     bool isDeviceSaved = await getDeviceSetupStatus();
-    String deviceValue = ref.read(selectedDevice);
 
     if (isDeviceSaved) {
-      return AdminPageDeviceSelectWidget(
-          width: width, deviceValue: deviceValue, ref: ref);
+      return AdminPageDeviceSelectWidget(width: width, ref: ref);
     } else {
       return const DeviceSavePage();
     }
@@ -150,7 +142,6 @@ class AdminPageController {
   }
 
   Widget buildDeviceList(BuildContext context) {
-    String device = ref.read(selectedDevice);
     return FutureBuilder(
       future: getDeviceList(),
       builder: (context, snapshot) {
@@ -159,22 +150,27 @@ class AdminPageController {
             child: CircularProgressIndicator(),
           );
         } else {
+          final devices =
+              snapshot.data?.cast<String>() ?? []; // Handle empty list
+          if (devices.isEmpty) {
+            return const Text('No devices found'); // Show placeholder
+          }
           return DropdownButton<String>(
-            items: snapshot.data!.map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(
-                  value,
-                  style: Theme.of(context).textTheme.displaySmall,
+            items: [
+              for (int i = 0; i < devices.length; i++)
+                DropdownMenuItem<String>(
+                  value: devices[i],
+                  child: Text(
+                    devices[i],
+                    style: Theme.of(context).textTheme.displaySmall,
+                  ),
                 ),
-              );
-            }).toList(),
+            ],
             onChanged: (String? value) {
               ref.read(selectedDevice.notifier).update((state) => value!);
               debugPrint('Selected Device: $value');
-              value = ref.read(selectedDevice);
             },
-            value: device,
+            value: ref.watch(selectedDevice), // Ensure initial value exists
           );
         }
       },
