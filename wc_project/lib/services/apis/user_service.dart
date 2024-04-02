@@ -48,7 +48,7 @@ class AuthService {
 }
 
 class UserService {
-  static const String _baseUrl = SharedConstants.apiBaseUrl;
+  static const String _baseUrl = SharedConstants.apiBaseUrlV2;
   // User Save - Post Method
   Future<void> saveUser(User user, String token) async {
     final url = Uri.parse('$_baseUrl${SharedConstants.userSave}');

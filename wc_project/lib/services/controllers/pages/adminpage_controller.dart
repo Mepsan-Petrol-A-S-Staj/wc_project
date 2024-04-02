@@ -152,26 +152,28 @@ class AdminPageController {
         } else {
           final devices =
               snapshot.data?.cast<String>() ?? []; // Handle empty list
+          debugPrint('Devices: $devices');
           if (devices.isEmpty) {
             return const Text('No devices found'); // Show placeholder
-          }
-          return DropdownButton<String>(
-            items: [
-              for (int i = 0; i < devices.length; i++)
-                DropdownMenuItem<String>(
-                  value: devices[i],
-                  child: Text(
-                    devices[i],
-                    style: Theme.of(context).textTheme.displaySmall,
+          } else {
+            return DropdownButton(
+              items: [
+                for (int i = 0; i < devices.length; i++)
+                  DropdownMenuItem(
+                    value: devices[i],
+                    child: Text(
+                      devices[i],
+                      style: Theme.of(context).textTheme.displaySmall,
+                    ),
                   ),
-                ),
-            ],
-            onChanged: (String? value) {
-              ref.read(selectedDevice.notifier).update((state) => value!);
-              debugPrint('Selected Device: $value');
-            },
-            value: ref.watch(selectedDevice), // Ensure initial value exists
-          );
+              ],
+              onChanged: (String? value) {
+                ref.read(selectedDevice.notifier).update((state) => value!);
+                debugPrint('Selected Device: $value');
+              },
+              value: ref.watch(selectedDevice), // Ensure initial value exists
+            );
+          }
         }
       },
     );

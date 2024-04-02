@@ -79,23 +79,23 @@ class DeviceSavePageController {
     if (floorValue != "emptyfloor") {
       switch (floorValue) {
         case "terrasfloor":
-          deviceName += "Teras $floorValue";
+          deviceName += "Teras $extraValue";
           ref.read(deviceNameProvider.notifier).update((state) => deviceName);
           break;
         case "secondfloor":
-          deviceName += "2. Kat $floorValue";
+          deviceName += "2. Kat $extraValue";
           ref.read(deviceNameProvider.notifier).update((state) => deviceName);
           break;
         case "firstfloor":
-          deviceName += "1. Kat $floorValue";
+          deviceName += "1. Kat $extraValue";
           ref.read(deviceNameProvider.notifier).update((state) => deviceName);
           break;
         case "groundfloor":
-          deviceName += "Zemin $floorValue";
+          deviceName += "Zemin $extraValue";
           ref.read(deviceNameProvider.notifier).update((state) => deviceName);
           break;
         default:
-          deviceName += "Zemin $floorValue";
+          deviceName += "Zemin $extraValue";
           ref.read(deviceNameProvider.notifier).update((state) => deviceName);
           break;
       }

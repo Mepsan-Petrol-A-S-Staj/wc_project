@@ -3,8 +3,10 @@ import 'package:http/http.dart' as http;
 import 'package:wc_project/shared/constant_shared.dart';
 
 import '../../models/survey_model.dart';
-class SurveyService{
-  static const String _baseUrl = SharedConstants.apiBaseUrl;
+
+class SurveyService {
+  static const String _baseUrl = SharedConstants.apiBaseUrlV2;
+
   // Survey Save - Post Method
   Future<void> saveSurvey(Survey survey, String token) async {
     final url = Uri.parse('$_baseUrl${SharedConstants.surveySave}');
@@ -22,6 +24,7 @@ class SurveyService{
       throw Exception('Failed to save survey');
     }
   }
+
   // ?Survey Montly - Post Method
   Future<void> montlySurvey(Survey survey, String token) async {
     final url = Uri.parse('$_baseUrl${SharedConstants.surveyMontly}');
@@ -58,6 +61,7 @@ class SurveyService{
       throw Exception('Failed to get survey');
     }
   }
+
   // Get Survey with device id - Get Method
   Future<Survey> getSurveyDevice(int id, String token) async {
     final url = Uri.parse('$_baseUrl${SharedConstants.surveyGetwithId}$id');
@@ -91,6 +95,7 @@ class SurveyService{
       throw Exception('Failed to delete survey');
     }
   }
+
   // Get Survey All - Get Method
   Future<List<Survey>> getAllSurvey(String token) async {
     final url = Uri.parse('$_baseUrl${SharedConstants.surveyGetAll}');
@@ -109,5 +114,4 @@ class SurveyService{
       throw Exception('Failed to get all survey');
     }
   }
-
 }

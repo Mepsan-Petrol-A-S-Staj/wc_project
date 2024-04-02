@@ -210,6 +210,7 @@ class _DeviceSavePageState extends ConsumerState<DeviceSavePage> {
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   'Cihazı Kaydet',
+                  // Cihaz maksimum 100 karakter olabilir.
                   style: Theme.of(context).textTheme.displaySmall!.copyWith(
                       color:
                           Theme.of(context).colorScheme.onSecondaryContainer),

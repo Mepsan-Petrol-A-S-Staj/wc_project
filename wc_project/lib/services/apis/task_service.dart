@@ -4,7 +4,8 @@ import 'package:wc_project/shared/constant_shared.dart';
 import '../../models/task_model.dart';
 
 class TaskService {
-  static const String _baseUrl = SharedConstants.apiBaseUrl;
+  static const String _baseUrl = SharedConstants.apiBaseUrlV2;
+
   // Task Save - Post Method
   Future<void> saveTask(Task task, String token) async {
     final url = Uri.parse('$_baseUrl${SharedConstants.taskSave}');

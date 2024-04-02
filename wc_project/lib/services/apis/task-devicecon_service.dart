@@ -6,7 +6,8 @@ import 'package:wc_project/shared/constant_shared.dart';
 import '../../models/task_model.dart';
 
 class TaskDeviceConService {
-  static const String _baseUrl = SharedConstants.apiBaseUrl;
+  static const String _baseUrl = SharedConstants.apiBaseUrlV2;
+
   // Get Task info with device id - Get Method
   Future<dynamic> getTaskInfoWithDeviceId(String deviceId, String token) async {
     try {

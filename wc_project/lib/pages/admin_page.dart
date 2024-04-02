@@ -35,6 +35,7 @@ class AdminPage extends StatelessWidget {
       String widgetKey = ref.watch(adminPageWidgetKey);
       return Column(
         children: [
+          // Admin App Bar
           FutureBuilder<Widget>(
             future: adminPageController.adminBuildSecondAppBar(),
             builder: (BuildContext context, AsyncSnapshot<Widget> snapshot) {
@@ -54,6 +55,7 @@ class AdminPage extends StatelessWidget {
                 vertical: height * SharedConstants.generalPadding),
             child: SizedBox(
               height: height * SharedConstants.generalSize / 16,
+              // Drawer
               child: Drawer(
                 backgroundColor:
                     Theme.of(context).colorScheme.secondaryContainer,
