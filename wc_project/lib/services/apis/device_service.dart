@@ -129,4 +129,52 @@ class DeviceService {
       return [];
     }
   }
+
+  Future<int> getDeviceIdbyDeviceName(String deviceName) async {
+    final String token = ref.watch(tokenProvider);
+    debugPrint('Get Device Token Degeri: $token');
+    try {
+      final url = Uri.parse(
+          '$_baseUrl${SharedConstants.deviceGetIdbyDeviceName}$deviceName');
+      final response = await http.get(
+        url,
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer $token",
+        },
+      );
+
+      switch (response.statusCode) {
+        case 200:
+          int id;
+          final responseData = jsonDecode(response.body);
+          final data = responseData['data'];
+          data != null ? id = data['id'] : id = 0;
+          debugPrint('Device Id: $id');
+          ref.read(selectedDeviceId.notifier).update((state) => id);
+          return id;
+        case 201:
+          final responseData = jsonDecode(response.body);
+          final data = responseData['data'];
+          final int id = data['id'];
+          ref.read(selectedDeviceId.notifier).update((state) => id);
+          return id;
+        case 401:
+          debugPrint('Unauthorized Error');
+          return 0;
+        case 403:
+          debugPrint('Forbidden Error');
+          return 0;
+        case 404:
+          debugPrint('Not Found Error');
+          return 0;
+        default:
+          debugPrint('Failed to get all device');
+          return 0;
+      }
+    } catch (e) {
+      debugPrint('Exception occurred while fetching all device: $e');
+      return 0;
+    }
+  }
 }

@@ -65,6 +65,8 @@ class SharedConstants {
   static const String deviceDeletewithId =
       '/device/delete'; // Devices Delete with Id
   static const String deviceGetAll = '/device/all'; // Devices Get All
+  static const String deviceGetIdbyDeviceName = '/device/name/';
+
   //----------------------------------------------------------------------------------------
   //* -> Task Device Connection
   //----------------------------------------------------------------------------------------
@@ -80,8 +82,9 @@ class SharedConstants {
   //----------------------------------------------------------------------------------------
   static const String answerHintText = 'Lütfen yorumunuzu buraya yazınız.';
   static const String submitText = 'Gönder'; // Submit Text
-  static const String surveySendedPopText =
+  static const String surveySendedPopComplateText =
       'Değerlendirme Gönderildi, \nTeşekkürler';
+  static const String surveySendedPopErrorText = 'Değerlendirme Gönderildi';
   //----------------------------------------------------------------------------------------
   //* -> Login Page
   //----------------------------------------------------------------------------------------

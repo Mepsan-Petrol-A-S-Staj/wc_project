@@ -4,13 +4,15 @@ import 'package:wc_project/shared/constant_shared.dart';
 
 import '../../models/survey_model.dart';
 
+enum SurveyType { SurveySave, SurveyNotSaved, SurveyDeleted, SurveyUpdated }
+
 class SurveyService {
   static const String _baseUrl = SharedConstants.apiBaseUrlV2;
 
   // Survey Save - Post Method
-  Future<void> saveSurvey(Survey survey, String token) async {
+  Future<SurveyType> saveSurvey(Survey survey, String token) async {
     final url = Uri.parse('$_baseUrl${SharedConstants.surveySave}');
-    final body = jsonEncode(survey);
+    final body = jsonEncode(survey.toJson());
     final response = await http.post(
       url,
       headers: {
@@ -19,8 +21,15 @@ class SurveyService {
       },
       body: body,
     );
-    if (response.statusCode != 200) {
-      throw Exception('Failed to save survey');
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      if (data['success']) {
+        return SurveyType.SurveySave;
+      } else {
+        return SurveyType.SurveyNotSaved;
+      }
+    } else {
+      return SurveyType.SurveyNotSaved;
     }
   }
 

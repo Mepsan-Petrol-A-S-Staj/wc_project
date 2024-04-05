@@ -68,6 +68,8 @@ class LoginPageController {
     ref.watch(userIsAdmin.notifier).update((state) => false);
     ref.watch(userIdProvider.notifier).update((state) => 0);
     ref.watch(tokenProvider.notifier).update((state) => '');
+    ref.watch(selectedDevice.notifier).update((state) => '');
+    ref.watch(selectedDeviceId.notifier).update((state) => -1);
   }
 
   void isAFK() async {

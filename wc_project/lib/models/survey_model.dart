@@ -1,14 +1,14 @@
 class Survey {
-  final String comment, person, surveyDate;
   final int rating;
   final int deviceId;
+  final String? comment, person, surveyDate;
 
   Survey({
     required this.rating,
-    required this.comment,
-    required this.person,
-    required this.surveyDate,
     required this.deviceId,
+    this.comment,
+    this.person,
+    this.surveyDate,
   });
 
   factory Survey.fromJson(Map<String, dynamic> json) {
@@ -17,7 +17,7 @@ class Survey {
       comment: json['comment'],
       person: json['person'],
       surveyDate: json['surveyDate'],
-      deviceId: json['deviceId']['id'] ?? 0,
+      deviceId: json['device']['id'] ?? 0,
     );
   }
 
@@ -27,7 +27,7 @@ class Survey {
       'comment': comment,
       'person': person,
       'surveyDate': surveyDate,
-      'deviceId': {'id': deviceId},
+      'device': {'id': deviceId},
     };
   }
 }

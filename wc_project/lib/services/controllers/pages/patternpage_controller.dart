@@ -26,6 +26,13 @@ class PatternPageController {
     required this.ref,
   });
 
+  Future<int> getDeviceId() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int deviceId = prefs.getInt(SharedConstants.preferanceDeviceId) ?? 0;
+    ref.read(deviceIdProvider.notifier).update((state) => deviceId);
+    return deviceId;
+  }
+
   // Device Saved Controll Function
   Future<void> sharedPreferanceStart() async {
     bool isDeviceSaved = false;

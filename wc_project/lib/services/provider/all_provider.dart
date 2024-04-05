@@ -18,10 +18,14 @@ final ipAdressProvicer =
     StateProvider<String>((ref) => ""); // Device ip adress control
 final deviceIdProvider = StateProvider<int>((ref) => 0); // Device id control
 
+// Selected Device
+final selectedDevice = StateProvider<String>((ref) => '');
+final selectedDeviceId= StateProvider<int>((ref) => -1);
+
+
 /// TODO: Look at the following code snippet and see if it can be refactored
 final rateProvider = StateProvider<int>((ref) => 1);
 final deviceIpAdressProvider = StateProvider<String>((ref) => '');
-final selectedDevice = StateProvider<String>((ref) => '');
 final afkTimeCounter = StateProvider<int>((ref) => 0);
 final providerSelectedFloor = StateProvider<String>((ref) => 'emptyfloor');
 final screenTypeProvider = StateProvider<int>((ref) => 0);

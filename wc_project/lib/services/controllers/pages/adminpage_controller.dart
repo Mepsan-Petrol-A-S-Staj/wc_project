@@ -35,7 +35,7 @@ class AdminPageController {
     try {
       final List<Device> devices =
           await DeviceService(ref: ref).getAllDevice(token);
-      deviceList = devices.map((device) => device.name).toList();
+      deviceList = devices.map((device) => device.deviceName).toList();
     } catch (e) {
       debugPrint('Error: $e');
     }
@@ -115,8 +115,18 @@ class AdminPageController {
   Widget buildItem(
       IconData icondata, BuildContext context, String key, String title) {
     return InkWell(
-      onTap: () {
-        ref.read(adminPageWidgetKey.notifier).state = key;
+      onTap: () async {
+        int selectedDeviceId = await getSelectedMachineId();
+        if (selectedDeviceId != -1) {
+          ref.read(adminPageWidgetKey.notifier).state = key;
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Please select a device'),
+            ),
+          );
+          // null;
+        }
       },
       child: Card(
           color: Theme.of(context).colorScheme.tertiaryContainer,
@@ -237,4 +247,14 @@ class AdminPageController {
       },
     );
   }
+
+  Future<int> getSelectedMachineId() async {
+    String selectedDeviceName = ref.read(selectedDevice);
+    int selectedDeviceId = await DeviceService(ref: ref)
+        .getDeviceIdbyDeviceName(selectedDeviceName);
+    debugPrint('Selected Device Id: $selectedDeviceId');
+    return selectedDeviceId;
+  }
+
+  // Future<List<Map<String,dynamic>>> get
 }
