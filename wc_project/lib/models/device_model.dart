@@ -1,10 +1,11 @@
 class Device {
-  final String ip, floor, name;
+  final String ip, floor, name, deviceName;
   final int? id;
   Device({
     required this.ip,
     required this.floor,
     required this.name,
+    required this.deviceName,
     this.id,
   });
 
@@ -14,6 +15,7 @@ class Device {
       ip: json['ip'],
       floor: json['floor'],
       name: json['name'],
+      deviceName: json['deviceName'],
     );
   }
 
@@ -23,6 +25,7 @@ class Device {
       'ip': ip,
       'floor': floor,
       'name': name,
+      'deviceName': deviceName,
     };
   }
 }

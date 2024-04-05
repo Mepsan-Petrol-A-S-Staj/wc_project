@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wc_project/models/device_model.dart';
@@ -23,8 +24,15 @@ class DeviceController {
   void saveDevice(Device device) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool(SharedConstants.preferanceDeviceSavedControllText, true);
-    prefs.setString(SharedConstants.preferaceDeviceName, device.name);
-    // prefs.setString(SharedConstants.preferanceDeviceId, device.id);
+    prefs.setString(SharedConstants.preferaceDeviceName, device.deviceName);
+    prefs.setInt(
+        SharedConstants.preferanceDeviceId, ref.watch(deviceIdProvider));
+    debugPrint('Device Saved: ${device.deviceName} with id: ${device.id}');
     ref.read(isDeviceSavedProvider.notifier).update((state) => true);
+  }
+
+  Future<int> getDeviceId() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getInt(SharedConstants.preferanceDeviceId) ?? 0;
   }
 }

@@ -106,6 +106,7 @@ class SharedConstants {
   //----------------------------------------------------------------------------------------
   static const preferanceDeviceSavedControllText = "isDeviceSaved";
   static const preferaceDeviceName = "deviceName";
+  static const preferanceDeviceId = "deviceId";
   //----------------------------------------------------------------------------------------
 
   //!----------------------------------------------------------------------------------------

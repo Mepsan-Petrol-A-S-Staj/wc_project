@@ -1,18 +1,24 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:wc_project/shared/constant_shared.dart';
 
 import '../../models/device_model.dart';
 import '../controllers/pages/devicesavepage_controller.dart';
+import '../provider/all_provider.dart';
 
 class DeviceService {
+  final WidgetRef ref;
+  DeviceService({
+    required this.ref,
+  });
   static const String _baseUrl = SharedConstants.apiBaseUrlV2;
   // Device Save - Post Method
   Future<DeviceSaveResult> saveDevice(Device device, String token) async {
     final url = Uri.parse('$_baseUrl${SharedConstants.deviceSave}');
     final body = jsonEncode(device);
-
+    debugPrint('Device Save Body: $body');
     final response = await http.post(
       url,
       headers: {
@@ -23,7 +29,16 @@ class DeviceService {
     );
     switch (response.statusCode) {
       case 200:
-        return DeviceSaveResult.success;
+        final responseData = jsonDecode(response.body);
+        final bool isdeviceSaved = responseData['success'];
+        if (!isdeviceSaved) {
+          return DeviceSaveResult.internetNotFound;
+        } else {
+          final data = responseData['data']['id'];
+          debugPrint('Device saved with id: $data');
+          ref.read(deviceIdProvider.notifier).update((state) => data);
+          return DeviceSaveResult.success;
+        }
       case 201:
         return DeviceSaveResult.success;
       case 401:

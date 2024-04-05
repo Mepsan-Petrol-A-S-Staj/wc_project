@@ -11,7 +11,6 @@ class SurveyService {
   Future<void> saveSurvey(Survey survey, String token) async {
     final url = Uri.parse('$_baseUrl${SharedConstants.surveySave}');
     final body = jsonEncode(survey);
-
     final response = await http.post(
       url,
       headers: {

@@ -33,7 +33,8 @@ class AdminPageController {
     debugPrint('Token Degeri: $token');
     List<String> deviceList = [];
     try {
-      final List<Device> devices = await DeviceService().getAllDevice(token);
+      final List<Device> devices =
+          await DeviceService(ref: ref).getAllDevice(token);
       deviceList = devices.map((device) => device.name).toList();
     } catch (e) {
       debugPrint('Error: $e');
@@ -62,11 +63,12 @@ class AdminPageController {
     return isDeviceSaved;
   }
 
-  Future<Widget> adminBuildSecondAppBar() async {
+  Future<Widget> adminBuildSecondAppBar(String selectedDeviceValue) async {
     bool isDeviceSaved = await getDeviceSetupStatus();
 
     if (isDeviceSaved) {
-      return AdminPageDeviceSelectWidget(width: width, ref: ref);
+      return AdminPageDeviceSelectWidget(
+          width: width, ref: ref, selectedDeviceValue: selectedDeviceValue);
     } else {
       return const DeviceSavePage();
     }
@@ -141,7 +143,11 @@ class AdminPageController {
     );
   }
 
-  Widget buildDeviceList(BuildContext context) {
+  Widget buildDeviceList(BuildContext context, String selectedDeviceValue) {
+    void setSelectedDevice(String deviceName) {
+      ref.read(selectedDevice.notifier).update((state) => deviceName);
+    }
+
     return FutureBuilder(
       future: getDeviceList(),
       builder: (context, snapshot) {
@@ -168,10 +174,16 @@ class AdminPageController {
                   ),
               ],
               onChanged: (String? value) {
-                ref.read(selectedDevice.notifier).update((state) => value!);
+                setSelectedDevice(value!);
                 debugPrint('Selected Device: $value');
               },
-              value: ref.watch(selectedDevice), // Ensure initial value exists
+              hint: selectedDeviceValue == ''
+                  ? const Text('Select Device')
+                  : Text(
+                      selectedDeviceValue,
+                      style: Theme.of(context).textTheme.displaySmall,
+                    ),
+              // Ensure initial value exists
             );
           }
         }

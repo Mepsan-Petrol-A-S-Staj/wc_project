@@ -23,7 +23,7 @@ class LoginPageController {
       ref.read(userIdProvider.notifier).update((state) => response['id']);
       ref.read(tokenProvider.notifier).update((state) => response['token']);
       ref.read(userIsAdmin.notifier).update((state) => response['isAdmin']);
-      debugPrint('\nToken: ${response['token']}'); // User id: ${value['id']}
+      debugPrint('User Id: ${response['id']}'); // User id: ${value['id']}
       return true;
     } else {
       return false;

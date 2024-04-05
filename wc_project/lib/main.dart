@@ -13,12 +13,6 @@ import 'package:wc_project/shared/theme_shared.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
-  // SystemChrome.setPreferredOrientations(
-  //   [
-  //     DeviceOrientation.landscapeLeft,
-  //     DeviceOrientation.landscapeRight,
-  //   ],
-  // );
   runApp(
     const ProviderScope(
       child: MyApp(),

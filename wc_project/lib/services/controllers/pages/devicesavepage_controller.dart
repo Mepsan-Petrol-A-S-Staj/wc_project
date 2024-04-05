@@ -83,11 +83,11 @@ class DeviceSavePageController {
           ref.read(deviceNameProvider.notifier).update((state) => deviceName);
           break;
         case "secondfloor":
-          deviceName += "2. Kat $extraValue";
+          deviceName += "2 $extraValue";
           ref.read(deviceNameProvider.notifier).update((state) => deviceName);
           break;
         case "firstfloor":
-          deviceName += "1. Kat $extraValue";
+          deviceName += "1 $extraValue";
           ref.read(deviceNameProvider.notifier).update((state) => deviceName);
           break;
         case "groundfloor":
@@ -105,16 +105,24 @@ class DeviceSavePageController {
       Device device = Device(
         ip: ipAdress,
         floor: floorValue,
-        name: deviceName,
+        name: extraValue,
+        deviceName: deviceName,
       );
       debugPrint(
           'Ip Adress : $ipAdress, Floor: $floorValue, DeviceName: $deviceName');
-      DeviceService deviceController = DeviceService();
+      DeviceService deviceController = DeviceService(ref: ref);
       DeviceSaveResult deviceSave =
           await deviceController.saveDevice(device, token);
       if (deviceSave == DeviceSaveResult.success) {
+        int deviceId = ref.watch(deviceIdProvider);
+        Device saveDeviceValue = Device(
+            ip: ipAdress,
+            floor: floorValue,
+            name: extraValue,
+            deviceName: deviceName,
+            id: deviceId);
         DeviceController deviceController = DeviceController(ref: ref);
-        deviceController.saveDevice(device);
+        deviceController.saveDevice(saveDeviceValue);
         ref.read(isDeviceSavedProvider.notifier).update((state) => true);
         debugPrint('Device Saved');
         ref.read(deviceNameProvider.notifier).update((state) => deviceName);

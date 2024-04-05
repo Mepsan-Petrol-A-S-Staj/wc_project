@@ -35,7 +35,7 @@ class PatternPageController {
             false;
     ref.read(isDeviceSavedProvider.notifier).update((state) => isDeviceSaved);
     debugPrint("isDeviceSaved durumu: $isDeviceSaved");
-    isDeviceSaved == 1
+    isDeviceSaved
         ? null
         : ref.read(pageIndexProvider.notifier).update((state) => 1);
   }

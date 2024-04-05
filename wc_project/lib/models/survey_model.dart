@@ -1,47 +1,33 @@
 class Survey {
-  final int surveyId;
+  final String comment, person, surveyDate;
+  final int rating;
   final int deviceId;
-  final int userId;
-  final int surveyType;
-  final int surveyResult;
-  final String surveyDate;
-  final String surveyTime;
-  final String surveyNote;
 
   Survey({
-    required this.surveyId,
-    required this.deviceId,
-    required this.userId,
-    required this.surveyType,
-    required this.surveyResult,
+    required this.rating,
+    required this.comment,
+    required this.person,
     required this.surveyDate,
-    required this.surveyTime,
-    required this.surveyNote,
+    required this.deviceId,
   });
 
   factory Survey.fromJson(Map<String, dynamic> json) {
     return Survey(
-      surveyId: json['surveyId'],
-      deviceId: json['deviceId'],
-      userId: json['userId'],
-      surveyType: json['surveyType'],
-      surveyResult: json['surveyResult'],
+      rating: json['rating'],
+      comment: json['comment'],
+      person: json['person'],
       surveyDate: json['surveyDate'],
-      surveyTime: json['surveyTime'],
-      surveyNote: json['surveyNote'],
+      deviceId: json['deviceId']['id'] ?? 0,
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'surveyId': surveyId,
-      'deviceId': deviceId,
-      'userId': userId,
-      'surveyType': surveyType,
-      'surveyResult': surveyResult,
+      'rating': rating,
+      'comment': comment,
+      'person': person,
       'surveyDate': surveyDate,
-      'surveyTime': surveyTime,
-      'surveyNote': surveyNote,
+      'deviceId': {'id': deviceId},
     };
   }
 }

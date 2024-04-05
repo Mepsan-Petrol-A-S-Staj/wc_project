@@ -33,11 +33,14 @@ class AdminPage extends StatelessWidget {
         screenType: screenType,
       );
       String widgetKey = ref.watch(adminPageWidgetKey);
+      String selectedDeviceValue = ref.watch(selectedDevice);
+
       return Column(
         children: [
           // Admin App Bar
           FutureBuilder<Widget>(
-            future: adminPageController.adminBuildSecondAppBar(),
+            future:
+                adminPageController.adminBuildSecondAppBar(selectedDeviceValue),
             builder: (BuildContext context, AsyncSnapshot<Widget> snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const CircularProgressIndicator();

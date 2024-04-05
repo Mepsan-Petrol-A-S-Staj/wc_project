@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:wc_project/services/controllers/device_controller.dart';
 
+import '../../../models/survey_model.dart';
+import '../../../services/apis/survey_service.dart';
 import '../../../services/provider/all_provider.dart';
 import '../../../shared/constant_shared.dart';
 
@@ -16,12 +19,18 @@ class HomePageTabletandDesktopWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController comment = TextEditingController();
+    DeviceController deviceController = DeviceController(ref: ref);
+    SurveyService surveyService = SurveyService();
+    // int deviceId =await deviceController.getDeviceId();
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Expanded(
           flex: 2,
           child: TextField(
+            controller: comment,
             textAlign: TextAlign.start,
             style: Theme.of(context).textTheme.displayMedium,
             maxLines: 2,
@@ -48,6 +57,15 @@ class HomePageTabletandDesktopWidget extends StatelessWidget {
               ),
             ),
             onPressed: () {
+              Survey survey = Survey(
+                rating: ref.read(rateProvider),
+                comment: comment.text,
+                person: "",
+                surveyDate: "",
+                deviceId: 0,
+              );
+              surveyService.saveSurvey(survey, ref.read(tokenProvider));
+
               showDialog(
                 barrierDismissible: false,
                 context: context,
