@@ -9,7 +9,8 @@ class TaskDeviceConService {
   static const String _baseUrl = SharedConstants.apiBaseUrlV2;
 
   // Get Task info with device id - Get Method
-  Future<dynamic> getTaskInfoWithDeviceId(String deviceId, String token) async {
+  Future<List<Task>> getTaskInfoWithDeviceId(
+      String deviceId, String token) async {
     try {
       final url =
           Uri.parse('$_baseUrl${SharedConstants.taskGetwithId}$deviceId');
@@ -22,27 +23,36 @@ class TaskDeviceConService {
       );
       switch (response.statusCode) {
         case 200:
-          return Task.fromJson(jsonDecode(response.body));
-        case 201:
-          return Task.fromJson(jsonDecode(response.body));
+          final data = jsonDecode(response.body);
+          if (data['success'] == false) {
+            return [];
+          } else {
+            debugPrint('Task Info: $data');
+            final List<dynamic> taskData = data['data'];
+            List<Task> tasks = [];
+            for (var taskJson in taskData) {
+              Task task = Task.fromJson(taskJson);
+              tasks.add(task);
+            }
+            return tasks;
+          }
         case 401:
           debugPrint('Unauthorized Error');
-          return {};
+          return [];
         case 403:
           debugPrint('Forbidden Error');
-          return {};
+          return [];
 
         case 404:
           debugPrint('error: Not Found Error');
-          return {};
-
+          return [];
         default:
           debugPrint('error: Failed to get task info with device id');
-          return {};
+          return [];
       }
     } catch (e) {
       debugPrint('Exception occurred while fetching task info: $e');
-      return {};
+      return [];
     }
   }
 

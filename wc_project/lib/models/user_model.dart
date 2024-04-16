@@ -12,18 +12,21 @@ class User {
     required this.isAdmin,
   });
 
-  factory User.fromJson(Map<String, dynamic> json) {
+  factory User.fromJson(Map<dynamic, dynamic>? json) {
+    if (json == null) {
+      throw ArgumentError('Json data is null');
+    }
     return User(
-      userId: json['userId'],
-      name: json['name'],
-      surname: json['surname'],
-      username: json['username'],
-      password: json['password'],
-      isAdmin: json['isAdmin'],
+      userId: json['id'] ?? 0,
+      name: json['name'] ?? '',
+      surname: json['surname'] ?? '',
+      username: json['username'] ?? '',
+      password: json['password'] ?? '',
+      isAdmin: json['isAdmin'] ?? false,
     );
   }
 
-  Map<String, dynamic> toJson() {
+  Map<dynamic, dynamic> toJson() {
     return {
       'userId': userId,
       'name': name,

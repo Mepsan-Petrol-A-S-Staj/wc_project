@@ -92,7 +92,9 @@ class AdminPageController {
         );
       case 'task':
         ref.read(adminPageWidgetKey.notifier).state = 'task';
-        return const AdminTaskWidget();
+        return AdminTaskWidget(
+          ref: ref,
+        );
       case 'user':
         return const AdminUserWidget();
       case 'answer':

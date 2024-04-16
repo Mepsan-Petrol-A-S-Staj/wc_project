@@ -110,8 +110,15 @@ class UserService {
       },
     );
     if (response.statusCode == 200) {
-      final List<dynamic> responseData = jsonDecode(response.body);
-      return responseData.map((e) => User.fromJson(e)).toList();
+      debugPrint('Response: ${response.body}');
+      final responseData = jsonDecode(response.body);
+      final isSucces = responseData['success'];
+      if (!isSucces) {
+        throw Exception('Failed to get all user');
+      } else {
+        final List<dynamic> data = responseData['data'];
+        return data.map((e) => User.fromJson(e)).toList();
+      }
     } else {
       throw Exception('Failed to get all user');
     }
